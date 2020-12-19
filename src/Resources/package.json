@@ -1,0 +1,9 @@
+{
+  "name": "@symfony/ux-chartjs",
+  "description": "Chart.js integration for Symfony",
+  "license": "MIT",
+  "version": "1.1.0",
+  "dependencies": {
+    "leaflet": "^1.7.1"
+  }
+}
