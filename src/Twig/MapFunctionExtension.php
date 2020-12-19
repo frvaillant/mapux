@@ -12,9 +12,6 @@ use Twig\TwigFunction;
 
 class MapFunctionExtension extends AbstractExtension
 {
-    public function __construct()
-    {
-    }
 
     public function getFunctions()
     {
@@ -23,7 +20,7 @@ class MapFunctionExtension extends AbstractExtension
         ];
     }
 
-    public function renderMap(string $mapId, Map $map)
+    public function renderMap(string $mapId, Map $map): string
     {
         if ($map->isReady()) {
             return '<div class="ux-map" id="' . $mapId . '" 
@@ -32,5 +29,6 @@ class MapFunctionExtension extends AbstractExtension
                         data-zoom="' . $map->getZoomLevel() . '">
                     </div>';
         }
+        return '';
     }
 }

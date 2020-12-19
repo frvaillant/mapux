@@ -1,4 +1,4 @@
-export default class MapBuilder {
+export class MapBuilder {
 
     constructor(container) {
 
@@ -10,6 +10,7 @@ export default class MapBuilder {
     }
 
     createMap() {
+        alert('hop')
         this.map = L.map(this.mapId).setView([this.centerLatitude, this.centerLongitude], this.zoomLevel)
     }
 

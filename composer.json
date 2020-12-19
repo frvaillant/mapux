@@ -4,7 +4,7 @@
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
   "minimum-stability": "stable",
 
-  "version": "0.0.5",
+  "version": "1.0.0",
   "license": "MIT",
   "authors": [
     {
@@ -15,6 +15,11 @@
   "autoload": {
     "psr-4": {
       "MapUx\\": "src/"
+    }
+  },
+  "extra": {
+    "npm": {
+      "leaflet": "^1.7.1"
     }
   }
 }
