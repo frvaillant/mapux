@@ -2,9 +2,9 @@
   "name": "frvaillant/mapux",
   "description": "Adds symfony twig function to create maps",
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
-  "minimum-stability": "0.0.5",
+  "minimum-stability": "stable",
 
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "authors": [
     {
@@ -17,9 +17,9 @@
       "MapUx\\": "src/"
     }
   },
-  "extra": {
-    "npm": {
-      "leaflet": "^1.7.1"
-    }
+  "scripts": {
+    "post-create-project-cmd": [
+      "MapUx\\Installer::installLeaflet"
+    ]
   }
 }

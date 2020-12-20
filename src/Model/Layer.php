@@ -7,6 +7,8 @@ namespace MapUx\Model;
 class Layer
 {
 
+    const DEFAULT_BACKGROUND = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
     /**
      * @var string
      */
@@ -19,7 +21,7 @@ class Layer
 
 
 
-    public function __construct(string $background)
+    public function __construct(string $background = self::DEFAULT_BACKGROUND)
     {
         $this->background = $background;
     }

@@ -27,18 +27,27 @@ class Map
      */
     private $layers;
 
+    /**
+     * @var array
+     */
+    private $markers;
+
 
     public function __construct(
-        float $centerLatitude   = self::DEFAULT_LAT,
-        float $centerLongitude  = self::DEFAULT_LON,
-        int $zoomLevel          = self::DEFAULT_ZOOM
-    ) {
+        float $centerLatitude = self::DEFAULT_LAT,
+        float $centerLongitude = self::DEFAULT_LON,
+        int $zoomLevel = self::DEFAULT_ZOOM,
+        string $background = null
+    )
+    {
         $this->setCenterLatitude($centerLatitude);
         $this->setCenterLongitude($centerLongitude);
         $this->setZoomLevel($zoomLevel);
+        $background ? $this->addLayer(new Layer($background)) : $this->addLayer(new Layer());
     }
 
-    public function isReady() {
+    public function isReady()
+    {
         return (
             null !== $this->centerLatitude && is_float($this->centerLatitude) &&
             null !== $this->centerLongitude && is_float($this->centerLongitude) &&
@@ -108,6 +117,30 @@ class Map
     public function setZoomLevel(int $zoomLevel): void
     {
         $this->zoomLevel = $zoomLevel;
+    }
+
+    public function addMarker(Marker $marker)
+    {
+        $this->markers[] = $marker;
+    }
+
+    public function setMarkers(array $markers)
+    {
+        $this->markers = $markers;
+    }
+
+    public function getMarkers()
+    {
+        $markers = [];
+        if ($this->markers) {
+            foreach ($this->markers as $marker) {
+                $markers[] = [
+                    'lat' => $marker->getLatitude(),
+                    'lon' => $marker->getLongitude()
+                ];
+            }
+        }
+        return json_encode($markers);
     }
 
 
