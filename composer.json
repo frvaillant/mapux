@@ -4,7 +4,7 @@
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
   "minimum-stability": "stable",
 
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "authors": [
     {
@@ -18,16 +18,10 @@
     }
   },
   "scripts": {
-    "post-root-package-install": [
-      "MapUx\\Installer::installLeaflet"
-    ],
-    "post-create-project-cmd": [
-      "MapUx\\Installer::installLeaflet"
-    ],
     "post-install-cmd": [
-      "MapUx\\Installer::installLeaflet"
+      "@install"
     ],
-    "post-update-cmd": [
+    "install": [
       "MapUx\\Installer::installLeaflet"
     ]
   }
