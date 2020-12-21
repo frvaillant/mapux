@@ -28,7 +28,7 @@
       "MapUx\\Installer::installLeaflet"
     ],
     "post-update-cmd": [
-      "MapUx\\Installer::installLeaflet",
+      "MapUx\\Installer::installLeaflet"
     ]
   }
 }
