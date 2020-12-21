@@ -18,11 +18,14 @@
     }
   },
   "scripts": {
+    "install": {
+      "mkdir": "mkdir test"
+    },
     "post-install-cmd": [
       "@install"
     ],
-    "install": [
-      "MapUx\\Installer::installLeaflet"
+    "post-update-cmd": [
+      "@install"
     ]
   }
 }
