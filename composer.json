@@ -4,7 +4,7 @@
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
   "minimum-stability": "stable",
 
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "authors": [
     {
@@ -18,8 +18,9 @@
     }
   },
   "extra": {
-    "npm": {
-      "leaflet": "1.0.7"
+    "leaflet": {
+      "name": "leaflet",
+      "url": "https://github.com/Leaflet/Leaflet"
     }
   }
 }
