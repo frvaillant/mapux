@@ -17,10 +17,18 @@
       "MapUx\\": "src/"
     }
   },
-  "extra": {
-    "leaflet": {
-      "name": "leaflet",
-      "url": "https://github.com/Leaflet/Leaflet"
-    }
+  "scripts": {
+    "post-root-package-install": [
+      "MapUx\\Installer::installLeaflet"
+    ],
+    "post-create-project-cmd": [
+      "MapUx\\Installer::installLeaflet"
+    ],
+    "post-install-cmd": [
+      "MapUx\\Installer::installLeaflet"
+    ],
+    "post-update-cmd": [
+      "MapUx\\Installer::installLeaflet",
+    ]
   }
 }
