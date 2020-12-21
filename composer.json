@@ -17,9 +17,9 @@
       "MapUx\\": "src/"
     }
   },
-  "scripts": {
-    "install-leaflet": [
-      "npm install leaflet"
-    ]
+  "extra": {
+    "npm": {
+      "leaflet": "1.0.7"
+    }
   }
 }
