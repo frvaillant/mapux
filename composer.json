@@ -3,7 +3,6 @@
   "description": "Adds symfony twig function to create maps",
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
   "minimum-stability": "stable",
-
   "version": "1.0.9",
   "license": "MIT",
   "authors": [
@@ -16,6 +15,12 @@
     "psr-4": {
       "MapUx\\": "src/"
     }
+  },
+  "require": {
+    "php": ">=7.2.5",
+    "symfony/config": "^4.4.17|^5.0",
+    "symfony/dependency-injection": "^4.4.17|^5.0",
+    "symfony/http-kernel": "^4.4.17|^5.0"
   },
   "scripts": {
     "install": {
