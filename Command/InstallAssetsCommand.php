@@ -1,12 +1,17 @@
 <?php
+namespace MapUx\Command;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 
-class InstallAssetsCommand extends \Symfony\Component\Console\Command\Command
+class InstallAssetsCommand extends Command
 {
 
     protected static $defaultName = 'mapux:install';
 
-    public function __construct(\Psr\Log\LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
         // you *must* call the parent constructor
