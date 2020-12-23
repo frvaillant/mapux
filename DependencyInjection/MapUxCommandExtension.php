@@ -13,7 +13,10 @@ class MapUxCommandExtension extends Extension
 {
     public function load(ContainerBuilder $container)
     {
-        var_dump('hello');
-        die;
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.xml');
     }
 }
