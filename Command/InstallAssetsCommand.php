@@ -24,7 +24,7 @@ class InstallAssetsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $io = new SymfonyStyle();
+        $io = new SymfonyStyle($input, $output);
         $io->writeln('success');
 
         return self::SUCCESS;
