@@ -33,10 +33,11 @@ class MapUxExtension extends Extension
         ;
 
         $container
-            ->setDefinition('$mapux.install_assets_command', new Definition(InstallAssetsCommand::class, [
+            ->setDefinition('MapUx\Command\InstallAssetsCommand', new Definition(InstallAssetsCommand::class))
+            ->setTags([
                 'name' => 'console.command',
                 'command' => 'mapux:install'
-            ]))
+            ])
         ;
 
         if (class_exists(Environment::class)) {
