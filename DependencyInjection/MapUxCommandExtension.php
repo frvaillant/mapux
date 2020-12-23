@@ -19,22 +19,13 @@ class MapUxCommandExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $container
-            ->setDefinition('mapux.command', new Definition(InstallAssetsCommand::class))
-            ->setPublic(false)
+            ->setDefinition('mapux.install.command', new Definition(InstallAssetsCommand::class))
+            ->addTag('console.command')
+            ->setArguments([
+                'name'    => 'console.command',
+                'command' => 'mapux:install'
+            ])
         ;
-
-        $container
-            ->setAlias(MapCommandInterface::class, 'mapux.command')
-            ->setPublic(false)
-        ;
-
-        if (class_exists(Environment::class)) {
-            $container
-                ->setDefinition('mapux.install.command', new Definition(MapCommandExtension::class))
-                ->addTag('console.command')
-                ->setPublic(false)
-            ;
-        }
     }
 
 
