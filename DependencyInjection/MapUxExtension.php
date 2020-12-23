@@ -10,7 +10,7 @@ use Metadata\Driver\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\NodeVisitor\NodeVisitorInterface;
