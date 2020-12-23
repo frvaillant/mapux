@@ -6,9 +6,11 @@ use MapUx\Builder\MapBuilder;
 use MapUx\Builder\MapBuilderInterface;
 use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
+use Metadata\Driver\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\NodeVisitor\NodeVisitorInterface;
@@ -40,11 +42,10 @@ class MapUxExtension extends Extension
             ;
         }
 
-        $application = new Application('mapux', '1.0.0');
-        $command = new InstallAssetsCommand();
-        $application->addCommand($command);
-        $application->setDefaultCommand($command->getName(), true);
-        $application->run();
+        $loader = new YamlFileLoader(
+            $container, new FileLocator(__DIR__ . '/../Config')
+        );
+        $loader->load('services.yaml');
     }
 
 
