@@ -32,13 +32,6 @@ class MapUxExtension extends Extension
             ->setPublic(false)
         ;
 
-        $commandDefinition = new Definition(InstallAssetsCommand::class);
-
-        $container
-            ->setDefinition('MapUx\Command\InstallAssetsCommand', $commandDefinition)
-
-        ;
-
         if (class_exists(Environment::class)) {
             $container
                 ->setDefinition('mapux.twig_extension', new Definition(MapFunctionExtension::class))
