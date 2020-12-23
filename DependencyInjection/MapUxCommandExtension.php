@@ -2,9 +2,6 @@
 
 namespace MapUx\DependencyInjection;
 
-use MapUx\Builder\MapBuilder;
-use MapUx\Builder\MapBuilderInterface;
-use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -15,19 +12,19 @@ use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
-
+use MapUx\Command\InstallAssetsCommand;
 
 class MapUxCommandExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
         $container
-            ->setDefinition('mapux.command', new Definition(\InstallAssetsCommand::class))
+            ->setDefinition('mapux.command', new Definition(InstallAssetsCommand::class))
             ->setPublic(false)
         ;
 
         $container
-            ->setAlias(MapBuilderInterface::class, 'mapux.command')
+            ->setAlias(MapCommandInterface::class, 'mapux.command')
             ->setPublic(false)
         ;
 
