@@ -16,7 +16,7 @@ use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
-
+use Symfony\Component\Console\Application;
 
 class MapUxExtension extends Extension
 {
@@ -39,6 +39,12 @@ class MapUxExtension extends Extension
                 ->setPublic(false)
             ;
         }
+
+        $application = new Application('mapux', '1.0.0');
+        $command = new InstallAssetsCommand();
+        $application->addCommand($command);
+        $application->setDefaultCommand($command->getName(), true);
+        $application->run();
     }
 
 

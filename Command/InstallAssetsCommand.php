@@ -8,8 +8,13 @@ use Symfony\Component\Console\Command\Command;
 
 class InstallAssetsCommand extends Command
 {
+    const SUCCESS = 1;
 
     protected static $defaultName = 'mapux:install';
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(LoggerInterface $logger)
     {
@@ -29,7 +34,7 @@ class InstallAssetsCommand extends Command
         $this->logger->info('Waking up the sun');
         // ...
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
     }
 
 }
