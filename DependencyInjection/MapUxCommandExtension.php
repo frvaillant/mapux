@@ -13,7 +13,7 @@ class MapUxCommandExtension extends Extension
 {
     public function load(ContainerBuilder $container)
     {
-        var_dump();
+        var_dump('hello');
         die;
     }
 }
