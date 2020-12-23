@@ -6,7 +6,7 @@ use MapUx\Builder\MapBuilder;
 use MapUx\Builder\MapBuilderInterface;
 use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
-use Metadata\Driver\FileLocator;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
