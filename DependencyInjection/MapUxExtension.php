@@ -4,6 +4,7 @@ namespace MapUx\DependencyInjection;
 
 use MapUx\Builder\MapBuilder;
 use MapUx\Builder\MapBuilderInterface;
+use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -29,6 +30,14 @@ class MapUxExtension extends Extension
         $container
             ->setAlias(MapBuilderInterface::class, 'mapux.builder')
             ->setPublic(false)
+        ;
+
+        $container
+            ->setDefinition('mapux.install.command', new Definition(InstallAssetsCommand::class))
+            ->setArguments([
+                'name' => 'console.command',
+                'command' => 'mapux:install'
+            ])
         ;
 
         if (class_exists(Environment::class)) {
