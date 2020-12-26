@@ -32,6 +32,11 @@ class Map
      */
     private $markers;
 
+    /**
+     * @var array
+     */
+    private $options = [];
+
 
     public function __construct(
         float $centerLatitude = self::DEFAULT_LAT,
@@ -141,6 +146,16 @@ class Map
             }
         }
         return json_encode($markers);
+    }
+
+    public function setOptions(array $options): void
+    {
+        $this->options = $options;
+    }
+
+    public function getOptions()
+    {
+        return json_encode($this->options);
     }
 
 
