@@ -122,6 +122,8 @@ $icon->setIconUrl('url-to-your-picture');
 $marker->setIcon($icon);
 ```
 You can also set size, shadow ... and all parameters for leaflet icon.  
+Doc : https://leafletjs.com/reference-1.7.1.html#icon  
+
 
 #### Popup
 You can also add a popup on your marker  
