@@ -1,3 +1,6 @@
 MapUx\Command\InstallAssetsCommand:
   tags:
     - { name: 'console.command', command: 'mapux:install' }
+MapUx\Command\UninstallAssetsCommand:
+  tags:
+    - { name: 'console.command', command: 'mapux:uninstall' }

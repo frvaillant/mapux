@@ -9,6 +9,7 @@ use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\NodeVisitor\NodeVisitorInterface;
@@ -42,11 +43,11 @@ class MapUxExtension extends Extension
             ;
         }
 
-        $loader = new XmlFileLoader(
+        $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Config')
         );
-        $loader->load('services.xml');
+        $loader->load('services.yaml');
 
 
     }
