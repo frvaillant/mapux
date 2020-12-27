@@ -93,10 +93,10 @@ You can also set size, shadow ... and all parameters for leaflet icon.
 You can also add a popup on your marker  
 ```php
 use MapUx\Model\Popup;
-$popup = new Popup('All the html you wand in your popup'); 
+$popup = new Popup('All the html you want in your popup'); 
 // Or you can do like this ://  
 $popup = new Popup();
-$popup->setContent('All the html you nedd in your popup');   
+$popup->setContent('All the html you need in your popup');   
 ```
 
 Options for Leaflet Popup are also available with  
