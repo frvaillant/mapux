@@ -8,5 +8,8 @@
         <service id="MapUx\Command\InstallAssetsCommand">
             <tag name="console.command" command="mapux:install"/>
         </service>
+        <service id="MapUx\Command\UninstallAssetsCommand">
+            <tag name="console.command" command="mapux:uninstall"/>
+        </service>
     </services>
 </container>
