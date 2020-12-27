@@ -38,6 +38,42 @@ In your footer section, just before </body>, add
 {{ encore_entry_script_tags('mapux') }}
 ```
 
+## Quick basic example
+Controller side
+```php
+use MapUx\Builder\MapBuilder;
+use MapUx\Model\Marker;
+use MapUx\Model\Popup;
+  
+  // [...]
+  
+$mapBuilder = new MapBuilder();
+$map = $mapBuilder->createMap(44.00, -0.57, 10);
+$marker = new Marker(44.00, -0.57);
+$popup = new Popup('My popup text');
+$markerClickFunction = 'alert("your click event has been triggered");';
+$marker->addEvent('click', $markerClickFunction);
+$marker->addPopup($popup);
+$map->addMarker($marker);
+
+return $this->render('home/index.html.twig', [
+    'map' => $map,
+]);
+```
+
+template side
+```twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Map Test{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    {{ render_map('mymap', map) }}
+</div>
+{% endblock %}
+```
+
 ## Use
 
 ### In your controller
