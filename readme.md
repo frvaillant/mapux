@@ -2,7 +2,7 @@
 
 ## Description
 MapUx is an UX component for Symfony project. Il aims helping you to add maps in your project.  
-It adds all what you nedd for maps, markers, popups ...  
+It adds all what you need for maps, markers, popups ...  
 It uses Leaflet Library wich complete documentation can be found here :  
 https://leafletjs.com/reference-1.7.1.html 
 
