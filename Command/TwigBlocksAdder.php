@@ -61,9 +61,9 @@ class TwigBlocksAdder
     public function addMapUxToFooter(): self
     {
         if (!$this->hasFooterBlock()) {
-            $this->blocks = explode('</footer>', $this->content);
+            $this->blocks = explode('</body>', $this->content);
             if (2 === count($this->blocks)) {
-                $this->content = $this->blocks[0] . self::SCRIPT_BLOCK . '</footer>' . $this->blocks[1];
+                $this->content = $this->blocks[0] . self::SCRIPT_BLOCK . '</body>' . $this->blocks[1];
                 $this->io->comment('****** scripts block added into footer section *******');
             }
         } else {
