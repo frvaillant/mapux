@@ -68,9 +68,7 @@ template side
 {% block title %}Map Test{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
     {{ render_map('mymap', map) }}
-</div>
 {% endblock %}
 ```
 
