@@ -3,7 +3,8 @@
 ## Description
 MapUx is an UX component for Symfony project. Il aims helping you to add maps in your project.  
 It adds all what you nedd for maps, markers, popups ...  
-It uses Leaflet Library wich works with open street map 
+It uses Leaflet Library wich complete documentation can be found here :  
+https://leafletjs.com/reference-1.7.1.html 
 
 ## Requirements
 PHP >7.2  
@@ -14,6 +15,28 @@ Webpack Encore
 - `composer require frvaillant/mapux dev-master`
 - `npm install --force`
 - `php bin/console mapux:install`
+
+## Manual Installation
+If you don't want to run the install command provided by MapUx, you need to add a few lines inside your project :  
+### Into webpack.config.js
+add :  
+```javascript
+Encore
+    .addEntry('mapux', './vendor/frvaillant/mapux/Resources/assets/mapux.js')
+    .copyFiles({
+    from: './node_modules/leaflet/dist/images',
+    to: 'images/[path][name].[ext]',
+    })
+```
+### Into base.html.twig
+In your head section, add  
+```twig
+ {{ encore_entry_link_tags('mapux') }}
+```
+In your footer section, add  
+```twig
+{{ encore_entry_script_tags('mapux') }}
+```
 
 ## Use
 
@@ -31,7 +54,9 @@ $map->setBackground('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png');
 ```
 You can find a list of available backgrounds here : https://www.creazo.fr/listing-des-fonds-de-cartes-dopen-street-map/  
 
-You can of course use all leaflet available options with  
+You can of course use all leaflet available options with the setOptions() method.  
+Doc : https://leafletjs.com/reference-1.7.1.html#map-example  
+For example :    
 ```php
 $map->setOptions([
     'zoomControl' => false
@@ -44,6 +69,7 @@ use MapUx\Model\Marker;
 $marker = new Marker(44.00, -0.57);
 ```
 If you need some leaflet options for markers  
+Doc : https://leafletjs.com/reference-1.7.1.html#marker  
 ```php
 $marker->setOptions(array $options);
 ```
@@ -74,6 +100,7 @@ $popup->setContent('All the html you nedd in your popup');
 ```
 
 Options for Leaflet Popup are also available with  
+Doc : https://leafletjs.com/reference-1.7.1.html#popup  
 ```php
  $popup->setOptions([
     'minWidth' => 500
@@ -93,11 +120,49 @@ Finally send your map in your twig render method
 ];
 ```
 
+### Adding Events
+You can add events on your map or markers.
+Each event must be setted by its name and a javascript function as a string.
+
+********************************************************************
+**Make sure to add " ; " at the end of each javascript instruction**   
+********************************************************************
+
+For example you can add a marker by clicking on the map :
+
+```php
+$clickMapAction = '
+    L.marker([event.latlng.lat, event.latlng.lng], {icon: defaultIcon}).addTo(event.target);
+ ';
+$map->addEvent('click', $clickMapAction);
+```
+
+You can add as much as events you need according to leaflet events
+
+To add an event on a marker, use the same method as above.  
+ For example :
+```php
+$dragEndAction = '
+    fetch("/myroute", {  
+        method: "GET"  
+    }).then(response => { 
+        return response.text() 
+    }).then(text => {  
+        console.log(text);
+    });'
+;
+
+$clickAction = 'console.log(event); alert("clicked")';
+
+$marker->addEvent('dragend', $dragEndAction);
+$marker->addEvent('click', $clickAction);
+```
+
 ### In your twig template
 
 ```twig
 {{ render_map('your-map-id', map) }}
 ```
 
-this will generate a map in a div with id="your-map-id" and class="map-ux".  
-MapUx comes with the minimu CSS to set min height (150px) and width (100%) for this div.
+this will generate a map in a div with id="your-map-id" and class="ux-map".  
+MapUx comes with the minimum CSS to set min height (150px) and width (100%) for this div.

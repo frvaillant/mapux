@@ -7,6 +7,7 @@ export class MapBuilder {
         this.centerLatitude = container.dataset.lat
         this.centerLongitude = container.dataset.lon
         this.zoomLevel = container.dataset.zoom
+        this.mapEvents = container.dataset.events
         this.mapId = container.getAttribute('id')
         this.background = container.dataset.background
         this.markers = JSON.parse(container.dataset.markers)
@@ -28,14 +29,27 @@ export class MapBuilder {
         this.map = L.map(this.mapId, this.options).setView([this.centerLatitude, this.centerLongitude], this.zoomLevel)
         this.addLayer()
 
-        for(const key in this.markers) {
-            this.addMarker(
-                this.markers[key].lat,
-                this.markers[key].lon,
-                this.markers[key].icon,
-                this.markers[key].options,
-                this.markers[key].popup
-            )
+        // ADDING MAP EVENTS ///////////////////////////////////////
+        if (this.mapEvents) {
+            const events = JSON.parse(this.mapEvents)
+            for (const key in events) {
+                this.map.on(events[key].name, (event) => {
+                    const defaultIcon = this.defaultIcon
+                    eval(events[key].action)
+                })
+            }
+        }
+        if (this.markers) {
+            for (const key in this.markers) {
+                this.addMarker(
+                    this.markers[key].lat,
+                    this.markers[key].lon,
+                    this.markers[key].icon,
+                    this.markers[key].options,
+                    this.markers[key].popup,
+                    this.markers[key].events
+                )
+            }
         }
     }
 
@@ -43,34 +57,59 @@ export class MapBuilder {
         L.tileLayer(this.background, {}).addTo(this.map);
     }
 
-    addMarker(lat, lon, icon = null, options = null, popup = null) {
+    makeIcon(iconData) {
+        const icon = JSON.parse(iconData)
+        const Icon = L.icon({
+            iconUrl: icon.iconUrl,
+            shadowUrl: icon.shadowUrl,
+            iconSize: icon.iconSize,
+            iconAnchor: icon.iconAnchor,
+            popupAnchor: icon.popupAnchor,
+            tooltipAnchor: icon.tooltipAnchor,
+            shadowSize: icon.shadowSize
+        })
+        return Icon
+    }
+
+    addMarker(lat, lon, icon = null, options = null, popup = null, events = null) {
 
         options = (options && "null" !== options) ?  JSON.parse(options) : {}
 
+        // SETTING ICON //////////////////////////////////////////
         if (null === icon) {
             options.icon = this.defaultIcon
         } else {
-            const dataIcon = JSON.parse(icon)
-            const Icon = L.icon({
-                iconUrl: dataIcon.iconUrl,
-                shadowUrl: dataIcon.shadowUrl,
-                iconSize: dataIcon.iconSize,
-                iconAnchor: dataIcon.iconAnchor,
-                popupAnchor: dataIcon.popupAnchor,
-                tooltipAnchor: dataIcon.tooltipAnchor,
-                shadowSize: dataIcon.shadowSize
-            })
-            options.icon = Icon
+            options.icon = this.makeIcon(icon)
         }
+
+        // ADDING MARKER //////////////////////////////////////////
         const marker = L.marker([lat, lon], options).addTo(this.map)
-        
+
+        // ADDING POPUP ON MARKER /////////////////////////////////
         if (popup && "null" !== popup) {
-            const popupData = JSON.parse(popup)
-            let myPopup = L.popup(popupData.options)
-            myPopup.setContent(popupData.content)
+            const myPopup = this.makePopup(popup)
             marker.bindPopup(myPopup)
+        }
+
+        // ADDING EVENTS ON MARKER /////////////////////////////////
+        if (events && "null" !== events) {
+            this.addEvents(events, marker)
         }
     }
 
+    addEvents(events, marker) {
+        events = JSON.parse(events)
+        for (const key in events) {
+            marker.on(events[key].name, (event) => {
+                eval(events[key].action)
+            })
+        }
+    }
 
+    makePopup(popup) {
+        const popupData = JSON.parse(popup)
+        let myPopup = L.popup(popupData.options)
+        myPopup.setContent(popupData.content)
+        return myPopup
+    }
 }

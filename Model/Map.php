@@ -37,6 +37,11 @@ class Map
      */
     private $options = [];
 
+    /**
+     * @var array 
+     */
+    private $events;
+
 
     public function __construct(
         float $centerLatitude = self::DEFAULT_LAT,
@@ -150,7 +155,8 @@ class Map
                     'lon' => $marker->getLongitude(),
                     'icon' => $marker->getIcon(),
                     'options' => $marker->getOptions(),
-                    'popup' => $marker->getPopup()
+                    'popup' => $marker->getPopup(),
+                    'events' => $marker->getEvents()
                 ];
             }
         }
@@ -165,6 +171,37 @@ class Map
     public function getOptions()
     {
         return json_encode($this->options);
+    }
+
+    public function addEvent(string $eventName, $action)
+    {
+        $this->events[$eventName] = $action;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvents(): ?string
+    {
+        if ($this->events) {
+            $events = [];
+            foreach ($this->events as $name => $action) {
+                $events[] = [
+                    'name' =>$name,
+                    'action' => $action,
+                ];
+            }
+            return json_encode($events);
+        }
+        return null;
+    }
+
+    /**
+     * @param array $events
+     */
+    public function setEvents(array $events): void
+    {
+        $this->events = $events;
     }
 
 

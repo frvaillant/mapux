@@ -32,6 +32,11 @@ class Marker
      */
     private $popup;
 
+    /**
+     * @var array
+     */
+    private $events;
+
     public function __construct($latitude, $longitude)
     {
         $this->setLatitude($latitude);
@@ -111,12 +116,12 @@ class Marker
     {
         $this->options = $options;
     }
-    
+
     public function addPopup(Popup $popup)
     {
         $this->popup = $popup;
     }
-    
+
     public function getPopup()
     {
         if ($this->popup) {
@@ -127,6 +132,38 @@ class Marker
         }
         return null;
     }
+
+    public function addEvent(string $eventName, $action)
+    {
+        $this->events[$eventName] = $action;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvents(): ?string
+    {
+        if ($this->events) {
+            $events = [];
+            foreach ($this->events as $name => $action) {
+                $events[] = [
+                    'name' =>$name,
+                    'action' => $action,
+                ];
+            }
+            return json_encode($events);
+        }
+        return null;
+    }
+
+    /**
+     * @param array $events
+     */
+    public function setEvents(array $events): void
+    {
+        $this->events = $events;
+    }
+
 
 
 
