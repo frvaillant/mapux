@@ -17,7 +17,20 @@ class Marker
      */
     private float $longitude;
 
+    /**
+     * @var Icon
+     */
     private $icon;
+
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
+     * @var Popup
+     */
+    private $popup;
 
     public function __construct($latitude, $longitude)
     {
@@ -62,15 +75,17 @@ class Marker
      */
     public function getIcon()
     {
-        return json_encode([
-            'iconUrl' => $this->icon->getIconUrl(),
-            'shadowUrl' => $this->icon->getShadowUrl(),
-            'iconSize' => $this->icon->getIconSize(),
-            'iconAnchor' => $this->icon->getIconAnchor(),
-            'popupAnchor' =>  $this->icon->getPopupAnchor(),
-            'tooltipAnchor' =>  $this->icon->getTooltipAnchor(),
-            'shadowSize' => $this->icon->getShadowSize()
-        ]);
+        if ($this->icon) {
+            return json_encode([
+                'iconUrl' => $this->icon->getIconUrl(),
+                'shadowUrl' => $this->icon->getShadowUrl(),
+                'iconSize' => $this->icon->getIconSize(),
+                'iconAnchor' => $this->icon->getIconAnchor(),
+                'popupAnchor' => $this->icon->getPopupAnchor(),
+                'tooltipAnchor' => $this->icon->getTooltipAnchor(),
+                'shadowSize' => $this->icon->getShadowSize()
+            ]);
+        }
     }
 
     /**
@@ -80,5 +95,39 @@ class Marker
     {
         $this->icon = $icon;
     }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): string
+    {
+        return json_encode($this->options);
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options): void
+    {
+        $this->options = $options;
+    }
+    
+    public function addPopup(Popup $popup)
+    {
+        $this->popup = $popup;
+    }
+    
+    public function getPopup()
+    {
+        if ($this->popup) {
+            return json_encode([
+                'content' => $this->popup->getContent(),
+                'options' => $this->popup->getOptions()
+            ]);
+        }
+        return null;
+    }
+
+
 
 }

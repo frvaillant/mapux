@@ -148,7 +148,9 @@ class Map
                 $markers[] = [
                     'lat' => $marker->getLatitude(),
                     'lon' => $marker->getLongitude(),
-                    'icon' => $marker->getIcon()
+                    'icon' => $marker->getIcon(),
+                    'options' => $marker->getOptions(),
+                    'popup' => $marker->getPopup()
                 ];
             }
         }

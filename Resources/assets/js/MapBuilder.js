@@ -29,7 +29,13 @@ export class MapBuilder {
         this.addLayer()
 
         for(const key in this.markers) {
-            this.addMarker(this.markers[key].lat, this.markers[key].lon, this.markers[key].icon, this.markers[key].options)
+            this.addMarker(
+                this.markers[key].lat,
+                this.markers[key].lon,
+                this.markers[key].icon,
+                this.markers[key].options,
+                this.markers[key].popup
+            )
         }
     }
 
@@ -37,9 +43,9 @@ export class MapBuilder {
         L.tileLayer(this.background, {}).addTo(this.map);
     }
 
-    addMarker(lat, lon, icon = null, options = null) {
+    addMarker(lat, lon, icon = null, options = null, popup = null) {
 
-        options = (options && options !== "null") ?  JSON.parse(options) : {}
+        options = (options && "null" !== options) ?  JSON.parse(options) : {}
 
         if (null === icon) {
             options.icon = this.defaultIcon
@@ -56,7 +62,14 @@ export class MapBuilder {
             })
             options.icon = Icon
         }
-        L.marker([lat, lon], options).addTo(this.map)
+        const marker = L.marker([lat, lon], options).addTo(this.map)
+        
+        if (popup && "null" !== popup) {
+            const popupData = JSON.parse(popup)
+            let myPopup = L.popup(popupData.options)
+            myPopup.setContent(popupData.content)
+            marker.bindPopup(myPopup)
+        }
     }
 
 
