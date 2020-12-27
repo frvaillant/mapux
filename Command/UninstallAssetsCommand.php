@@ -37,7 +37,7 @@ class UninstallAssetsCommand extends Command
         from: \'./node_modules/leaflet/dist/images\',
         to: \'images/[path][name].[ext]\',
         })');
-        
+
         $io->block('step 2 :: removing blocks from base.html.twig');
         $io->block('remove 
         {% block cssmapux %}
@@ -46,11 +46,12 @@ class UninstallAssetsCommand extends Command
         {% block scriptsmapux %}
         {{ encore_entry_script_tags(\'mapux\') }}
         {% endblock %} from your <footer> section');
-        
+
         $io->block('step 3 :: run "npm remove leaflet"');
         $io->block('step 4 :: run "composer remove frvaillant/mapux"');
-        
-        
+        $io->block('step 5 :: run "yarn encore dev"');
+
+
         return self::SUCCESS;
 
     }

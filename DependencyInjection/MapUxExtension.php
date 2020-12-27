@@ -43,12 +43,11 @@ class MapUxExtension extends Extension
             ;
         }
 
-        $loader = new YamlFileLoader(
+        $loader = new XmlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Config')
         );
-        $loader->load('services.yaml');
-
+        $loader->load('services.xml');
 
     }
 
