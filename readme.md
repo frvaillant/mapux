@@ -33,7 +33,7 @@ In your head section, add
 ```twig
  {{ encore_entry_link_tags('mapux') }}
 ```
-In your footer section, add  
+In your footer section, just before </body>, add  
 ```twig
 {{ encore_entry_script_tags('mapux') }}
 ```
