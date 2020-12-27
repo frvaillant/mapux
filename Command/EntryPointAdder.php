@@ -66,6 +66,10 @@ class EntryPointAdder
 
     public function generateNewWebpackFile()
     {
+        if ($this->hasAllreadyEntryPoint()) {
+            $this->io->warning('your "webpack.config.js" allready have MapUx rules');
+            return false;
+        }
         if ($this->isWebpackEncoreFile() && !$this->hasAllreadyEntryPoint() && $this->hasModuleExport()) {
             $this->separateWebpackFile();
             $this->addEntryPoint();

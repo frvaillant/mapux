@@ -33,7 +33,7 @@ class TwigBlocksAdder
             $this->io->error('file "base.html.twig" not found');
         }
     }
-    
+
     private function hasHeadBlock()
     {
         return (count(explode('{% block cssmapux %}', $this->content)) === 2);
@@ -50,6 +50,7 @@ class TwigBlocksAdder
             $this->blocks = explode('</head>', $this->content);
             if (2 === count($this->blocks)) {
                 $this->content = $this->blocks[0] . self::CSS_BLOCK . '</head>' . $this->blocks[1];
+                $this->io->comment('****** CSS block added into head section *******');
             }
         } else {
             $this->io->comment('block mapux CSS allready added');
@@ -63,6 +64,7 @@ class TwigBlocksAdder
             $this->blocks = explode('</footer>', $this->content);
             if (2 === count($this->blocks)) {
                 $this->content = $this->blocks[0] . self::SCRIPT_BLOCK . '</footer>' . $this->blocks[1];
+                $this->io->comment('****** scripts block added into footer section *******');
             }
         } else {
             $this->io->comment('block mapux Scripts allready added');
@@ -72,11 +74,12 @@ class TwigBlocksAdder
 
     public function save()
     {
-        if ($this->hasHeadBlock() && $this->hasFooterBlock()) {
+        if ($this->hasHeadBlock() || $this->hasFooterBlock()) {
             file_put_contents($this->file, $this->content);
             $this->io->success('base.html.twig file updated');
             return true;
         }
+
         $this->io->error('Impossible to update base.html.twig');
         return false;
     }
