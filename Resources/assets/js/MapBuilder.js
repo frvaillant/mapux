@@ -29,7 +29,7 @@ export class MapBuilder {
         this.addLayer()
 
         for(const key in this.markers) {
-            this.addMarker(this.markers[key].lat, this.markers[key].lon, this.markers[key].icon)
+            this.addMarker(this.markers[key].lat, this.markers[key].lon, this.markers[key].icon, this.markers[key].options)
         }
     }
 
@@ -37,9 +37,12 @@ export class MapBuilder {
         L.tileLayer(this.background, {}).addTo(this.map);
     }
 
-    addMarker(lat, lon, icon = null) {
+    addMarker(lat, lon, icon = null, options = null) {
+
+        options = (options && options !== "null") ?  JSON.parse(options) : {}
+
         if (null === icon) {
-            L.marker([lat, lon], {icon: this.defaultIcon}).addTo(this.map)
+            options.icon = this.defaultIcon
         } else {
             const dataIcon = JSON.parse(icon)
             const Icon = L.icon({
@@ -51,8 +54,10 @@ export class MapBuilder {
                 tooltipAnchor: dataIcon.tooltipAnchor,
                 shadowSize: dataIcon.shadowSize
             })
-            L.marker([lat, lon], {icon: Icon}).addTo(this.map)
+            options.icon = Icon
         }
+        L.marker([lat, lon], options).addTo(this.map)
     }
+
 
 }
