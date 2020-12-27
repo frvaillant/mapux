@@ -10,8 +10,8 @@ use MapUx\Builder\MapBuilderInterface;
 
 class MapBuilder implements MapBuilderInterface
 {
-    public function createMap(float $latitude, float $longitude, int $zoomLevel): Map
+    public function createMap(float $latitude, float $longitude, int $zoomLevel, string $background = null): Map
     {
-        return new Map($latitude, $longitude, $zoomLevel);
+        return new Map($latitude, $longitude, $zoomLevel, $background);
     }
 }

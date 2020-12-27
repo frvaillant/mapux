@@ -62,13 +62,21 @@ class Marker
      */
     public function getIcon()
     {
-        return $this->icon;
+        return json_encode([
+            'iconUrl' => $this->icon->getIconUrl(),
+            'shadowUrl' => $this->icon->getShadowUrl(),
+            'iconSize' => $this->icon->getIconSize(),
+            'iconAnchor' => $this->icon->getIconAnchor(),
+            'popupAnchor' =>  $this->icon->getPopupAnchor(),
+            'tooltipAnchor' =>  $this->icon->getTooltipAnchor(),
+            'shadowSize' => $this->icon->getShadowSize()
+        ]);
     }
 
     /**
      * @param mixed $icon
      */
-    public function setIcon($icon): void
+    public function setIcon(Icon $icon): void
     {
         $this->icon = $icon;
     }

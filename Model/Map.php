@@ -51,6 +51,12 @@ class Map
         $background ? $this->addLayer(new Layer($background)) : $this->addLayer(new Layer());
     }
 
+    public function setBackground($background)
+    {
+        $this->layers[0] = new Layer($background);
+    }
+
+
     public function isReady()
     {
         return (
@@ -141,7 +147,8 @@ class Map
             foreach ($this->markers as $marker) {
                 $markers[] = [
                     'lat' => $marker->getLatitude(),
-                    'lon' => $marker->getLongitude()
+                    'lon' => $marker->getLongitude(),
+                    'icon' => $marker->getIcon()
                 ];
             }
         }

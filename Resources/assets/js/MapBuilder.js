@@ -12,10 +12,9 @@ export class MapBuilder {
         this.markers = JSON.parse(container.dataset.markers)
         this.options = JSON.parse(container.dataset.options)
 
-        this.icon = L.icon({
+        this.defaultIcon = L.icon({
             iconUrl: '/build/images/marker-icon.png',
             shadowUrl: '/build/images/marker-shadow.png',
-            iconRetinaUrl: '/build/images/marker-icon-2x.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -30,7 +29,7 @@ export class MapBuilder {
         this.addLayer()
 
         for(const key in this.markers) {
-            this.addMarker(this.markers[key].lat, this.markers[key].lon)
+            this.addMarker(this.markers[key].lat, this.markers[key].lon, this.markers[key].icon)
         }
     }
 
@@ -38,8 +37,22 @@ export class MapBuilder {
         L.tileLayer(this.background, {}).addTo(this.map);
     }
 
-    addMarker(lat, lon) {
-        L.marker([lat, lon], {icon: this.icon}).addTo(this.map)
+    addMarker(lat, lon, icon = null) {
+        if (null === icon) {
+            L.marker([lat, lon], {icon: this.defaultIcon}).addTo(this.map)
+        } else {
+            const dataIcon = JSON.parse(icon)
+            const Icon = L.icon({
+                iconUrl: dataIcon.iconUrl,
+                shadowUrl: dataIcon.shadowUrl,
+                iconSize: dataIcon.iconSize,
+                iconAnchor: dataIcon.iconAnchor,
+                popupAnchor: dataIcon.popupAnchor,
+                tooltipAnchor: dataIcon.tooltipAnchor,
+                shadowSize: dataIcon.shadowSize
+            })
+            L.marker([lat, lon], {icon: Icon}).addTo(this.map)
+        }
     }
 
 }
