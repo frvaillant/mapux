@@ -16,6 +16,10 @@ class InstallAssetsCommand extends Command
 {
     const SUCCESS = 1;
 
+    const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
+    const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux/images';
+
+
     protected static $defaultName = 'mapux:install';
 
     protected function configure()
@@ -42,13 +46,13 @@ class InstallAssetsCommand extends Command
             $appJsFile = __DIR__ . '/../../../../assets/app.js';
             $appJsFileContent = file_get_contents($appJsFile);
             $appJsFileContent .= '
+import \'../node_modules/leaflet/dist/leaflet.css\'
 import \'../vendor/frvaillant/mapux/Resources/assets/css/map.css\'
 require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
-require (\'../node_modules/leaflet/dist/leaflet.css\')
 ';
             file_put_contents($appJsFile, $appJsFileContent);
 
-            shell_exec('cp node_modules/leaflet/dist/images public/bundle/mapux/images');
+            shell_exec('cp ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
         }
 
         $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
@@ -66,6 +70,8 @@ require (\'../node_modules/leaflet/dist/leaflet.css\')
             $result = shell_exec('yarn encore dev');
             $io->block($result);
         }
+        $io->success('MAPUX INSTALLATION PROCESS ENDED');
+
         return self::SUCCESS;
     }
 }
