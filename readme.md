@@ -121,6 +121,15 @@ $icon = new Icon();
 $icon->setIconUrl('url-to-your-picture');
 $marker->setIcon($icon);
 ```
+
+You can also set the icon by setting it in marker options :  
+```php
+$icon = new Icon();
+$icon->setIconUrl('url-to-your-picture');
+$marker->setOptions([
+    'icon' => $icon, 
+]);
+```
 You can also set size, shadow ... and all parameters for leaflet icon.  
 Doc : https://leafletjs.com/reference-1.7.1.html#icon  
 

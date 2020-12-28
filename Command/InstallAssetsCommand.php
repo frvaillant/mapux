@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class InstallAssetsCommand extends Command
 {
-    const END = 1;
+    const SUCCESS = 1;
 
     protected static $defaultName = 'mapux:install';
 
@@ -35,7 +35,7 @@ class InstallAssetsCommand extends Command
         $firstResponse = $helper->ask($input, $output, $firstQuestion);
         if ('n' === $firstResponse) {
             $io->error('Installation aborted');
-            return self::SUCCESS;;
+            return self::SUCCESS;
         }
         if ('y' === $firstResponse) {
             // Webpack.config.js UPDATE
