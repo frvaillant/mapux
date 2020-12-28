@@ -106,6 +106,9 @@ class Marker
      */
     public function getOptions(): string
     {
+        if ($this->options['icon']) {
+            $this->options['icon'] = $this->options['icon']->render();
+        }
         return json_encode($this->options);
     }
 
@@ -163,8 +166,4 @@ class Marker
     {
         $this->events = $events;
     }
-
-
-
-
 }

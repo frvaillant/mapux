@@ -74,12 +74,16 @@ export class MapBuilder {
     addMarker(lat, lon, icon = null, options = null, popup = null, events = null) {
 
         options = (options && "null" !== options) ?  JSON.parse(options) : {}
-
+        console.log(options.icon)
         // SETTING ICON //////////////////////////////////////////
-        if (null === icon) {
-            options.icon = this.defaultIcon
+        if (!options.icon) {
+            if (null === icon) {
+                options.icon = this.defaultIcon
+            } else {
+                options.icon = this.makeIcon(icon)
+            }
         } else {
-            options.icon = this.makeIcon(icon)
+            options.icon = this.makeIcon(options.icon)
         }
 
         // ADDING MARKER //////////////////////////////////////////

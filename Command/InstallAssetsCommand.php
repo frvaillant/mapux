@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class InstallAssetsCommand extends Command
 {
-    const SUCCESS = 1;
+    const END = 1;
 
     protected static $defaultName = 'mapux:install';
 
@@ -35,7 +35,7 @@ class InstallAssetsCommand extends Command
         $firstResponse = $helper->ask($input, $output, $firstQuestion);
         if ('n' === $firstResponse) {
             $io->error('Installation aborted');
-            return;
+            return self::SUCCESS;;
         }
         if ('y' === $firstResponse) {
             // Webpack.config.js UPDATE
@@ -59,7 +59,7 @@ class InstallAssetsCommand extends Command
 
         if ('n' === $secondResponse) {
             $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
-            return;
+            return self::SUCCESS;;
         }
         if ('y' === $secondResponse) {
             $io->comment('Yarn encore dev running ...');

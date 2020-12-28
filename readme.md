@@ -13,7 +13,7 @@ Webpack Encore
 
 ## Install MapUx
 - `composer require frvaillant/mapux dev-master`
-- `npm install --force`
+- `npm install --force` ou `yarn install --force`
 - `php bin/console mapux:install`
 
 ## Manual Installation

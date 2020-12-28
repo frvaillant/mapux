@@ -13,9 +13,22 @@ class Icon
     private $popupAnchor = [1, -34];
     private $tooltipAnchor = [16, -28];
     private $shadowSize = [41, 41];
-    
+
     public function __construct()
     {
+    }
+
+    public function render()
+    {
+        return json_encode([
+            'iconUrl' => $this->getIconUrl(),
+            'shadowUrl' => $this->getShadowUrl(),
+            'iconSize' => $this->getIconSize(),
+            'iconAnchor' => $this->getIconAnchor(),
+            'popupAnchor' => $this->getPopupAnchor(),
+            'tooltipAnchor' => $this->getTooltipAnchor(),
+            'shadowSize' => $this->getShadowSize()
+        ]);
     }
 
     /**
@@ -129,6 +142,4 @@ class Icon
     {
         $this->shadowSize = $shadowSize;
     }
-    
-    
 }
