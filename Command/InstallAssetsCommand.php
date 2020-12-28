@@ -38,17 +38,15 @@ class InstallAssetsCommand extends Command
             return self::SUCCESS;
         }
         if ('y' === $firstResponse) {
-            // Webpack.config.js UPDATE
-            $entryPointAdder = new EntryPointAdder(__DIR__ . '/../../../../webpack.config.js', $io);
-            $entryPointAdder->generateNewWebpackFile();
 
-
-            // Base.html.twig update
-            $twigBlocksAdder = new TwigBlocksAdder(__DIR__ . '/../../../../templates/base.html.twig', $io);
-            $twigBlocksAdder
-                ->addMapUxToHead()
-                ->addMapUxToFooter()
-                ->save();
+            $appJsFile = __DIR__ . '/../../../../assets/app.js';
+            $appJsFileContent = file_get_contents($appJsFile);
+            $appJsFileContent .= '
+import \'../vendor/frvaillant/mapux/Resources/assets/css/map.css\'
+require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
+require (\'../node_modules/leaflet/dist/leaflet.css\')
+';
+            file_put_contents($appJsFile, $appJsFileContent);
         }
 
         $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
@@ -66,9 +64,6 @@ class InstallAssetsCommand extends Command
             $result = shell_exec('yarn encore dev');
             $io->block($result);
         }
-
         return self::SUCCESS;
-
     }
-
 }
