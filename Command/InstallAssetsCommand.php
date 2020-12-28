@@ -43,17 +43,24 @@ class InstallAssetsCommand extends Command
         if ('y' === $firstResponse) {
 
             $appJsFile = __DIR__ . '/../../../../assets/app.js';
-            $appJsFileContent = file_get_contents($appJsFile);
-            $appJsFileContent .= '
-import \'../node_modules/leaflet/dist/leaflet.css\'
-import \'../vendor/frvaillant/mapux/Resources/assets/css/map.css\'
+            if (is_file($appJsFile)) {
+                $appJsFileContent = file_get_contents($appJsFile);
+                if (1 === count(explode('frvaillant/mapux', $appJsFileContent))) {
+                    $appJsFileContent .= '
 require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 ';
-            file_put_contents($appJsFile, $appJsFileContent);
+                    file_put_contents($appJsFile, $appJsFileContent);
+                    $io->success('app.js updated');
+                }
+            } else {
+                $io->error('impossible to find app.js file');
+            }
 
             shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
 
             shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
+
+            $io->success('leaflet pictures added to your project');
         }
 
         $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
@@ -64,6 +71,8 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
         if ('n' === $secondResponse) {
             $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
+            $io->writeln('******** Make sure your entry points are added in your template ********');
+            $io->success('MAPUX INSTALLATION PROCESS ENDED');
             return self::SUCCESS;;
         }
         if ('y' === $secondResponse) {
@@ -71,6 +80,7 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
             $result = shell_exec('yarn encore dev');
             $io->block($result);
         }
+        $io->writeln('******** Make sure your entry points are added in your template ********');
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
 
         return self::SUCCESS;
