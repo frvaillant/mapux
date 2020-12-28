@@ -1,6 +1,8 @@
 {
-  "license": "UNLICENSED",
-  "private": true,
+  "name": "@frvaillant/mapux",
+  "description": "Leaflet integration for Symfony",
+  "license": "MIT",
+  "version": "1.0.0",
   "dependencies": {
     "leaflet": "1.7.1"
   }
