@@ -18,24 +18,13 @@ Webpack Encore
 
 ## Manual Installation
 If you don't want to run the install command provided by MapUx, you need to add a few lines inside your project :  
-### Into webpack.config.js
+### Into assets/app.js
 add :  
 ```javascript
-Encore
-    .addEntry('mapux', './vendor/frvaillant/mapux/Resources/assets/mapux.js')
-    .copyFiles({
-    from: './node_modules/leaflet/dist/images',
-    to: 'images/[path][name].[ext]',
-    })
-```
-### Into base.html.twig
-In your head section, add  
-```twig
- {{ encore_entry_link_tags('mapux') }}
-```
-In your footer section, just before </body>, add  
-```twig
-{{ encore_entry_script_tags('mapux') }}
+import '../vendor/frvaillant/mapux/Resources/assets/css/map.css'
+require ('../vendor/frvaillant/mapux/Resources/assets/js/map.js')
+require ('../node_modules/leaflet/dist/leaflet.css')
+
 ```
 
 ## Quick basic example
