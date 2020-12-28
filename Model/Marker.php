@@ -106,7 +106,7 @@ class Marker
      */
     public function getOptions(): string
     {
-        if ($this->options['icon']) {
+        if (isset($this->options['icon'])) {
             $this->options['icon'] = $this->options['icon']->render();
         }
         return json_encode($this->options);
