@@ -1,7 +1,7 @@
 # MapUx
 
 ## Description
-MapUx is an UX component for Symfony project. Il aims helping you to add maps in your project.  
+MapUx is an UX component for Symfony project. Its goal is to help you to add maps in your project.  
 It adds all what you need for maps, markers, popups ...  
 It uses Leaflet Library wich complete documentation can be found here :  
 https://leafletjs.com/reference-1.7.1.html 
@@ -17,7 +17,7 @@ Webpack Encore
 - `php bin/console mapux:install`
 
 ## Manual Installation
-If you don't want to run the mapux:install command provided by MapUx, you need to add a few lines inside your project :  
+If you don't want to run the mapux:install command provided by MapUx, you need to add a few things into your project :  
 
 - first run these two necessary commands :  
     - `composer require frvaillant/mapux dev-master`
@@ -38,7 +38,7 @@ cp - a node_modules/leaflet/dist/images public/bundle/mapux
 ```
 
 ## Quick basic example
-Controller side
+- Controller side
 ```php
 use MapUx\Builder\MapBuilder;
 use MapUx\Model\Marker;
@@ -60,7 +60,7 @@ return $this->render('home/index.html.twig', [
 ]);
 ```
 
-template side
+- template side
 ```twig
 {% extends 'base.html.twig' %}
 
@@ -71,10 +71,10 @@ template side
 {% endblock %}
 ```
 
-## Use
+## How to use ?
 
 ### In your controller
-#### Create a map
+#### Creating a map
 ```php
 use MapUx\Builder\MapBuilder;
 $mapBuilder = new MapBuilder();
@@ -112,6 +112,14 @@ $map->addMarker($marker);
 ```
 This will add a default marker on your map. 
 
+You can also add a complete set of markers :  
+```shell script
+$marker = new Marker(44.00, -0.57);
+$marker2 = new Marker(44.10, -0.57);
+$marker3 = new Marker(44.20, -0.57);
+$map->setMarkers([$marker, $marker1, $marker2]);
+```
+
 #### Icons
 If you want to personalize icons, you can create a picture for it and create a new Icon  
 ```php
@@ -129,27 +137,28 @@ $marker->setOptions([
     'icon' => $icon, 
 ]);
 ```
-You can also set size, shadow ... and all parameters for leaflet icon.  
+You can of course set size, shadow ... and all parameters for leaflet icon.  
 Doc : https://leafletjs.com/reference-1.7.1.html#icon  
 
 
 #### Popup
-You can also add a popup on your marker  
+You can add a popup on your marker  
 ```php
 use MapUx\Model\Popup;
-$popup = new Popup('All the html you want in your popup'); 
+$popup = new Popup('<p>All the html you want in your popup</p>'); 
 // Or you can do like this ://  
 $popup = new Popup();
-$popup->setContent('All the html you need in your popup');   
+$popup->setContent('<span>All the html you need in your popup</span>');   
 ```
 
 Options for Leaflet Popup are also available with  
-Doc : https://leafletjs.com/reference-1.7.1.html#popup  
 ```php
  $popup->setOptions([
     'minWidth' => 500
 ]);
 ```
+Doc : https://leafletjs.com/reference-1.7.1.html#popup  
+
 
 Then bind your popup to marker with   
 ```php
@@ -202,7 +211,7 @@ $marker->addEvent('dragend', $dragEndAction);
 $marker->addEvent('click', $clickAction);
 ```
 
-### In your twig template
+### Finally in your twig template
 
 ```twig
 {{ render_map('your-map-id', map) }}
@@ -215,3 +224,5 @@ You can add as much class as you need for your map by adding a classlist as last
 
 this will generate a map in a div with id="your-map-id".  
 MapUx comes with the minimum CSS to set min height (400px) and width (100%) for this div.
+
+**MapUx development is still in process. Use carefully and please contact me about each problem you encounter. Have fun**
