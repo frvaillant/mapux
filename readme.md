@@ -18,8 +18,8 @@ Webpack Encore
 
 ## Manual Installation
 If you don't want to run the mapux:install command provided by MapUx, you need to add a few lines inside your project :  
-### Into assets/app.js
-- add :  
+
+- add in your assets/app.js file:  
 ```javascript
 require ('../vendor/frvaillant/mapux/Resources/assets/js/map.js')
 ```
