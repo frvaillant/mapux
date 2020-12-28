@@ -14,8 +14,8 @@ export class MapBuilder {
         this.options = JSON.parse(container.dataset.options)
 
         this.defaultIcon = L.icon({
-            iconUrl: '/build/images/marker-icon.png',
-            shadowUrl: '/build/images/marker-shadow.png',
+            iconUrl: '/bundle/mapux/images/marker-icon.png',
+            shadowUrl: '/bundle/mapux/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
