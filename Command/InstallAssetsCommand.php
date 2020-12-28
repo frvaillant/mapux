@@ -29,7 +29,7 @@ class InstallAssetsCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
         $io->title('MAPUX INSTALLATION PROCESS');
-        $firstQuestion = new ChoiceQuestion('To install mapux automatically, be sure to have a webpack.config.js file at project root and a templates/base.html.twig. Continue ? ', [
+        $firstQuestion = new ChoiceQuestion('To install MapUx automatically, be sure to have a assets/app.js and having run "yarn install --force" or "npm install --force" before. Continue ? ', [
             'y', 'n'
         ]);
         $firstResponse = $helper->ask($input, $output, $firstQuestion);
