@@ -17,14 +17,18 @@ Webpack Encore
 - `php bin/console mapux:install`
 
 ## Manual Installation
-If you don't want to run the install command provided by MapUx, you need to add a few lines inside your project :  
+If you don't want to run the mapux:install command provided by MapUx, you need to add a few lines inside your project :  
 ### Into assets/app.js
-add :  
+- add :  
 ```javascript
-import '../vendor/frvaillant/mapux/Resources/assets/css/map.css'
 require ('../vendor/frvaillant/mapux/Resources/assets/js/map.js')
-require ('../node_modules/leaflet/dist/leaflet.css')
+```
 
+- Create a public/bundle/mapux directory
+
+- copy leaflet/dist/images to the directory created before :  
+```shell script
+cp - a node_modules/leaflet/dist/images public/bundle/mapux
 ```
 
 ## Quick basic example
