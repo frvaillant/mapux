@@ -47,6 +47,8 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 require (\'../node_modules/leaflet/dist/leaflet.css\')
 ';
             file_put_contents($appJsFile, $appJsFileContent);
+
+            shell_exec('cp node_modules/leaflet/dist/images public/bundle/mapux/images');
         }
 
         $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
