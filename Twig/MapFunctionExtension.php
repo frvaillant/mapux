@@ -20,10 +20,10 @@ class MapFunctionExtension extends AbstractExtension
         ];
     }
 
-    public function renderMap(string $mapId, Map $map): string
+    public function renderMap(string $mapId, Map $map, string $classList = ""): string
     {
         if ($map->isReady()) {
-            return '<div class="ux-map" id="' . $mapId . '" 
+            return '<div class="ux-map ' . $classList . '" id="' . $mapId . '" 
                         data-lat="' . $map->getCenterLatitude() . '" 
                         data-lon="' . $map->getCenterLongitude() . '"
                         data-options=\'' . $map->getOptions() . '\' 

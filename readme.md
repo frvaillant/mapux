@@ -201,6 +201,11 @@ $marker->addEvent('click', $clickAction);
 ```twig
 {{ render_map('your-map-id', map) }}
 ```
+By default the div is rendered with a class named "ux-map"
+You can add as much class as you need for your map by adding a classlist as last parameter :
+```twig
+{{ render_map('your-map-id', map, 'my-class-1 my-class-2') }}
+```
 
-this will generate a map in a div with id="your-map-id" and class="ux-map".  
-MapUx comes with the minimum CSS to set min height (150px) and width (100%) for this div.
+this will generate a map in a div with id="your-map-id".  
+MapUx comes with the minimum CSS to set min height (400px) and width (100%) for this div.
