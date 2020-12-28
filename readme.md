@@ -19,6 +19,12 @@ Webpack Encore
 ## Manual Installation
 If you don't want to run the mapux:install command provided by MapUx, you need to add a few lines inside your project :  
 
+- first run these two necessary commands :  
+    - `composer require frvaillant/mapux dev-master`
+    - `npm install --force` ou `yarn install --force`
+
+*********** Instructions below are done by `php bin/console mapux:install` command ***********  
+
 - add in your assets/app.js file:  
 ```javascript
 require ('../vendor/frvaillant/mapux/Resources/assets/js/map.js')
