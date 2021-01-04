@@ -184,6 +184,60 @@ Finally send your map in your twig render method
 You can add events on your map or markers.
 Each event must be set by its name and a javascript function as a string.
 
+MapUx gives your two ways to add events on your map or markers.
+
+#### Use MapuxEvents class
+If you ran `php bin/console mapux:install`, a MapuxEvents.js file has been added in your assets/js directory.  
+This class can help you to add more complex events.  
+**Do not change the constructor**  
+
+To add an event, add a method in this file. The below example shows you how to add a marker by clicking on the map.  
+```javascript
+export class MapuxEvents {
+    constructor(target, map, defaultIcon) {
+        this.target = target // Should be the map or a marker
+        this.map = map
+        this.defaultIcon = defaultIcon
+    }
+
+    addIcon(event, params) { 
+// the event variable embed the leaflet event you used
+// params are optionnal and will be defined in php as an array
+     const marker = L.marker([event.latlng.lat, event.latlng.lng], {
+                icon : this.defaultIcon // Do not forget this or define a method to set your icon
+            }).addTo(this.map)
+            marker.on('click', (e) => {
+                console.log(params['word'])
+            })
+    }
+}
+```
+
+In your controller :  
+```php
+$map->addEvent('click', 'addIcon', [
+    'word' => 'the word to show in alert window'
+]);
+```
+
+You can set multiple events using setEvents method :  
+```php
+$map->setEvents([
+            'eventName' => [ 
+                'methodName', 
+                [ 
+                    'param1' => 'param1Value',
+                    'param2' => 'param2Value' 
+                ] 
+            ],
+            'eventName2' => [ 
+                'methodName', 
+                null 
+            ]
+        ]);
+```
+
+#### Add javascript function as string
 ********************************************************************
 **Make sure to add " ; " at the end of each javascript instruction**   
 ********************************************************************
@@ -221,8 +275,8 @@ $marker->addEvent('click', $clickAction);
 and you can also add multiple events with :
 ```php
 $marker->setEvents([
-    'dragend' => $dragEndAction,
-    'click'   => $clickAction
+    'dragend' => [$dragEndAction, null],
+    'click'   => [$clickAction, null]
 ]);
 ```
 

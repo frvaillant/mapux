@@ -1,10 +1,13 @@
+require ('../../node_modules/leaflet/dist/leaflet')
+
 export class MapuxEvents {
-
-    constructor() {
-
+    constructor(target, map, defaultIcon) {
+        this.target = target // Should be the map or a marker
+        this.map = map
+        this.defaultIcon = defaultIcon
     }
 
-    static mapuxTest(event, params) {
+    test(event, params) {
         alert(params['word']);
     }
 }
