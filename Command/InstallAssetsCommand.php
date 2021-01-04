@@ -18,7 +18,8 @@ class InstallAssetsCommand extends Command
 
     const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
     const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
-    const ASSETS_JS_DIR        = __DIR__ . '/../../../../assets/js/';
+    const ASSETS_JS_DIR        = 'assets/js';
+    const RESOURCES_JS_DIR     = 'vendor/frvaillant/mapux/Resources/assets/js';
 
     protected static $defaultName = 'mapux:install';
 
@@ -65,7 +66,7 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
             shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
 
-            shell_exec('cp ../Resources/assets/js/MapuxEvents.js ' . self::ASSETS_JS_DIR . 'MapuxEvents.js');
+            shell_exec('cp ' . self::RESOURCES_JS_DIR. '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
 
             $io->success('MapuxEvents file copied in your project');
 
