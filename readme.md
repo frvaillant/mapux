@@ -182,7 +182,7 @@ Finally send your map in your twig render method
 
 ### Adding Events
 You can add events on your map or markers.
-Each event must be set by its name and a javascript function as a string.
+Each event must be set by its name, a javascript function and optionally some parameters.
 
 MapUx gives your two ways to add events on your map or markers.
 
