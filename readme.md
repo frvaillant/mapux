@@ -1,5 +1,5 @@
 # MapUx
-
+![logo](http://frvaillant.com/mapux/logo.svg)
 ## Description
 MapUx is an UX component for Symfony project. Its goal is to help you to add maps in your project directly from your controllers.  
 It adds all what you need for maps, markers, popups ...  
