@@ -10,12 +10,12 @@ class Marker
     /**
      * @var float
      */
-    private float $latitude;
+    private $latitude;
 
     /**
      * @var float
      */
-    private float $longitude;
+    private $longitude;
 
     /**
      * @var Icon
@@ -37,7 +37,7 @@ class Marker
      */
     private $events;
 
-    public function __construct($latitude, $longitude)
+    public function __construct(float $latitude, float $longitude)
     {
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
@@ -82,13 +82,13 @@ class Marker
     {
         if ($this->icon) {
             return json_encode([
-                'iconUrl' => $this->icon->getIconUrl(),
-                'shadowUrl' => $this->icon->getShadowUrl(),
-                'iconSize' => $this->icon->getIconSize(),
-                'iconAnchor' => $this->icon->getIconAnchor(),
-                'popupAnchor' => $this->icon->getPopupAnchor(),
+                'iconUrl'       => $this->icon->getIconUrl(),
+                'shadowUrl'     => $this->icon->getShadowUrl(),
+                'iconSize'      => $this->icon->getIconSize(),
+                'iconAnchor'    => $this->icon->getIconAnchor(),
+                'popupAnchor'   => $this->icon->getPopupAnchor(),
                 'tooltipAnchor' => $this->icon->getTooltipAnchor(),
-                'shadowSize' => $this->icon->getShadowSize()
+                'shadowSize'    => $this->icon->getShadowSize()
             ]);
         }
     }
@@ -136,9 +136,9 @@ class Marker
         return null;
     }
 
-    public function addEvent(string $eventName, $action)
+    public function addEvent(string $eventName, $action, $params = null)
     {
-        $this->events[$eventName] = $action;
+        $this->events[$eventName] = [$action, $params];
     }
 
     /**
@@ -148,10 +148,11 @@ class Marker
     {
         if ($this->events) {
             $events = [];
-            foreach ($this->events as $name => $action) {
+            foreach ($this->events as $name => [$action, $params]) {
                 $events[] = [
-                    'name' =>$name,
+                    'name'   => $name,
                     'action' => $action,
+                    'params' => $params ?? null,
                 ];
             }
             return json_encode($events);

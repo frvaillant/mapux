@@ -25,11 +25,11 @@ class MapFunctionExtension extends AbstractExtension
         if ($map->isReady()) {
             return '<div class="ux-map ' . $classList . '" id="' . $mapId . '" 
                         data-lat="' . $map->getCenterLatitude() . '" 
-                        data-lon="' . $map->getCenterLongitude() . '"
-                        data-options=\'' . $map->getOptions() . '\' 
-                        data-events=\'' . $map->getEvents() . '\'
+                        data-lon="' . $map->getCenterLongitude() . '"     
                         data-zoom="' . $map->getZoomLevel() . '"
                         data-background="' . $map->getLayers()[0]->getBackground() . '" 
+                        data-options=\'' . $map->getOptions() . '\' 
+                        data-events=\'' . $map->getEvents() . '\'
                         data-markers=\'' . $map->getMarkers() . '\'
                         >
                     </div>';

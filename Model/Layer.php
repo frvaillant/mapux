@@ -58,7 +58,4 @@ class Layer
     {
         $this->background = $background;
     }
-
-
-
 }

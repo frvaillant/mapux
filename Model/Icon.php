@@ -6,13 +6,13 @@ namespace MapUx\Model;
 
 class Icon
 {
-    private $iconUrl = '/build/images/marker-icon.png';
-    private $shadowUrl = '/build/images/marker-shadow.png';
-    private $iconSize = [25, 41];
-    private $iconAnchor = [12, 41];
-    private $popupAnchor = [1, -34];
+    private $iconUrl       = '/build/images/marker-icon.png';
+    private $shadowUrl     = '/build/images/marker-shadow.png';
+    private $iconSize      = [25, 41];
+    private $iconAnchor    = [12, 41];
+    private $popupAnchor   = [1, -34];
     private $tooltipAnchor = [16, -28];
-    private $shadowSize = [41, 41];
+    private $shadowSize    = [41, 41];
 
     public function __construct()
     {
@@ -21,13 +21,13 @@ class Icon
     public function render()
     {
         return json_encode([
-            'iconUrl' => $this->getIconUrl(),
-            'shadowUrl' => $this->getShadowUrl(),
-            'iconSize' => $this->getIconSize(),
-            'iconAnchor' => $this->getIconAnchor(),
-            'popupAnchor' => $this->getPopupAnchor(),
+            'iconUrl'       => $this->getIconUrl(),
+            'shadowUrl'     => $this->getShadowUrl(),
+            'iconSize'      => $this->getIconSize(),
+            'iconAnchor'    => $this->getIconAnchor(),
+            'popupAnchor'   => $this->getPopupAnchor(),
             'tooltipAnchor' => $this->getTooltipAnchor(),
-            'shadowSize' => $this->getShadowSize()
+            'shadowSize'    => $this->getShadowSize()
         ]);
     }
 

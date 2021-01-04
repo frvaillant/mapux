@@ -1,4 +1,5 @@
 require('leaflet/dist/leaflet')
+import { MapuxEvents } from "../../../../../../assets/js/MapuxEvents";
 
 export class MapBuilder {
 
@@ -26,6 +27,7 @@ export class MapBuilder {
     }
 
     createMap() {
+
         this.map = L.map(this.mapId, this.options).setView([this.centerLatitude, this.centerLongitude], this.zoomLevel)
         this.addLayer()
 
@@ -33,9 +35,20 @@ export class MapBuilder {
         if (this.mapEvents) {
             const events = JSON.parse(this.mapEvents)
             for (const key in events) {
+
                 this.map.on(events[key].name, (event) => {
                     const defaultIcon = this.defaultIcon
-                    eval(events[key].action)
+                    try {
+                        eval(events[key].action)
+                    } catch(error) {
+                        try {
+                            MapUxFunctions[events[key].action](event, events[key].params)
+                        } catch (e) {
+                            console.error('map event is not correctly defined' + ' : ' + e)
+                        }
+                    } finally {
+
+                    }
                 })
             }
         }
@@ -74,7 +87,7 @@ export class MapBuilder {
     addMarker(lat, lon, icon = null, options = null, popup = null, events = null) {
 
         options = (options && "null" !== options) ?  JSON.parse(options) : {}
-        console.log(options.icon)
+
         // SETTING ICON //////////////////////////////////////////
         if (!options.icon) {
             if (null === icon) {
@@ -105,7 +118,17 @@ export class MapBuilder {
         events = JSON.parse(events)
         for (const key in events) {
             marker.on(events[key].name, (event) => {
-                eval(events[key].action)
+                try {
+                    eval(events[key].action)
+                } catch(error) {
+                    try {
+                        MapUxFunctions[events[key].action](event, events[key].params)
+                    } catch (e) {
+                        console.error('marker event is not correctly defined' + ' : ' + e)
+                    }
+                } finally {
+
+                }
             })
         }
     }

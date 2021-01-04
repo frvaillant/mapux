@@ -1,19 +1,26 @@
 # MapUx
 
 ## Description
-MapUx is an UX component for Symfony project. Its goal is to help you to add maps in your project.  
+MapUx is an UX component for Symfony project. Its goal is to help you to add maps in your project directly from your controllers.  
 It adds all what you need for maps, markers, popups ...  
 It uses Leaflet Library wich complete documentation can be found here :  
 https://leafletjs.com/reference-1.7.1.html 
 
+> Please note that this version of mapUX is still in development.  
+> We are building this component with love and care but some errors can be found.
+> Tests are on the way and Some functions will soon be added (polygons for example)  
+> Please use github issues to report any problem encountered.  
+> Have fun.
+
 ## Requirements
-PHP >7.2  
-Symfony project >4.4  
-Webpack Encore  
+> PHP >7.2  
+> Symfony project >4.4  
+> composer  
+> Webpack Encore  
 
 ## Install MapUx
 - `composer require frvaillant/mapux dev-master`
-- `npm install --force` ou `yarn install --force`
+- `npm install --force` or `yarn install --force`
 - `php bin/console mapux:install`
 
 ## Manual Installation
@@ -115,8 +122,8 @@ This will add a default marker on your map.
 You can also add a complete set of markers :  
 ```shell script
 $marker = new Marker(44.00, -0.57);
-$marker2 = new Marker(44.10, -0.57);
-$marker3 = new Marker(44.20, -0.57);
+$marker2 = new Marker(44.10, -0.58);
+$marker3 = new Marker(44.20, -0.59);
 $map->setMarkers([$marker, $marker1, $marker2]);
 ```
 
@@ -175,7 +182,7 @@ Finally send your map in your twig render method
 
 ### Adding Events
 You can add events on your map or markers.
-Each event must be setted by its name and a javascript function as a string.
+Each event must be set by its name and a javascript function as a string.
 
 ********************************************************************
 **Make sure to add " ; " at the end of each javascript instruction**   
@@ -192,7 +199,7 @@ $map->addEvent('click', $clickMapAction);
 
 You can add as much as events you need according to leaflet events
 
-To add an event on a marker, use the same method as above.  
+Add an event on a marker with the same method as above.  
  For example :
 ```php
 $dragEndAction = '
@@ -209,6 +216,14 @@ $clickAction = 'console.log(event); alert("clicked")';
 
 $marker->addEvent('dragend', $dragEndAction);
 $marker->addEvent('click', $clickAction);
+```
+
+and you can also add multiple events with :
+```php
+$marker->setEvents([
+    'dragend' => $dragEndAction,
+    'click'   => $clickAction
+]);
 ```
 
 ### Finally in your twig template

@@ -6,8 +6,8 @@ namespace MapUx\Model;
 
 class Map
 {
-    const DEFAULT_LAT = 44;
-    const DEFAULT_LON = 0;
+    const DEFAULT_LAT  = 44;
+    const DEFAULT_LON  = 0;
     const DEFAULT_ZOOM = 10;
     /**
      * @var float
@@ -38,16 +38,16 @@ class Map
     private $options = [];
 
     /**
-     * @var array 
+     * @var array
      */
     private $events;
 
 
     public function __construct(
-        float $centerLatitude = self::DEFAULT_LAT,
+        float $centerLatitude  = self::DEFAULT_LAT,
         float $centerLongitude = self::DEFAULT_LON,
-        int $zoomLevel = self::DEFAULT_ZOOM,
-        string $background = null
+        int $zoomLevel         = self::DEFAULT_ZOOM,
+        string $background     = null
     )
     {
         $this->setCenterLatitude($centerLatitude);
@@ -151,12 +151,12 @@ class Map
         if ($this->markers) {
             foreach ($this->markers as $marker) {
                 $markers[] = [
-                    'lat' => $marker->getLatitude(),
-                    'lon' => $marker->getLongitude(),
-                    'icon' => $marker->getIcon(),
+                    'lat'     => $marker->getLatitude(),
+                    'lon'     => $marker->getLongitude(),
+                    'icon'    => $marker->getIcon(),
                     'options' => $marker->getOptions(),
-                    'popup' => $marker->getPopup(),
-                    'events' => $marker->getEvents()
+                    'popup'   => $marker->getPopup(),
+                    'events'  => $marker->getEvents()
                 ];
             }
         }
@@ -173,9 +173,9 @@ class Map
         return json_encode($this->options);
     }
 
-    public function addEvent(string $eventName, $action)
+    public function addEvent(string $eventName, $action, $params = null)
     {
-        $this->events[$eventName] = $action;
+        $this->events[$eventName] = [$action, $params];
     }
 
     /**
@@ -185,10 +185,11 @@ class Map
     {
         if ($this->events) {
             $events = [];
-            foreach ($this->events as $name => $action) {
+            foreach ($this->events as $name => [$action, $params]) {
                 $events[] = [
-                    'name' =>$name,
+                    'name'   => $name,
                     'action' => $action,
+                    'params' => $params ?? null,
                 ];
             }
             return json_encode($events);

@@ -18,6 +18,7 @@ class InstallAssetsCommand extends Command
 
     const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
     const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
+    const ASSETS_JS_DIR        = __DIR__ . '/../../../../assets/js/';
 
     protected static $defaultName = 'mapux:install';
 
@@ -61,7 +62,16 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
             shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             $io->success('leaflet pictures added to your project');
+
+            shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
+
+            shell_exec('cp ../Resources/assets/js/MapuxEvents.js ' . self::ASSETS_JS_DIR . 'MapuxEvents.js');
+
+            $io->success('MapuxEvents file copied in your project');
+
+
         }
+
 
         $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
             'y', 'n'
