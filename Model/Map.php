@@ -82,9 +82,25 @@ class Map
     /**
      * @return mixed
      */
-    public function getLayers()
+    public function getLayers(): array
     {
         return $this->layers;
+    }
+
+    public function getLayersInfos(): string
+    {
+        $layers = [];
+        $n=0;
+        foreach ($this->layers as $layer) {
+            if($n>0) {
+                $layers[] = [
+                    'background' => $layer->getBackground(),
+                    'options' => $layer->getOptions()
+                ];
+            }
+            $n++;
+        }
+        return json_encode($layers);
     }
 
     /**
@@ -204,6 +220,4 @@ class Map
     {
         $this->events = $events;
     }
-
-
 }

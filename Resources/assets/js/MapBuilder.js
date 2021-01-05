@@ -13,6 +13,7 @@ export class MapBuilder {
         this.background = container.dataset.background
         this.markers = JSON.parse(container.dataset.markers)
         this.options = JSON.parse(container.dataset.options)
+        this.layers  = JSON.parse(container.dataset.layers)
 
         this.defaultIcon = L.icon({
             iconUrl: '/bundle/mapux/images/marker-icon.png',
@@ -30,7 +31,7 @@ export class MapBuilder {
 
         this.map = L.map(this.mapId, this.options).setView([this.centerLatitude, this.centerLongitude], this.zoomLevel)
         this.addLayer()
-
+        this.addOptionnalLayers()
         // ADDING MAP EVENTS ///////////////////////////////////////
         if (this.mapEvents) {
             const events = JSON.parse(this.mapEvents)
@@ -69,6 +70,14 @@ export class MapBuilder {
 
     addLayer() {
         L.tileLayer(this.background, {}).addTo(this.map);
+    }
+
+    addOptionnalLayers() {
+        if(this.layers) {
+            for (const key in this.layers) {
+                L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map);
+            }
+        }
     }
 
     makeIcon(iconData) {

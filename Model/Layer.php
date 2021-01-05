@@ -30,7 +30,7 @@ class Layer
     /**
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(): ?array
     {
         return $this->options;
     }

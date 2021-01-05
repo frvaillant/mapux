@@ -31,6 +31,7 @@ class MapFunctionExtension extends AbstractExtension
                         data-options=\'' . $map->getOptions() . '\' 
                         data-events=\'' . $map->getEvents() . '\'
                         data-markers=\'' . $map->getMarkers() . '\'
+                        data-layers=\'' . $map->getLayersInfos() . '\' 
                         >
                     </div>';
         }
