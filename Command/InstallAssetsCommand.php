@@ -20,6 +20,7 @@ class InstallAssetsCommand extends Command
     const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
     const ASSETS_JS_DIR        = 'assets/js/mapux';
     const RESOURCES_JS_DIR     = 'vendor/frvaillant/mapux/Resources/assets/js';
+    const RESOURCES_IMAGES_DIR = 'vendor/frvaillant/mapux/Resources/assets/images';
 
     protected static $defaultName = 'mapux:install';
 
@@ -62,7 +63,7 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
             shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
-            //TODO Copy images de mapux à public bundle
+            shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             $io->success('leaflet pictures added to your project');
 

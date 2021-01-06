@@ -1,4 +1,4 @@
-require ('../../node_modules/leaflet/dist/leaflet')
+require ('../../../node_modules/leaflet/dist/leaflet')
 
 export class MapuxEvents {
     constructor(target, map, icons) {
