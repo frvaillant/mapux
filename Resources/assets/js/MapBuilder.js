@@ -171,7 +171,7 @@ export class MapBuilder {
 
     getIcons() {
         return {
-            "blue": this.defaultIcon,
+            "default": this.defaultIcon,
             "red": this.createIcon('red'),
             "green": this.createIcon('green'),
             "orange": this.createIcon('orange'),
