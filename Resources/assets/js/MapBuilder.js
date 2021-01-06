@@ -30,8 +30,9 @@ export class MapBuilder {
     createMap() {
 
         this.map = L.map(this.mapId, this.options).setView([this.centerLatitude, this.centerLongitude], this.zoomLevel)
-        this.addLayer()
+        this.addBasemapLayer()
         this.addOptionnalLayers()
+
         // ADDING MAP EVENTS ///////////////////////////////////////
         if (this.mapEvents) {
             const events = JSON.parse(this.mapEvents)
@@ -54,6 +55,8 @@ export class MapBuilder {
                 })
             }
         }
+
+        // ADDING MARKERS
         if (this.markers) {
             for (const key in this.markers) {
                 this.addMarker(
@@ -68,7 +71,7 @@ export class MapBuilder {
         }
     }
 
-    addLayer() {
+    addBasemapLayer() {
         L.tileLayer(this.background, {}).addTo(this.map)
     }
 
@@ -143,8 +146,6 @@ export class MapBuilder {
                     } catch (e) {
                         console.error('marker event is not correctly defined' + ' : ' + e)
                     }
-                } finally {
-
                 }
             })
         }
