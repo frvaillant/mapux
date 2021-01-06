@@ -82,8 +82,8 @@ class Marker
     {
         if ($this->icon) {
             return json_encode([
-                'iconUrl'       => $this->icon->getIconUrl(),
-                'shadowUrl'     => $this->icon->getShadowUrl(),
+                'iconUrl'       => $this->icon->getIconPicture(),
+                'shadowUrl'     => $this->icon->getShadowPicture(),
                 'iconSize'      => $this->icon->getIconSize(),
                 'iconAnchor'    => $this->icon->getIconAnchor(),
                 'popupAnchor'   => $this->icon->getPopupAnchor(),
