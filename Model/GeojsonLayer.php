@@ -3,6 +3,7 @@
 
 namespace MapUx\Model;
 
+use \Exception;
 
 class GeojsonLayer extends Layer
 {
@@ -13,7 +14,11 @@ class GeojsonLayer extends Layer
 
     public function __construct(string $json, string $background = '')
     {
-        $this->json = json_decode($json, true);
+        try {
+            $this->json = json_decode($json, true);
+        } catch(Exception $e) {
+            $e->getMessage();
+        }
         parent::__construct($background);
     }
 

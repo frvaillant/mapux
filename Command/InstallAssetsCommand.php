@@ -18,7 +18,7 @@ class InstallAssetsCommand extends Command
 
     const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
     const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
-    const ASSETS_JS_DIR        = 'assets/js';
+    const ASSETS_JS_DIR        = 'assets/js/mapux';
     const RESOURCES_JS_DIR     = 'vendor/frvaillant/mapux/Resources/assets/js';
 
     protected static $defaultName = 'mapux:install';

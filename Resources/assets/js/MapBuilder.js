@@ -1,5 +1,5 @@
 require('leaflet/dist/leaflet')
-import { MapuxEvents } from "../../../../../../assets/js/MapuxEvents";
+import { MapuxEvents } from "../../../../../../assets/js/mapux/MapuxEvents";
 
 export class MapBuilder {
 
