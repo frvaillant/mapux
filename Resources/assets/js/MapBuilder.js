@@ -24,7 +24,6 @@ export class MapBuilder {
             tooltipAnchor: [16, -28],
             shadowSize: [41, 41]
         });
-
     }
 
     createMap() {
@@ -141,7 +140,7 @@ export class MapBuilder {
                     eval(events[key].action)
                 } catch(error) {
                     try {
-                        const UxEvent = new MapuxEvents(this.map, this.map, this.defaultIcon)
+                        const UxEvent = new MapuxEvents(this.map, this.map, this.getIcons())
                         UxEvent[events[key].action](event, events[key].params)
                     } catch (e) {
                         console.error('marker event is not correctly defined' + ' : ' + e)
@@ -156,5 +155,31 @@ export class MapBuilder {
         let myPopup = L.popup(popupData.options)
         myPopup.setContent(popupData.content)
         return myPopup
+    }
+
+    createIcon(color) {
+        return L.icon({
+            iconUrl: '/bundle/mapux/images/' + color + '-icon.png',
+            shadowUrl: '/bundle/mapux/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41]
+        })
+    }
+
+    getIcons() {
+        return {
+            "blue": this.defaultIcon,
+            "red": this.createIcon('red'),
+            "green": this.createIcon('green'),
+            "orange": this.createIcon('orange'),
+            "yellow": this.createIcon('yellow'),
+            "pink": this.createIcon('pink'),
+            "purple": this.createIcon('purple'),
+            "brown": this.createIcon('brown'),
+            "black": this.createIcon('black'),
+        }
     }
 }

@@ -62,6 +62,8 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
             shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
+            //TODO Copy images de mapux à public bundle
+
             $io->success('leaflet pictures added to your project');
 
             shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
