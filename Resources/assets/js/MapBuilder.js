@@ -79,8 +79,11 @@ export class MapBuilder {
 
             for (const key in this.layers) {
 
-                if (this.layers[key].isGeoJson) {
-                    L.geoJSON(JSON.parse(this.layers[key].json)).addTo(this.map)
+                if (this.layers[key].isCircle) {
+                    L.circle(this.layers[key].center, this.layers[key].options).addTo(this.map);
+
+                } else if (this.layers[key].isGeoJson) {
+                    L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].style).addTo(this.map)
                 } else {
                     L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map)
                 }

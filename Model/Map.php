@@ -100,12 +100,34 @@ class Map
             if($n>0) {
                 $layers[$n] = [
                     'background' => $layer->getBackground(),
-                    'options' => $layer->getOptions(),
-                    'isGeoJson' => false,
+                    'options'    => $layer->getOptions(),
+                    'isGeoJson'  => false,
                 ];
+
                 if($layer instanceof GeojsonLayer) {
                     $layers[$n]['isGeoJson'] = true;
                     $layers[$n]['json'] = $layer->getJson();
+                    $layers[$n]['style'] = [
+                        "fillColor" => $layer->getFillColor(),
+                        "color"     => $layer->getColor(),
+                        "weight"    => $layer->getWeight(),
+                        "opacity"   => $layer->getOpacity(),
+                        "fillOpacity" => $layer->getFillOpacity()
+                    ];
+                }
+
+
+                if($layer instanceof Circle) {
+                    $layers[$n]['isCircle'] = true;
+                    $layers[$n]['center']   = $layer->getCenter();
+                    $layers[$n]['options']    = [
+                        "radius"      => $layer->getRadius(),
+                        "color"       => $layer->getColor(),
+                        "weight"      => $layer->getWeight(),
+                        "opacity"     => $layer->getOpacity(),
+                        "fillColor"   => $layer->getFillColor(),
+                        "fillOpacity" => $layer->getFillOpacity()
+                    ];
                 }
             }
             $n++;
