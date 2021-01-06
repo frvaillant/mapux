@@ -253,5 +253,14 @@ class Map
         $this->events = $events;
     }
 
+    public function getPointsFromMarkers(): array
+    {
+        $points = [];
+        foreach ($this->markers as $marker) {
+            $points[] = [$marker->getLongitude(), $marker->getLatitude()];
+        }
+        return $points;
+    }
+
 
 }
