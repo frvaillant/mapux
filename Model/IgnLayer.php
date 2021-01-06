@@ -42,13 +42,17 @@ class IgnLayer extends Layer
      */
     private $key = null;
 
-    public function __construct(string $key, string $background = parent::DEFAULT_BACKGROUND)
+    public function __construct(string $key, string $ressource, string $background = parent::DEFAULT_BACKGROUND)
     {
-        $this->key = $key;
         parent::__construct($background);
+
+        $this->key = $key;
+        if(null !== $ressource) {
+            $this->setResource($ressource);
+        }
     }
 
-    public function setGeoserviceLayerType(string $layerType)
+    private function setResource(string $layerType)
     {
         if (!$this->key) {
             throw new \Exception('You need a Geoservice Api Key to use IgnLayer. Get your key at : https://www.sphinxonline.com/SurveyServer/s/etudesmk/Geoservices/questionnaire.htm');

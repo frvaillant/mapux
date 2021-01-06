@@ -61,6 +61,10 @@ class Map
         $this->layers[0] = new Layer($background);
     }
 
+    public function removeBackground()
+    {
+        $this->setBackground('');
+    }
 
     public function isReady()
     {

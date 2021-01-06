@@ -132,14 +132,14 @@ If you want to personalize icons, you can create a picture for it and create a n
 ```php
 use MapUx\Model\Icon;
 $icon = new Icon();
-$icon->setIconUrl('url-to-your-picture');
+$icon->setIconPicture('url-to-your-picture');
 $marker->setIcon($icon);
 ```
 
 You can also set the icon by setting it in marker options :  
 ```php
 $icon = new Icon();
-$icon->setIconUrl('url-to-your-picture');
+$icon->setIconPicture('url-to-your-picture');
 $marker->setOptions([
     'icon' => $icon, 
 ]);

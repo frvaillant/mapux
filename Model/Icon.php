@@ -21,8 +21,8 @@ class Icon
     public function render()
     {
         return json_encode([
-            'iconUrl'       => $this->getIconUrl(),
-            'shadowUrl'     => $this->getShadowUrl(),
+            'iconUrl'       => $this->getIconPicture(),
+            'shadowUrl'     => $this->getShadowPicture(),
             'iconSize'      => $this->getIconSize(),
             'iconAnchor'    => $this->getIconAnchor(),
             'popupAnchor'   => $this->getPopupAnchor(),
@@ -34,7 +34,7 @@ class Icon
     /**
      * @return string
      */
-    public function getIconUrl(): string
+    public function getIconPicture(): string
     {
         return $this->iconUrl;
     }
@@ -42,7 +42,7 @@ class Icon
     /**
      * @param string $iconUrl
      */
-    public function setIconUrl(string $iconUrl): void
+    public function setIconPicture(string $iconUrl): void
     {
         $this->iconUrl = $iconUrl;
     }
@@ -50,7 +50,7 @@ class Icon
     /**
      * @return string
      */
-    public function getShadowUrl(): string
+    public function getShadowPicture(): string
     {
         return $this->shadowUrl;
     }
@@ -58,7 +58,7 @@ class Icon
     /**
      * @param string $shadowUrl
      */
-    public function setShadowUrl(string $shadowUrl): void
+    public function setShadowPicture(string $shadowUrl): void
     {
         $this->shadowUrl = $shadowUrl;
     }
