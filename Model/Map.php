@@ -66,6 +66,7 @@ class Map
         $this->setBackground('');
     }
 
+
     public function isReady()
     {
         return (
@@ -97,10 +98,15 @@ class Map
         $n=0;
         foreach ($this->layers as $layer) {
             if($n>0) {
-                $layers[] = [
+                $layers[$n] = [
                     'background' => $layer->getBackground(),
-                    'options' => $layer->getOptions()
+                    'options' => $layer->getOptions(),
+                    'isGeoJson' => false,
                 ];
+                if($layer instanceof GeojsonLayer) {
+                    $layers[$n]['isGeoJson'] = true;
+                    $layers[$n]['json'] = $layer->getJson();
+                }
             }
             $n++;
         }
@@ -224,4 +230,6 @@ class Map
     {
         $this->events = $events;
     }
+
+
 }

@@ -4,13 +4,13 @@
 namespace MapUx\Builder;
 
 
-use MapUx\Model\Map;
 use MapUx\Builder\MapBuilderInterface;
+use MapUx\Model\Map;
 
 
 class MapBuilder implements MapBuilderInterface
 {
-    public function createMap(float $latitude, float $longitude, int $zoomLevel, string $background = null): Map
+    public function createMap(float $latitude = Map::DEFAULT_LAT, float $longitude = Map::DEFAULT_LON, int $zoomLevel = Map::DEFAULT_ZOOM, string $background = null): Map
     {
         return new Map($latitude, $longitude, $zoomLevel, $background);
     }

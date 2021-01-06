@@ -6,8 +6,8 @@ namespace MapUx\Model;
 
 class Icon
 {
-    private $iconUrl       = '/build/images/marker-icon.png';
-    private $shadowUrl     = '/build/images/marker-shadow.png';
+    private $iconUrl       = '/bundle/mapux/images/marker-icon.png';
+    private $shadowUrl     = '/bundle/mapux/images/marker-shadow.png';
     private $iconSize      = [25, 41];
     private $iconAnchor    = [12, 41];
     private $popupAnchor   = [1, -34];

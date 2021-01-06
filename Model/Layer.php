@@ -58,4 +58,9 @@ class Layer
     {
         $this->background = $background;
     }
+
+    public function removeBackground()
+    {
+        $this->setBackground('');
+    }
 }

@@ -69,13 +69,19 @@ export class MapBuilder {
     }
 
     addLayer() {
-        L.tileLayer(this.background, {}).addTo(this.map);
+        L.tileLayer(this.background, {}).addTo(this.map)
     }
 
     addOptionnalLayers() {
         if(this.layers) {
+
             for (const key in this.layers) {
-                L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map);
+
+                if (this.layers[key].isGeoJson) {
+                    L.geoJSON(JSON.parse(this.layers[key].json)).addTo(this.map)
+                } else {
+                    L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map)
+                }
             }
         }
     }
