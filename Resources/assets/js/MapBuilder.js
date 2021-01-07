@@ -1,5 +1,6 @@
 require('leaflet/dist/leaflet')
-import { MapuxEvents } from "../../../../../../assets/js/mapux/MapuxEvents";
+import { MapuxEvents } from "../../../../../../assets/js/mapux/MapuxEvents"
+import { GridGenerator } from "./GridGenerator"
 
 export class MapBuilder {
 
@@ -88,6 +89,11 @@ export class MapBuilder {
 
                 } else if (this.layers[key].isRectangle) {
                     obj = L.rectangle(this.layers[key].points, this.layers[key].options)
+
+                } else if (this.layers[key].isGrid) {
+                    const Grid = new GridGenerator(this.layers[key].options)
+                    Grid.createGrid()
+                    obj = L.layerGroup(Grid.getRectangles())
 
                 } else {
                     obj = L.tileLayer(this.layers[key].background, this.layers[key].options)

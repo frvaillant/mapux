@@ -154,6 +154,11 @@ class Map
                         $layers[$n]['options'][$key] = $value;
                     }
                 }
+
+                if($layer instanceof Grid) {
+                    $layers[$n]['isGrid']  = true;
+                    $layers[$n]['options'] =  $layer->getParameters();
+                }
             }
             $n++;
         }
