@@ -19,6 +19,10 @@ class Layer
      */
     private $options;
 
+    /**
+     * @var array
+     */
+    private $events;
 
 
     public function __construct(string $background = self::DEFAULT_BACKGROUND)
@@ -63,4 +67,38 @@ class Layer
     {
         $this->setBackground('');
     }
+
+    public function addEvent(string $eventName, $action, $params = null)
+    {
+        $this->events[$eventName] = [$action, $params];
+    }
+
+    /**
+     * @return array
+     */
+    public function getEvents(): ?string
+    {
+        if ($this->events) {
+            $events = [];
+            foreach ($this->events as $name => [$action, $params]) {
+                $events[] = [
+                    'name'   => $name,
+                    'action' => $action,
+                    'params' => $params ?? null,
+                ];
+            }
+            return json_encode($events);
+        }
+        return null;
+    }
+
+    /**
+     * @param array $events
+     */
+    public function setEvents(array $events): void
+    {
+        $this->events = $events;
+    }
+
+
 }

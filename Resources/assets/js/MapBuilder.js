@@ -32,6 +32,7 @@ export class MapBuilder {
         this.addBasemapLayer()
         this.addOptionnalLayers()
 
+
         // ADDING MAP EVENTS ///////////////////////////////////////
         if (this.mapEvents) {
             const events = JSON.parse(this.mapEvents)
@@ -77,14 +78,23 @@ export class MapBuilder {
     addOptionnalLayers() {
         if(this.layers) {
             for (const key in this.layers) {
+                let obj = {}
                 if (this.layers[key].isCircle) {
-                    L.circle(this.layers[key].center, this.layers[key].options).addTo(this.map);
+                    obj = L.circle(this.layers[key].center, this.layers[key].options)
+                    obj.addTo(this.map);
                 } else if (this.layers[key].isGeoJson) {
-                    L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].style).addTo(this.map)
+                    obj = L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].options)
+                    obj.addTo(this.map)
                 } else if (this.layers[key].isRectangle) {
-                    L.rectangle(this.layers[key].points, this.layers[key].options).addTo(this.map);
+                    console.log(this.layers[key].options)
+                    obj = L.rectangle(this.layers[key].points, this.layers[key].options)
+                    obj.addTo(this.map);
                 } else {
-                    L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map)
+                    obj = L.tileLayer(this.layers[key].background, this.layers[key].options)
+                    obj.addTo(this.map)
+                }
+                if (this.layers[key].events) {
+                    this.addEvents(this.layers[key].events, obj)
                 }
             }
         }
@@ -134,10 +144,10 @@ export class MapBuilder {
         }
     }
 
-    addEvents(events, marker) {
+    addEvents(events, target) {
         events = JSON.parse(events)
         for (const key in events) {
-            marker.on(events[key].name, (event) => {
+            target.on(events[key].name, (event) => {
                 try {
                     eval(events[key].action)
                 } catch(error) {

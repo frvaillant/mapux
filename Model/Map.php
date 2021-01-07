@@ -102,18 +102,23 @@ class Map
                     'background' => $layer->getBackground(),
                     'options'    => $layer->getOptions(),
                     'isGeoJson'  => false,
+                    'events'     => $layer->getEvents() ?? null
                 ];
 
                 if($layer instanceof GeojsonLayer) {
                     $layers[$n]['isGeoJson'] = true;
                     $layers[$n]['json'] = $layer->getJson();
-                    $layers[$n]['style'] = [
-                        "fillColor" => $layer->getFillColor(),
-                        "color"     => $layer->getColor(),
-                        "weight"    => $layer->getWeight(),
-                        "opacity"   => $layer->getOpacity(),
-                        "fillOpacity" => $layer->getFillOpacity()
+                    $layers[$n]['options'] = [
+                        'fillColor' => $layer->getFillColor(),
+                        'color'     => $layer->getColor(),
+                        'weight'    => $layer->getWeight(),
+                        'opacity'   => $layer->getOpacity(),
+                        'fillOpacity' => $layer->getFillOpacity(),
                     ];
+                    $layers[$n]['events'] = $layer->getEvents() ?? null;
+                    foreach ($layer->getOptions() as $key => $value) {
+                        $layers[$n]['options'][$key] = $value;
+                    }
                 }
 
 
@@ -121,25 +126,33 @@ class Map
                     $layers[$n]['isCircle'] = true;
                     $layers[$n]['center']   = $layer->getCenter();
                     $layers[$n]['options']    = [
-                        "radius"      => $layer->getRadius(),
-                        "color"       => $layer->getColor(),
-                        "weight"      => $layer->getWeight(),
-                        "opacity"     => $layer->getOpacity(),
-                        "fillColor"   => $layer->getFillColor(),
-                        "fillOpacity" => $layer->getFillOpacity()
+                        'radius'      => $layer->getRadius(),
+                        'color'       => $layer->getColor(),
+                        'weight'      => $layer->getWeight(),
+                        'opacity'     => $layer->getOpacity(),
+                        'fillColor'   => $layer->getFillColor(),
+                        'fillOpacity' => $layer->getFillOpacity(),
                     ];
+                    $layers[$n]['events'] = $layer->getEvents() ?? null;
+                    foreach ($layer->getOptions() as $key => $value) {
+                        $layers[$n]['options'][$key] = $value;
+                    }
                 }
 
                 if($layer instanceof Rectangle) {
                     $layers[$n]['isRectangle'] = true;
                     $layers[$n]['points']   = [$layer->getFirstPoint(), $layer->getSecondPoint()];
                     $layers[$n]['options']    = [
-                        "color"       => $layer->getColor(),
-                        "weight"      => $layer->getWeight(),
-                        "opacity"     => $layer->getOpacity(),
-                        "fillColor"   => $layer->getFillColor(),
-                        "fillOpacity" => $layer->getFillOpacity()
+                        'color'       => $layer->getColor(),
+                        'weight'      => $layer->getWeight(),
+                        'opacity'     => $layer->getOpacity(),
+                        'fillColor'   => $layer->getFillColor(),
+                        'fillOpacity' => $layer->getFillOpacity(),
                     ];
+                    $layers[$n]['events'] = $layer->getEvents() ?? null;
+                    foreach ($layer->getOptions() as $key => $value) {
+                        $layers[$n]['options'][$key] = $value;
+                    }
                 }
             }
             $n++;
