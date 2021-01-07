@@ -76,14 +76,13 @@ export class MapBuilder {
 
     addOptionnalLayers() {
         if(this.layers) {
-
             for (const key in this.layers) {
-
                 if (this.layers[key].isCircle) {
                     L.circle(this.layers[key].center, this.layers[key].options).addTo(this.map);
-
                 } else if (this.layers[key].isGeoJson) {
                     L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].style).addTo(this.map)
+                } else if (this.layers[key].isRectangle) {
+                    L.rectangle(this.layers[key].points, this.layers[key].options).addTo(this.map);
                 } else {
                     L.tileLayer(this.layers[key].background, this.layers[key].options).addTo(this.map)
                 }
@@ -143,7 +142,7 @@ export class MapBuilder {
                     eval(events[key].action)
                 } catch(error) {
                     try {
-                        const UxEvent = new MapuxEvents(marker, this.map, this.getIcons())
+                        const UxEvent = new MapuxEvents(this.map, this.map, this.getIcons())
                         UxEvent[events[key].action](event, events[key].params)
                     } catch (e) {
                         console.error('marker event is not correctly defined' + ' : ' + e)
@@ -160,7 +159,7 @@ export class MapBuilder {
         return myPopup
     }
 
-    createMapuxIcon(color) {
+    createIcon(color) {
         return L.icon({
             iconUrl: '/bundle/mapux/images/' + color + '-icon.png',
             shadowUrl: '/bundle/mapux/images/marker-shadow.png',
@@ -175,14 +174,14 @@ export class MapBuilder {
     getIcons() {
         return {
             "default": this.defaultIcon,
-            "red": this.createMapuxIcon('red'),
-            "green": this.createMapuxIcon('green'),
-            "orange": this.createMapuxIcon('orange'),
-            "yellow": this.createMapuxIcon('yellow'),
-            "pink": this.createMapuxIcon('pink'),
-            "purple": this.createMapuxIcon('purple'),
-            "brown": this.createMapuxIcon('brown'),
-            "black": this.createMapuxIcon('black'),
+            "red": this.createIcon('red'),
+            "green": this.createIcon('green'),
+            "orange": this.createIcon('orange'),
+            "yellow": this.createIcon('yellow'),
+            "pink": this.createIcon('pink'),
+            "purple": this.createIcon('purple'),
+            "brown": this.createIcon('brown'),
+            "black": this.createIcon('black'),
         }
     }
 }

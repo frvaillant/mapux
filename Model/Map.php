@@ -129,6 +129,18 @@ class Map
                         "fillOpacity" => $layer->getFillOpacity()
                     ];
                 }
+
+                if($layer instanceof Rectangle) {
+                    $layers[$n]['isRectangle'] = true;
+                    $layers[$n]['points']   = [$layer->getFirstPoint(), $layer->getSecondPoint()];
+                    $layers[$n]['options']    = [
+                        "color"       => $layer->getColor(),
+                        "weight"      => $layer->getWeight(),
+                        "opacity"     => $layer->getOpacity(),
+                        "fillColor"   => $layer->getFillColor(),
+                        "fillOpacity" => $layer->getFillOpacity()
+                    ];
+                }
             }
             $n++;
         }
