@@ -81,21 +81,18 @@ export class MapBuilder {
                 let obj = {}
                 if (this.layers[key].isCircle) {
                     obj = L.circle(this.layers[key].center, this.layers[key].options)
-                    obj.addTo(this.map);
                 } else if (this.layers[key].isGeoJson) {
                     obj = L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].options)
-                    obj.addTo(this.map)
                 } else if (this.layers[key].isRectangle) {
                     console.log(this.layers[key].options)
                     obj = L.rectangle(this.layers[key].points, this.layers[key].options)
-                    obj.addTo(this.map);
                 } else {
                     obj = L.tileLayer(this.layers[key].background, this.layers[key].options)
-                    obj.addTo(this.map)
                 }
                 if (this.layers[key].events) {
                     this.addEvents(this.layers[key].events, obj)
                 }
+                obj.addTo(this.map)
             }
         }
     }
