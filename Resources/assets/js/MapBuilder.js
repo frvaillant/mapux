@@ -79,15 +79,19 @@ export class MapBuilder {
         if(this.layers) {
             for (const key in this.layers) {
                 let obj = {}
+
                 if (this.layers[key].isCircle) {
                     obj = L.circle(this.layers[key].center, this.layers[key].options)
+
                 } else if (this.layers[key].isGeoJson) {
                     obj = L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].options)
+
                 } else if (this.layers[key].isRectangle) {
-                    console.log(this.layers[key].options)
                     obj = L.rectangle(this.layers[key].points, this.layers[key].options)
+
                 } else {
                     obj = L.tileLayer(this.layers[key].background, this.layers[key].options)
+
                 }
                 if (this.layers[key].events) {
                     this.addEvents(this.layers[key].events, obj)
