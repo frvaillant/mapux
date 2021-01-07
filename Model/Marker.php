@@ -6,6 +6,8 @@ namespace MapUx\Model;
 
 class Marker
 {
+    const DEFAULT_LAT  = 44.8383293;
+    const DEFAULT_LON  = -0.5629559;
 
     /**
      * @var float
@@ -37,7 +39,7 @@ class Marker
      */
     private $events;
 
-    public function __construct(float $latitude, float $longitude)
+    public function __construct(float $latitude = self::DEFAULT_LAT, float $longitude = self::DEFAULT_LON)
     {
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
