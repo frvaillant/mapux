@@ -6,8 +6,8 @@ namespace MapUx\Model;
 
 class Map
 {
-    const DEFAULT_LAT  = 44.8383293;
-    const DEFAULT_LON  = -0.5629559;
+    const DEFAULT_LAT  = 44.8485138261124;
+    const DEFAULT_LON  = -0.563934445381165;
     const DEFAULT_ZOOM = 10;
     /**
      * @var float

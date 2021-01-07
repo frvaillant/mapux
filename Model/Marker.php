@@ -6,8 +6,8 @@ namespace MapUx\Model;
 
 class Marker
 {
-    const DEFAULT_LAT  = 44.8383293;
-    const DEFAULT_LON  = -0.5629559;
+    const DEFAULT_LAT  = 44.8485138261124;
+    const DEFAULT_LON  = -0.563934445381165;
 
     /**
      * @var float
