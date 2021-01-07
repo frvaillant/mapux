@@ -85,7 +85,6 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
         if ('n' === $secondResponse) {
             $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
-            $io->writeln('******** Make sure your entry points are added in your template ********');
             $io->success('MAPUX INSTALLATION PROCESS ENDED');
             return self::SUCCESS;;
         }
@@ -94,7 +93,6 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
             $result = shell_exec('yarn encore dev');
             $io->block($result);
         }
-        $io->writeln('******** Make sure your entry points are added in your template ********');
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
 
         return self::SUCCESS;
