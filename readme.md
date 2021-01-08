@@ -18,12 +18,6 @@ https://leafletjs.com/reference-1.7.1.html
 > composer  
 > Webpack Encore  
 
-## Install MapUx
-- `composer require frvaillant/mapux dev-master`
-- `npm install --force` or `yarn install --force`
-- `php bin/console mapux:install`  
-- `Yarn encore dev`
-
 ## Documentation
 All the documentation about MapUx can be found here :  
 [Documentation MapUx](https://www.frvaillant.com/mapux)
