@@ -9,10 +9,11 @@ use MapUx\Model\Marker;
 class Legend
 {
 
+
+
     public function __construct(Map $map)
     {
         $this->map = $map;
-        //dd($this->getHtml());
     }
 
     private function getMarkers()
@@ -33,10 +34,10 @@ class Legend
         $legendLayers = [];
         $layers = $this->map->getLayers();
         foreach ($layers as $layer) {
-            if($layer instanceof ShapeLayer && $layer->getTitle()) {
+            if($layer instanceof ShapeLayer && $layer->getLegendName()) {
                 $legendLayers[] = [
                     'type'  => $layer->getLegendType(),
-                    'title' => $layer->getTitle(),
+                    'title' => $layer->getLegendName(),
                     'style' => [
                         'background' => $this->hex2rgba($layer->getFillColor(), $layer->getFillOpacity()),
                         'border'     => $layer->getWeight() . 'px solid ' . $this->hex2rgba($layer->getColor(), $layer->getOpacity()),
@@ -49,7 +50,7 @@ class Legend
 
     public function getHtml($classes = "")
     {
-        $html = '<div class="mapux-legend ' . $classes .'">';
+        $html = '<div class="mapux-legend ' . $classes . ' ' . $this->map->getLegendPosition() .'">';
         $html .= '<span class="mapux-legend-title">' . $this->map->getTitle() . '</span>';
 
         $markers = $this->getMarkers();

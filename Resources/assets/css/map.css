@@ -16,14 +16,29 @@ LEGEND
  */
 .mapux-legend {
     position:absolute;
-    top:3px;
-    right:3px;
     display:flex;
     flex-direction: column;
     background: rgba(255,255,255, 0.9);
     padding:7px;
     border:1px solid black;
     z-index:401;
+}
+
+.mapux-legend.top-right {
+    top:3px;
+    right:3px;
+}
+.mapux-legend.top-left {
+    top:3px;
+    left:3px;
+}
+.mapux-legend.bottom-right {
+    bottom:3px;
+    right:3px;
+}
+.mapux-legend.bottom-left {
+    bottom:3px;
+    left:3px;
 }
 
 .mapux-legend-element {

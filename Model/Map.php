@@ -52,6 +52,11 @@ class Map
      */
     private $title = null;
 
+    /**
+     * @var string
+     */
+    private $legendPosition = 'top-right';
+
 
     public function __construct(
         float $centerLatitude  = self::DEFAULT_LAT,
@@ -317,9 +322,10 @@ class Map
         return $points;
     }
 
-    public function addLegend()
+    public function addLegend($position = '')
     {
         $this->showLegend = true;
+        $this->legendPosition = $position;
     }
 
     public function hasLegend()
@@ -348,6 +354,14 @@ class Map
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLegendPosition(): string
+    {
+        return $this->legendPosition;
     }
 
 

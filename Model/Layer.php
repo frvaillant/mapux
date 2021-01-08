@@ -27,7 +27,7 @@ class Layer
     /**
      * @var string
      */
-    private $title = null;
+    private $legendName = null;
 
     /**
      * @var null string
@@ -43,17 +43,17 @@ class Layer
     /**
      * @return string
      */
-    public function getTitle(): ?string
+    public function getLegendName(): ?string
     {
-        return $this->title;
+        return $this->legendName;
     }
 
     /**
-     * @param string $title
+     * @param string $legendName
      */
-    public function setTitle(string $title): void
+    public function setLegendName(string $legendName): void
     {
-        $this->title = str_replace("'", "`", $title);
+        $this->legendName = str_replace("'", "`", $legendName);
     }
 
 
