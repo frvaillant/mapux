@@ -42,6 +42,16 @@ class Map
      */
     private $events;
 
+    /**
+     * @var bool
+     */
+    private $showLegend = false;
+
+    /**
+     * @var string
+     */
+    private $title = null;
+
 
     public function __construct(
         float $centerLatitude  = self::DEFAULT_LAT,
@@ -95,9 +105,9 @@ class Map
     public function getLayersInfos(): string
     {
         $layers = [];
-        $n=0;
+        $n = 0;
         foreach ($this->layers as $layer) {
-            if($n>0) {
+            if($n > 0) {
                 $layers[$n] = [
                     'background' => $layer->getBackground(),
                     'options'    => $layer->getOptions(),
@@ -116,9 +126,11 @@ class Map
                         'fillOpacity' => $layer->getFillOpacity(),
                     ];
                     $layers[$n]['events'] = $layer->getEvents() ?? null;
+
                     foreach ($layer->getOptions() as $key => $value) {
                         $layers[$n]['options'][$key] = $value;
                     }
+
                 }
 
 
@@ -149,10 +161,12 @@ class Map
                         'fillColor'   => $layer->getFillColor(),
                         'fillOpacity' => $layer->getFillOpacity(),
                     ];
+
                     $layers[$n]['events'] = $layer->getEvents() ?? null;
                     foreach ($layer->getOptions() as $key => $value) {
                         $layers[$n]['options'][$key] = $value;
                     }
+
                 }
 
                 if($layer instanceof Grid) {
@@ -247,6 +261,11 @@ class Map
         return json_encode($markers);
     }
 
+    public function getAllMarkers()
+    {
+        return $this->markers;
+    }
+
     public function setOptions(array $options): void
     {
         $this->options = $options;
@@ -296,6 +315,39 @@ class Map
             $points[] = [$marker->getLongitude(), $marker->getLatitude()];
         }
         return $points;
+    }
+
+    public function addLegend()
+    {
+        $this->showLegend = true;
+    }
+
+    public function hasLegend()
+    {
+        return $this->showLegend;
+    }
+
+    public function getLegend($classes = "")
+    {
+        //TODO returning html
+        $legend = new Legend($this);
+        return $legend->getHtml($classes);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
 

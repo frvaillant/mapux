@@ -31,6 +31,7 @@ final class Polyline extends GeojsonLayer
         $this->setType(self::SHAPE_TYPE);
         $this->setPoints($points);
         $this->makeJson();
+        $this->setLegendType('line');
     }
 
     private function makeJson()

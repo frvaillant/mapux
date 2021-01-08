@@ -28,6 +28,7 @@ class Circle extends ShapeLayer
         $this->setCenterLat($centerLat);
         $this->setCenterLng($centerLng);
         $this->setRadius($radius);
+        $this->setLegendType('circle');
     }
 
     /**

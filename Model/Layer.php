@@ -24,10 +24,36 @@ class Layer
      */
     private $events;
 
+    /**
+     * @var string
+     */
+    private $title = null;
+
+    /**
+     * @var null string
+     */
+    private $legendType = null;
+
 
     public function __construct(string $background = self::DEFAULT_BACKGROUND)
     {
         $this->background = $background;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = str_replace("'", "`", $title);
     }
 
 
@@ -99,6 +125,23 @@ class Layer
     {
         $this->events = $events;
     }
+
+    /**
+     * @return null
+     */
+    public function getLegendType()
+    {
+        return $this->legendType;
+    }
+
+    /**
+     * @param null $legendType
+     */
+    public function setLegendType($legendType): void
+    {
+        $this->legendType = $legendType;
+    }
+
 
 
 }

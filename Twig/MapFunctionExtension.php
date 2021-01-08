@@ -20,21 +20,27 @@ class MapFunctionExtension extends AbstractExtension
         ];
     }
 
-    public function renderMap(string $mapId, Map $map, string $classList = ""): string
+    public function renderMap(string $mapId, Map $map, string $classList = "", string $legendClassList = ""): string
     {
+        $html = '';
         if ($map->isReady()) {
-            return '<div class="ux-map ' . $classList . '" id="' . $mapId . '" 
-                        data-lat="' . $map->getCenterLatitude() . '" 
-                        data-lon="' . $map->getCenterLongitude() . '"     
-                        data-zoom="' . $map->getZoomLevel() . '"
-                        data-background="' . $map->getLayers()[0]->getBackground() . '" 
-                        data-options=\'' . $map->getOptions() . '\' 
-                        data-events=\'' . $map->getEvents() . '\'
-                        data-markers=\'' . $map->getMarkers() . '\'
-                        data-layers=\'' . $map->getLayersInfos() . '\' 
-                        >
-                    </div>';
+            $html .= '<div class="mapux-container">' .
+                        '<div class="mapux-map ' . $classList . '" id="' . $mapId . '" 
+                            data-lat="' . $map->getCenterLatitude() . '" 
+                            data-lon="' . $map->getCenterLongitude() . '"     
+                            data-zoom="' . $map->getZoomLevel() . '"
+                            data-background="' . $map->getLayers()[0]->getBackground() . '" 
+                            data-options=\'' . $map->getOptions() . '\' 
+                            data-events=\'' . $map->getEvents() . '\'
+                            data-markers=\'' . $map->getMarkers() . '\'
+                            data-layers=\'' . $map->getLayersInfos() . '\' 
+                            >
+                        </div>';
+            if ($map->hasLegend()) {
+               $html .= $map->getLegend($legendClassList);
+            }
+            $html .= '</div>';
         }
-        return '';
+        return $html;
     }
 }

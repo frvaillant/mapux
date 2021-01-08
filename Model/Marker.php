@@ -39,11 +39,35 @@ class Marker
      */
     private $events;
 
+    /**
+     * @var string
+     */
+    private $legendName = null;
+
     public function __construct(float $latitude = self::DEFAULT_LAT, float $longitude = self::DEFAULT_LON)
     {
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
+        $this->icon = new Icon();
     }
+
+    /**
+     * @return string
+     */
+    public function getLegendName(): string
+    {
+        return str_replace("'", "`", $this->legendName) ?? '';
+    }
+
+    /**
+     * @param string $legendName
+     */
+    public function setLegendName(string $legendName): void
+    {
+        $this->legendName = $legendName;
+    }
+
+
 
     /**
      * @return float
@@ -82,17 +106,16 @@ class Marker
      */
     public function getIcon()
     {
-        if ($this->icon) {
-            return json_encode([
-                'iconUrl'       => $this->icon->getIconPicture(),
-                'shadowUrl'     => $this->icon->getShadowPicture(),
-                'iconSize'      => $this->icon->getIconSize(),
-                'iconAnchor'    => $this->icon->getIconAnchor(),
-                'popupAnchor'   => $this->icon->getPopupAnchor(),
-                'tooltipAnchor' => $this->icon->getTooltipAnchor(),
-                'shadowSize'    => $this->icon->getShadowSize()
-            ]);
-        }
+        return json_encode([
+            'iconUrl'       => $this->icon->getIconPicture(),
+            'shadowUrl'     => $this->icon->getShadowPicture(),
+            'iconSize'      => $this->icon->getIconSize(),
+            'iconAnchor'    => $this->icon->getIconAnchor(),
+            'popupAnchor'   => $this->icon->getPopupAnchor(),
+            'tooltipAnchor' => $this->icon->getTooltipAnchor(),
+            'shadowSize'    => $this->icon->getShadowSize()
+        ]);
+        
     }
 
     /**
@@ -102,6 +125,12 @@ class Marker
     {
         $this->icon = $icon;
     }
+    
+    public function getIconObject() 
+    {
+        return $this->icon;
+    }
+    
 
     /**
      * @return array

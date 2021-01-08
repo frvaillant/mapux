@@ -11,18 +11,27 @@ namespace MapUx\Model;
 class Popup
 {
     /**
-     * @var string 
+     * @var string
      */
     private $content = "";
 
     /**
-     * @var array 
+     * @var array
      */
     private $options = [];
-    
+
     public function __construct($content = null)
     {
         $this->setContent($content);
+    }
+
+    private function encodeContent($content)
+    {
+        $content = str_replace("'", "&#039;",$content);
+
+        $content = str_replace('"', "&quot;", $content);
+
+        return $content;
     }
 
     /**
@@ -38,7 +47,7 @@ class Popup
      */
     public function setContent(string $content): void
     {
-        $this->content = $content;
+        $this->content = str_replace("'", "`", $content);
     }
 
     /**

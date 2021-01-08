@@ -23,6 +23,7 @@ class Rectangle extends ShapeLayer
         $this->removeBackground();
         $this->setFirstPoint($firstPoint);
         $this->setSecondPoint($secondPoint);
+        $this->setLegendType('square');
     }
 
 
