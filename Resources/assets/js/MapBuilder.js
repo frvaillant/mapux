@@ -88,6 +88,7 @@ export class MapBuilder {
         if(this.layers) {
             for (const key in this.layers) {
                 let obj = {}
+                let ver = 0;
 
                 if (this.layers[key].isCircle) {
                     obj = L.circle(this.layers[key].center, this.layers[key].options)
@@ -105,6 +106,8 @@ export class MapBuilder {
 
                 } else if (this.layers[key].isAdjustableGrid) {
                     this.addAdjustableGrid(this.layers[key].width, this.layers[key].color)
+                    ver = 1
+
                 } else {
                     obj = L.tileLayer(this.layers[key].background, this.layers[key].options)
 
@@ -112,7 +115,10 @@ export class MapBuilder {
                 if (this.layers[key].events) {
                     this.addEvents(this.layers[key].events, obj)
                 }
-                obj.addTo(this.map)
+                if (ver === 0) {
+                    obj.addTo(this.map)
+                }
+
             }
         }
     }
