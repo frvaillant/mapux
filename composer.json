@@ -2,8 +2,6 @@
   "name": "frvaillant/mapux",
   "description": "Adds symfony twig function to create maps",
   "keywords": ["PHP","UX", "Symfony", "map", "leaflet"],
-  "minimum-stability": "stable",
-  "version": "1.0.1",
   "license": "MIT",
   "authors": [
     {
