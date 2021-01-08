@@ -34,6 +34,14 @@ export class MapBuilder {
         this.addOptionnalLayers()
 
 
+        if (this.options.scale) {
+            L.control.scale({
+                metric: true,
+                imperial: false
+            }).addTo(this.map)
+        }
+
+
         // ADDING MAP EVENTS ///////////////////////////////////////
         if (this.mapEvents) {
             const events = JSON.parse(this.mapEvents)

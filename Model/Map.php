@@ -57,6 +57,11 @@ class Map
      */
     private $legendPosition = 'top-right';
 
+    /**
+     * @var bool
+     */
+    private $hasScale = true;
+
 
     public function __construct(
         float $centerLatitude  = self::DEFAULT_LAT,
@@ -69,6 +74,7 @@ class Map
         $this->setCenterLongitude($centerLongitude);
         $this->setZoomLevel($zoomLevel);
         $background ? $this->addLayer(new Layer($background)) : $this->addLayer(new Layer());
+        $this->options['scale'] = $this->hasScale();
     }
 
     public function setBackground($background)
@@ -364,5 +370,17 @@ class Map
         return $this->legendPosition;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasScale(): bool
+    {
+        return $this->hasScale;
+    }
 
+    public function removeScale(): void
+    {
+        $this->hasScale = false;
+        $this->options['scale'] = $this->hasScale();
+    }
 }
