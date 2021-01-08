@@ -328,7 +328,7 @@ class Map
         return $points;
     }
 
-    public function addLegend($position = '')
+    public function addLegend($position = 'top-right')
     {
         $this->showLegend = true;
         $this->legendPosition = $position;
