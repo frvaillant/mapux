@@ -17,7 +17,7 @@ class Layer
     /**
      * @var array
      */
-    private $options;
+    private $options = [];
 
     /**
      * @var array

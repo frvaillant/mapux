@@ -42,9 +42,10 @@ class IgnLayer extends Layer
      */
     private $key = null;
 
-    public function __construct(string $key, string $ressource, string $background = parent::DEFAULT_BACKGROUND)
+    public function __construct(string $key, string $ressource)
     {
-        parent::__construct($background);
+        parent::__construct();
+        $this->removeBackground();
 
         $this->key = $key;
         if(null !== $ressource) {

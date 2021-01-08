@@ -14,7 +14,7 @@ class Icon
     private $tooltipAnchor = [16, -28];
     private $shadowSize    = [41, 41];
 
-    public function __construct($color = null)
+    public function __construct(string $color = null)
     {
         if(null !== $color) {
             $this->setIconPicture(sprintf('/bundle/mapux/images/%s-icon.png', $color));

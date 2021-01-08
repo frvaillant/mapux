@@ -4,34 +4,8 @@
 namespace MapUx\Model;
 
 
-class Circle extends Layer
+class Circle extends ShapeLayer
 {
-
-    /**
-     * @var string
-     */
-    protected $color = '#0d47a1';
-
-    /**
-     * @var string
-     */
-    protected $fillColor = '#2196f3';
-
-    /**
-     * @var integer
-     */
-    protected $weight = 2;
-
-    /**
-     * @var float
-     */
-    protected $opacity = 1;
-
-    /**
-     * @var float
-     */
-    protected $fillOpacity = 0.5;
-
     /**
      * @var float
      */
@@ -46,8 +20,8 @@ class Circle extends Layer
      * @var integer
      */
     protected $radius;
-    
-    public function __construct($centerLat, $centerLng, $radius)
+
+    public function __construct(float $centerLat, float $centerLng, int $radius)
     {
         parent::__construct();
         $this->removeBackground();
@@ -87,56 +61,9 @@ class Circle extends Layer
     {
         $this->centerLng = $centerLng;
     }
-    
-    
 
-    /**
-     * @return string
-     */
-    public function getColor(): string
-    {
-        return $this->color;
-    }
 
-    /**
-     * @param string $color
-     */
-    public function setColor(string $color): void
-    {
-        $this->color = $color;
-    }
 
-    /**
-     * @return int
-     */
-    public function getWeight(): int
-    {
-        return $this->weight;
-    }
-
-    /**
-     * @param int $weight
-     */
-    public function setWeight(int $weight): void
-    {
-        $this->weight = $weight;
-    }
-
-    /**
-     * @return float
-     */
-    public function getOpacity(): float
-    {
-        return $this->opacity;
-    }
-
-    /**
-     * @param float $opacity
-     */
-    public function setOpacity(float $opacity): void
-    {
-        $this->opacity = $opacity;
-    }
 
     /**
      * @return string
@@ -154,37 +81,7 @@ class Circle extends Layer
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
-    public function getFillColor(): string
-    {
-        return $this->fillColor;
-    }
 
-    /**
-     * @param string $fillColor
-     */
-    public function setFillColor(string $fillColor): void
-    {
-        $this->fillColor = $fillColor;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFillOpacity(): float
-    {
-        return $this->fillOpacity;
-    }
-
-    /**
-     * @param float $fillOpacity
-     */
-    public function setFillOpacity(float $fillOpacity): void
-    {
-        $this->fillOpacity = $fillOpacity;
-    }
 
     /**
      * @return array
@@ -209,8 +106,8 @@ class Circle extends Layer
     {
         $this->radius = $radius;
     }
-    
-    
-    
+
+
+
 
 }

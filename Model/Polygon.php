@@ -27,11 +27,13 @@ final class Polygon extends GeojsonLayer
       ]
     }';
 
+
     public function __construct(array $points)
     {
         parent::__construct('');
+        $this->removeBackground();
         $this->setType(self::SHAPE_TYPE);
-        $this->points = $points;
+        $this->setPoints($points);
         $this->makeJson();
     }
 

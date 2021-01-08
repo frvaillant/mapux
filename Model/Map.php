@@ -23,7 +23,7 @@ class Map
     private $zoomLevel;
 
     /**
-     * @var Layer
+     * @var array
      */
     private $layers;
 
