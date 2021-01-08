@@ -95,6 +95,8 @@ export class MapBuilder {
                     Grid.createGrid()
                     obj = L.layerGroup(Grid.getRectangles())
 
+                } else if (this.layers[key].isAdjustableGrid) {
+                    this.addAdjustableGrid(this.layers[key].width, this.layers[key].color)
                 } else {
                     obj = L.tileLayer(this.layers[key].background, this.layers[key].options)
 
@@ -200,5 +202,23 @@ export class MapBuilder {
             "brown": this.createIcon('brown'),
             "black": this.createIcon('black'),
         }
+    }
+
+    addAdjustableGrid(width, color, html = null) {
+
+        L.GridLayer.GridDebug = L.GridLayer.extend({
+            createTile: function (coords) {
+                const square = document.createElement('div')
+                square.style.outline = width + 'px solid ' + color
+                square.innerHTML = html // [coords.z, coords.x, coords.y].join('/')
+                return square
+            },
+        });
+
+        L.gridLayer.gridDebug = function (opts) {
+            return new L.GridLayer.GridDebug(opts)
+        };
+
+        this.map.addLayer(L.gridLayer.gridDebug())
     }
 }

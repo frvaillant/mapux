@@ -159,6 +159,12 @@ class Map
                     $layers[$n]['isGrid']  = true;
                     $layers[$n]['options'] =  $layer->getParameters();
                 }
+
+                if($layer instanceof AdjustableGrid) {
+                    $layers[$n]['isAdjustableGrid']  = true;
+                    $layers[$n]['color'] =  $layer->getColor();
+                    $layers[$n]['width'] =  $layer->getWeight();
+                }
             }
             $n++;
         }
