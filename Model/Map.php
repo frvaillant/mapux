@@ -323,7 +323,7 @@ class Map
     {
         $points = [];
         foreach ($this->markers as $marker) {
-            $points[] = [$marker->getLongitude(), $marker->getLatitude()];
+            $points[] = [$marker->getLatitude(), $marker->getLongitude()];
         }
         return $points;
     }
@@ -383,4 +383,7 @@ class Map
         $this->hasScale = false;
         $this->options['scale'] = $this->hasScale();
     }
+
+
+
 }

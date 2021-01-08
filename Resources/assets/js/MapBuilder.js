@@ -93,7 +93,6 @@ export class MapBuilder {
                     obj = L.circle(this.layers[key].center, this.layers[key].options)
 
                 } else if (this.layers[key].isGeoJson) {
-                    console.log(this.layers[key].json)
                     obj = L.geoJSON(JSON.parse(this.layers[key].json), this.layers[key].options)
 
                 } else if (this.layers[key].isRectangle) {
