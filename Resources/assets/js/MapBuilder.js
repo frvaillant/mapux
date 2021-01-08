@@ -53,7 +53,7 @@ export class MapBuilder {
                         eval(events[key].action)
                     } catch(error) {
                         try {
-                            const UxEvent = new MapuxEvents(this.map, this.map, this.defaultIcon)
+                            const UxEvent = new MapuxEvents(this.map, this.map, this.getIcons())
                             UxEvent[events[key].action](event, events[key].params)
                         } catch (e) {
                             console.error('map event is not correctly defined' + ' : ' + e)
@@ -172,7 +172,7 @@ export class MapBuilder {
                         const UxEvent = new MapuxEvents(this.map, this.map, this.getIcons())
                         UxEvent[events[key].action](event, events[key].params)
                     } catch (e) {
-                        console.error('marker event is not correctly defined' + ' : ' + e)
+                        console.error('your event is not correctly defined' + ' : ' + e)
                     }
                 }
             })

@@ -6,8 +6,4 @@ export class MapuxEvents {
         this.map = map
         this.icons = icons
     }
-
-    test(event, params) {
-        alert(params['word']);
-    }
 }
