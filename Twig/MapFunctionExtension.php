@@ -24,7 +24,7 @@ class MapFunctionExtension extends AbstractExtension
     {
         $html = '';
         if ($map->isReady()) {
-            $html .= '<div class="mapux-container">' .
+            $html .= '<div class="mapux-container" id="' . $mapId .'-container">' .
                         '<div class="mapux-map ' . $classList . '" id="' . $mapId . '" 
                             data-lat="' . $map->getCenterLatitude() . '" 
                             data-lon="' . $map->getCenterLongitude() . '"     
