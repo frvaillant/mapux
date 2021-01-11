@@ -4,6 +4,8 @@
 namespace MapUx\Model;
 
 
+use MapUx\Services\GeoServicesTrait;
+
 class Rectangle extends ShapeLayer
 {
     /**
@@ -16,6 +18,7 @@ class Rectangle extends ShapeLayer
      */
     protected $secondPoint;
 
+    use GeoServicesTrait;
 
     public function __construct($firstPoint, $secondPoint)
     {
@@ -26,6 +29,13 @@ class Rectangle extends ShapeLayer
         $this->setLegendType('square');
     }
 
+    public function getSurface()
+    {
+        $d1 = $this->distanceBetween($this->firstPoint[0], $this->firstPoint[1], $this->firstPoint[0], $this->secondPoint[1]);
+        $d2 = $this->distanceBetween($this->firstPoint[0], $this->secondPoint[1], $this->secondPoint[0], $this->secondPoint[1]);
+
+        return round($d1 * $d2, 2);
+    }
 
     /**
      * @return string

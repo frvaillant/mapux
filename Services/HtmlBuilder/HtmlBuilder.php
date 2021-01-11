@@ -45,4 +45,13 @@ class HtmlBuilder
         return $this->dom;
     }
 
+    /**
+     * @return array
+     */
+    public function getOpenedElements(): array
+    {
+        return $this->openedElements;
+    }
+
+
 }

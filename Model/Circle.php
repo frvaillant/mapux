@@ -31,6 +31,11 @@ class Circle extends ShapeLayer
         $this->setLegendType('circle');
     }
 
+    public function getSurface()
+    {
+        return round(M_PI * pow($this->getRadius(), 2), 2);
+    }
+
     /**
      * @return float
      */

@@ -53,9 +53,4 @@ class AdjustableGrid extends Layer
     {
         $this->weight = $weight;
     }
-
-   
-    
-    
-
 }

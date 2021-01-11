@@ -32,7 +32,7 @@ abstract class ShapeLayer extends Layer
      */
     protected $fillOpacity = 0.5;
 
-
+    abstract public function getSurface();
     /**
      * @return string
      */

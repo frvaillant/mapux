@@ -109,6 +109,9 @@ class HtmlElement
      */
     public function setTextContent(string $textContent): void
     {
+        if ($this->isSingle()) {
+            throw new \Exception('You can not set content in single element');
+        }
         $this->textContent = htmlspecialchars($textContent);
     }
 
