@@ -53,6 +53,6 @@ class MapFunctionExtension extends AbstractExtension
 
             $htmlBuilder->close();
         }
-        return $htmlBuilder->render();
+        return $htmlBuilder;
     }
 }

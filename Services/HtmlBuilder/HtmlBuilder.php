@@ -36,7 +36,7 @@ class HtmlBuilder
         return $this;
     }
 
-    public function render() {
+    public function __toString() {
         if (!empty($this->openedElements)) {
             $errorMessage = 'HTML Structure error : ' . count($this->openedElements);
             $errorMessage .= count($this->openedElements) > 1 ? ' tags are not closed' : ' tag is not closed';
