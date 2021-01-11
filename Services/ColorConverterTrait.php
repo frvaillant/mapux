@@ -3,10 +3,22 @@
 
 namespace MapUx\Services;
 
+/**
+ * Trait ColorConverterTrait
+ * @package MapUx\Services
+ */
 
 trait ColorConverterTrait
 {
 
+    /**
+     * @param $color
+     * @param null $opacity
+     * @return string
+     *
+     * Author : Bojan Petrovic
+     * https://mekshq.com/how-to-convert-hexadecimal-color-code-to-rgb-or-rgba-using-php/
+     */
     protected function hex2rgba($color, $opacity = null) {
 
         $default = 'rgb(0,0,0)';
