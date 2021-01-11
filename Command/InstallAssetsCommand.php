@@ -69,7 +69,9 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
             shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
 
-            shell_exec('cp ' . self::RESOURCES_JS_DIR. '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
+            if (!is_file(self::ASSETS_JS_DIR . '/MapuxEvents.js')) {
+                shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
+            }
 
             $io->success('MapuxEvents file copied in your project');
 

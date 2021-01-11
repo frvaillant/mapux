@@ -28,7 +28,7 @@ class HtmlBuilder
     public function close()
     {
         if (empty($this->openedElements)) {
-            throw new \Exception('No elements are opened. Can\'t use close() funciton');
+            throw new \Exception('No element is opened. Can\'t use close() function');
         }
         $this->dom .= sprintf('</%s>', $this->openedElements[array_key_last($this->openedElements)]);
         $this->openedElements = array_slice($this->openedElements, 0, -1, true);
