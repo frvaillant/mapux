@@ -67,71 +67,74 @@ class Legend
                 ])->close();
 
         $markers = $this->getMarkers();
-        foreach ($markers as $picture => $title) {
-            $htmlBuilder
-                ->div([
-                    'attributes' => [
-                        'class' => 'mapux-legend-element'
-                    ]
-                ])
-                    ->span([
+        if ($markers && !empty($merkers)) {
+            foreach ($markers as $picture => $title) {
+                $htmlBuilder
+                    ->div([
                         'attributes' => [
-                            'class' =>' mapux-legend-img'
+                            'class' => 'mapux-legend-element'
                         ]
                     ])
-                        ->img([
-                            'isSingle' => true,
-                            'attributes' => [
-                                'src' => $picture,
-                                'alt' => htmlspecialchars_decode($title)
-                            ]
-                        ])
+                    ->span([
+                        'attributes' => [
+                            'class' => ' mapux-legend-img'
+                        ]
+                    ])
+                    ->img([
+                        'isSingle' => true,
+                        'attributes' => [
+                            'src' => $picture,
+                            'alt' => htmlspecialchars_decode($title)
+                        ]
+                    ])
                     ->close()
                     ->span([
                         'attributes' => [
-                            'class' =>' mapux-legend-text'
+                            'class' => ' mapux-legend-text'
                         ],
                         'content' => $title
                     ])
                     ->close()
-                ->close();
+                    ->close();
+            }
         }
 
         $layers = $this->getLayers();
+        if ($layers && !empty($layers)) {
+            foreach ($layers as $layer) {
+                $style = '';
+                foreach ($layer['style'] as $name => $value) {
+                    $style .= $name . ': ' . $value . '; ';
+                }
 
-        foreach ($layers as $layer) {
-            $style = '';
-            foreach ($layer['style'] as $name => $value) {
-                $style .= $name . ': ' . $value . '; ';
-            }
-            
-            $htmlBuilder
-                ->div([
-                    'attributes' => [
-                        'class' => 'mapux-legend-element'
-                    ]
-                ])
+                $htmlBuilder
+                    ->div([
+                        'attributes' => [
+                            'class' => 'mapux-legend-element'
+                        ]
+                    ])
                     ->span([
                         'attributes' => [
                             'class' => 'mapux-legend-img'
                         ]
                     ])
-                        ->div([
-                            'attributes' => [
-                                'class' => 'mapux-legend-' . $layer['type'],
-                                'style' => $style
-                            ]
-                        ])
-                        ->close()
+                    ->div([
+                        'attributes' => [
+                            'class' => 'mapux-legend-' . $layer['type'],
+                            'style' => $style
+                        ]
+                    ])
                     ->close()
-                ->span([
-                    'attributes' => [
-                        'class' => 'mapux-legend-text',
-                    ],
-                    'content' => $layer['title']
-                ])
-                ->close()
-            ->close();
+                    ->close()
+                    ->span([
+                        'attributes' => [
+                            'class' => 'mapux-legend-text',
+                        ],
+                        'content' => $layer['title']
+                    ])
+                    ->close()
+                    ->close();
+            }
         }
         $htmlBuilder->close();
     }
