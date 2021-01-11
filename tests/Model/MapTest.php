@@ -74,4 +74,23 @@ class MapTest extends TestCase
         $this->assertEquals(true, is_array(json_decode($map->getMarkers(), true)));
     }
 
+    public function testGetPointsFromMarkers()
+    {
+        $map = new \MapUx\Model\Map(44.00, 2.00, 10);
+        $marker = new Marker(44, 1);
+        $map->addMarker($marker);
+        $marker2 = new Marker(44, 2);
+        $map->addMarker($marker2);
+        $marker3 = new Marker (44, 3);
+        $map->addMarker($marker3);
+
+        $excepted = [
+            [44, 1],
+            [44, 2],
+            [44, 3]
+        ];
+
+        $this->assertEquals($excepted, $map->getPointsFromMarkers());
+    }
+
 }

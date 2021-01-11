@@ -29,6 +29,22 @@ class Rectangle extends ShapeLayer
         $this->setLegendType('square');
     }
 
+    public function getLength()
+    {
+        $d1 = $this->distanceBetween($this->firstPoint[0], $this->firstPoint[1], $this->firstPoint[0], $this->secondPoint[1]);
+        $d2 = $this->distanceBetween($this->firstPoint[0], $this->secondPoint[1], $this->secondPoint[0], $this->secondPoint[1]);
+
+        return $d1 > $d2 ? $d1 : $d2;
+    }
+
+    public function getWidth()
+    {
+        $d1 = $this->distanceBetween($this->firstPoint[0], $this->firstPoint[1], $this->firstPoint[0], $this->secondPoint[1]);
+        $d2 = $this->distanceBetween($this->firstPoint[0], $this->secondPoint[1], $this->secondPoint[0], $this->secondPoint[1]);
+
+        return $d1 > $d2 ? $d2 : $d1;
+    }
+
     public function getSurface()
     {
         $d1 = $this->distanceBetween($this->firstPoint[0], $this->firstPoint[1], $this->firstPoint[0], $this->secondPoint[1]);

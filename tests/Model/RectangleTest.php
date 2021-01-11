@@ -35,5 +35,18 @@ class RectangleTest extends TestCase
     {
         $rectangle = new Rectangle([44, 1], [42,2]);
         $this->assertEquals(17788174617.53, $rectangle->getSurface());
+        $this->assertEquals(17788174617.53, round($rectangle->getLength() * $rectangle->getWidth(), 2));
+    }
+
+    public function testGetLength()
+    {
+        $rectangle = new Rectangle([44, 1], [42,2]);
+        $this->assertEquals(222389.85, $rectangle->getLength());
+    }
+
+    public function testGetWidth()
+    {
+        $rectangle = new Rectangle([44, 1], [42,2]);
+        $this->assertEquals(79986.45, $rectangle->getWidth());
     }
 }
