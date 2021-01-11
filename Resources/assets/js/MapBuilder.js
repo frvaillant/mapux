@@ -187,6 +187,7 @@ export class MapBuilder {
 
     htmlSpecialcharsDecode(string) {
         const chars = {
+            '&amp;': '&',
             '&lt;': '<',
             '&gt;': '>',
             '&quot;': '"',

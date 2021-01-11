@@ -3,6 +3,7 @@
 
 namespace MapUx\Model;
 
+use MapUx\Services\HtmlBuilder\HtmlBuilder;
 
 class Map
 {
@@ -339,10 +340,11 @@ class Map
         return $this->showLegend;
     }
 
-    public function getLegend($classes = "")
+    public function getLegend($classes = "", HtmlBuilder $htmlBuilder)
     {
+        //TODO returning html
         $legend = new Legend($this);
-        return $legend->getHtml($classes);
+        return $legend->getHtml($classes, $htmlBuilder);
     }
 
     /**

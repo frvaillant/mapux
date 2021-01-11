@@ -19,7 +19,7 @@ class HtmlElement
     /**
      * @var array
      */
-    protected $attributes;
+    protected $attributes = [];
 
     /**
      * @var string
@@ -33,7 +33,7 @@ class HtmlElement
      */
     public function __construct($name, $arguments)
     {
-        $arguments = $arguments[0];
+        $arguments  = $arguments[0];
         $this->name = $name;
 
         if (isset($arguments['isSingle'])) {
@@ -119,6 +119,7 @@ class HtmlElement
         foreach ($this->attributes as $name => $value) {
             $html .= sprintf('%s="%s" ', $name, htmlspecialchars($value));
         }
+        $html = rtrim($html);
         $html .= $this->isSingle() ? ' />' : '>';
 
         if ($this->textContent) {

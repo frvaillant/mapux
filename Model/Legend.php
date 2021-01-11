@@ -6,6 +6,7 @@ namespace MapUx\Model;
 use MapUx\Model\Map;
 use MapUx\Model\Marker;
 use MapUx\Services\ColorConverterTrait;
+use MapUx\Services\HtmlBuilder\HtmlBuilder;
 
 class Legend
 {
@@ -50,33 +51,89 @@ class Legend
         return $legendLayers;
     }
 
-    public function getHtml($classes = "")
+    public function getHtml($classes = "", HtmlBuilder $htmlBuilder)
     {
-        $html = '<div class="mapux-legend ' . $classes . ' ' . $this->map->getLegendPosition() .'">';
-        $html .= '<span class="mapux-legend-title">' . $this->map->getTitle() . '</span>';
+        $htmlBuilder
+            ->div([
+                'attributes' => [
+                    'class' => 'mapux-legend ' . $classes . ' ' . $this->map->getLegendPosition(),
+                ]
+            ])
+                ->span([
+                    'attributes' => [
+                        'class' => 'mapux-legend-title'
+                    ],
+                    'content' => $this->map->getTitle()
+                ])->close();
 
         $markers = $this->getMarkers();
         foreach ($markers as $picture => $title) {
-            $html .= '<div class="mapux-legend-element">';
-            $html .= '<span class="mapux-legend-img"><img src="' . $picture . '" alt="' . htmlspecialchars_decode($title) . '"></span>';
-            $html .= '<span class="mapux-legend-text">' . htmlspecialchars_decode($title) . '</span>';
-            $html .= '</div>';
+            $htmlBuilder
+                ->div([
+                    'attributes' => [
+                        'class' => 'mapux-legend-element'
+                    ]
+                ])
+                    ->span([
+                        'attributes' => [
+                            'class' =>' mapux-legend-img'
+                        ]
+                    ])
+                        ->img([
+                            'isSingle' => true,
+                            'attributes' => [
+                                'src' => $picture,
+                                'alt' => htmlspecialchars_decode($title)
+                            ]
+                        ])
+                    ->close()
+                    ->span([
+                        'attributes' => [
+                            'class' =>' mapux-legend-text'
+                        ],
+                        'content' => $title
+                    ])
+                    ->close()
+                ->close();
         }
 
         $layers = $this->getLayers();
 
         foreach ($layers as $layer) {
-            $html .= '<div class="mapux-legend-element">';
-            $html .= '<span class="mapux-legend-img"><div class="mapux-legend-' . $layer['type'] . '" style="';
+            $style = '';
             foreach ($layer['style'] as $name => $value) {
-                $html .= $name . ': ' . $value . '; ';
+                $style .= $name . ': ' . $value . '; ';
             }
-            $html .= '"></div></span> <span class="mapux-legend-text">' . htmlspecialchars_decode($layer['title']) . '</span>';
-            $html .= '</div>';
+            
+            $htmlBuilder
+                ->div([
+                    'attributes' => [
+                        'class' => 'mapux-legend-element'
+                    ]
+                ])
+                    ->span([
+                        'attributes' => [
+                            'class' => 'mapux-legend-img'
+                        ]
+                    ])
+                        ->div([
+                            'attributes' => [
+                                'class' => 'mapux-legend-' . $layer['type'],
+                                'style' => $style
+                            ]
+                        ])
+                        ->close()
+                    ->close()
+                ->span([
+                    'attributes' => [
+                        'class' => 'mapux-legend-text',
+                    ],
+                    'content' => $layer['title']
+                ])
+                ->close()
+            ->close();
         }
-        $html .= '</div>';
-
-        return $html;
+        $htmlBuilder->close();
     }
 
 }

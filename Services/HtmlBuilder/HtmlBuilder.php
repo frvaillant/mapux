@@ -38,7 +38,9 @@ class HtmlBuilder
 
     public function render() {
         if (!empty($this->openedElements)) {
-            throw new \Exception('HTML Structure error : ' . count($this->openedElements) . ' tags are not closed');
+            $errorMessage = 'HTML Structure error : ' . count($this->openedElements);
+            $errorMessage .= count($this->openedElements) > 1 ? ' tags are not closed' : ' tag is not closed';
+            throw new \Exception($errorMessage);
         }
         return $this->dom;
     }
