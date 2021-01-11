@@ -58,8 +58,8 @@ class Legend
         $markers = $this->getMarkers();
         foreach ($markers as $picture => $title) {
             $html .= '<div class="mapux-legend-element">';
-            $html .= '<span class="mapux-legend-img"><img src="' . $picture . '" alt="' . str_replace("`", "'", $title) . '"></span>';
-            $html .= '<span class="mapux-legend-text">' . str_replace("`", "'", $title) . '</span>';
+            $html .= '<span class="mapux-legend-img"><img src="' . $picture . '" alt="' . htmlspecialchars_decode($title) . '"></span>';
+            $html .= '<span class="mapux-legend-text">' . htmlspecialchars_decode($title) . '</span>';
             $html .= '</div>';
         }
 
@@ -71,7 +71,7 @@ class Legend
             foreach ($layer['style'] as $name => $value) {
                 $html .= $name . ': ' . $value . '; ';
             }
-            $html .= '"></div></span> <span class="mapux-legend-text">' . str_replace("`", "'", $layer['title']) . '</span>';
+            $html .= '"></div></span> <span class="mapux-legend-text">' . htmlspecialchars_decode($layer['title']) . '</span>';
             $html .= '</div>';
         }
         $html .= '</div>';

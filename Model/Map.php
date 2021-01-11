@@ -341,7 +341,6 @@ class Map
 
     public function getLegend($classes = "")
     {
-        //TODO returning html
         $legend = new Legend($this);
         return $legend->getHtml($classes);
     }

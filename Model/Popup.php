@@ -25,15 +25,6 @@ class Popup
         $this->setContent($content);
     }
 
-    private function encodeContent($content)
-    {
-        $content = str_replace("'", "&#039;",$content);
-
-        $content = str_replace('"', "&quot;", $content);
-
-        return $content;
-    }
-
     /**
      * @return string
      */
@@ -47,7 +38,7 @@ class Popup
      */
     public function setContent(string $content): void
     {
-        $this->content = str_replace("'", "`", $content);
+        $this->content = htmlspecialchars($content, ENT_QUOTES);
     }
 
     /**

@@ -54,9 +54,9 @@ class Marker
     /**
      * @return string
      */
-    public function getLegendName(): string
+    public function getLegendName(): ?string
     {
-        return str_replace("'", "`", $this->legendName) ?? '';
+        return $this->legendName;
     }
 
     /**
@@ -64,7 +64,7 @@ class Marker
      */
     public function setLegendName(string $legendName): void
     {
-        $this->legendName = $legendName;
+        $this->legendName = htmlspecialchars($legendName);
     }
 
 
@@ -115,7 +115,7 @@ class Marker
             'tooltipAnchor' => $this->icon->getTooltipAnchor(),
             'shadowSize'    => $this->icon->getShadowSize()
         ]);
-        
+
     }
 
     /**
@@ -125,12 +125,12 @@ class Marker
     {
         $this->icon = $icon;
     }
-    
-    public function getIconObject() 
+
+    public function getIconObject()
     {
         return $this->icon;
     }
-    
+
 
     /**
      * @return array
@@ -160,7 +160,7 @@ class Marker
     {
         if ($this->popup) {
             return json_encode([
-                'content' => $this->popup->getContent(),
+                'content' => htmlspecialchars($this->popup->getContent()),
                 'options' => $this->popup->getOptions()
             ]);
         }

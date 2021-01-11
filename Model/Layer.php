@@ -53,7 +53,7 @@ class Layer
      */
     public function setLegendName(string $legendName): void
     {
-        $this->legendName = str_replace("'", "`", $legendName);
+        $this->legendName = htmlspecialchars($legendName);
     }
 
 

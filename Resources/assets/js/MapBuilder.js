@@ -185,10 +185,25 @@ export class MapBuilder {
         }
     }
 
+    htmlSpecialcharsDecode(string) {
+        const chars = {
+            '&lt;': '<',
+            '&gt;': '>',
+            '&quot;': '"',
+            '&#039;':"'"
+        }
+
+        for (let encoded in chars) {
+            string = string.split(encoded)
+            string = string.join(chars[encoded])
+        }
+        return string
+    }
+
     makePopup(popup) {
         const popupData = JSON.parse(popup)
         let myPopup = L.popup(popupData.options)
-        myPopup.setContent(popupData.content.replace("`", "'"))
+        myPopup.setContent(this.htmlSpecialcharsDecode(popupData.content))
         return myPopup
     }
 
