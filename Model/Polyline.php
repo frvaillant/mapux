@@ -32,6 +32,12 @@ final class Polyline extends GeojsonLayer
         $this->setPoints($points);
         $this->makeJson();
         $this->setLegendType('line');
+        $this->setFillOpacity(0);
+        $this->setFillColor('#fff');
+    }
+
+    public function getSurface() {
+        return 0;
     }
 
     private function makeJson()

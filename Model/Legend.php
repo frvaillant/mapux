@@ -23,7 +23,6 @@ class Legend
     {
         $legendMarkers = [];
         $markers = $this->map->getAllMarkers();
-
         foreach ($markers as $marker) {
             if (!in_array($marker->getIconObject()->getIconPicture(), $legendMarkers) && $marker->getLegendName()) {
                 $legendMarkers[$marker->getIconObject()->getIconPicture()] = $marker->getLegendName();
@@ -102,10 +101,6 @@ class Legend
         $layers = $this->getLayers();
         if ($layers && !empty($layers)) {
             foreach ($layers as $layer) {
-                $style = '';
-                foreach ($layer['style'] as $name => $value) {
-                    $style .= $name . ': ' . $value . '; ';
-                }
 
                 $htmlBuilder
                     ->div([
@@ -121,7 +116,7 @@ class Legend
                     ->div([
                         'attributes' => [
                             'class' => 'mapux-legend-' . $layer['type'],
-                            'style' => $style
+                            'style' => $this->makeStyle($layer)
                         ]
                     ])
                     ->close()
@@ -137,6 +132,18 @@ class Legend
             }
         }
         $htmlBuilder->close();
+    }
+
+    private function makeStyle($layer) {
+        $style = '';
+        foreach ($layer['style'] as $name => $value) {
+            $style .= $name . ': ' . $value . '; ';
+        }
+
+        if($layer['type'] === 'line') {
+            $style = str_replace('border', 'border-bottom', $style);
+        }
+        return $style;
     }
 
 }
