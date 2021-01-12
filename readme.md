@@ -20,4 +20,4 @@ https://leafletjs.com/reference-1.7.1.html
 
 ## Documentation
 All the documentation about MapUx can be found here :  
-[Documentation MapUx](https://www.frvaillant.com/mapux)
+[Documentation MapUx](https://www.frvaillant.com/mapux) (in french for the moment)
