@@ -67,7 +67,7 @@ class Legend
                 ])->close();
 
         $markers = $this->getMarkers();
-        if ($markers && !empty($merkers)) {
+        if ($markers && !empty($markers)) {
             foreach ($markers as $picture => $title) {
                 $htmlBuilder
                     ->div([
