@@ -44,8 +44,8 @@ trait ColorConverterTrait
         if($opacity){
             if(abs($opacity) > 1) {
                 $opacity = 1;
-                return 'rgba(' . implode(",", $rgb) . ',' . $opacity . ')';
             }
+                return 'rgba(' . implode(",", $rgb) . ',' . $opacity . ')';
         }
         return 'rgb('.implode(",",$rgb).')';
     }
