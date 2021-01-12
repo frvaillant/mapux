@@ -17,44 +17,37 @@ trait ColorConverterTrait
      * @return string
      *
      * Author : Bojan Petrovic
+     * Refactoring : François VAILLANT
      * https://mekshq.com/how-to-convert-hexadecimal-color-code-to-rgb-or-rgba-using-php/
      */
     protected function hex2rgba($color, $opacity = null) {
 
-        $default = 'rgb(0,0,0)';
-
-        //Return default if no color provided
-        if(empty($color))
-            return $default;
-
-        //Sanitize $color if "#" is provided
-        if ($color[0] == '#' ) {
-            $color = substr( $color, 1 );
+        if(empty($color)) {
+            throw new \Exception('no color is provided.');
         }
 
+        $color = ($color[0] === '#') ? substr( $color, 1 ) : $color;
+
         //Check if color has 6 or 3 characters and get values
-        if (strlen($color) == 6) {
+        if (strlen($color) === 6) {
             $hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
-        } elseif ( strlen( $color ) == 3 ) {
+        } elseif ( strlen( $color ) === 3 ) {
             $hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
         } else {
-            return $default;
+            throw new \Exception('A color have to be provided with 3 or 6 numbers');
         }
 
         //Convert hexadec to rgb
-        $rgb =  array_map('hexdec', $hex);
+        $rgb = array_map('hexdec', $hex);
 
         //Check if opacity is set(rgba or rgb)
         if($opacity){
-            if(abs($opacity) > 1)
-                $opacity = 1.0;
-            $output = 'rgba('.implode(",",$rgb).','.$opacity.')';
-        } else {
-            $output = 'rgb('.implode(",",$rgb).')';
+            if(abs($opacity) > 1) {
+                $opacity = 1;
+                return 'rgba(' . implode(",", $rgb) . ',' . $opacity . ')';
+            }
         }
-
-        //Return rgb(a) color string
-        return $output;
+        return 'rgb('.implode(",",$rgb).')';
     }
 
 }

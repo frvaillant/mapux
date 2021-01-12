@@ -34,5 +34,4 @@ class TwigFunctionTest extends TestCase
 
         $this->assertEquals($expected, stripslashes($renderer->renderMap('map-id', $map)));
     }
-
 }
