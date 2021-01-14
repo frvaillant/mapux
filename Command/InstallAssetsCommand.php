@@ -74,14 +74,12 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
                     'Create the /bundle/mapux directory-ies in your public directory and give it rights to write in it (chmod 755 path-to-folder).' . PHP_EOL .
                     'Then relaunch command';
             }
-            //shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
 
             try {
                 $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
             } catch(\Exception $e) {
                 $errors[] = '* Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
             }
-            //shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             try {
                 if (!file_exists(self::ASSETS_JS_DIR)) {
@@ -90,14 +88,12 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
             } catch(\Exception $e) {
                 $errors[] = '* Impossible to create directory ' . self::ASSETS_JS_DIR;
             }
-            //shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
             if (!is_file(self::ASSETS_JS_DIR . '/MapuxEvents.js')) {
                 try {
                     copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js', self::ASSETS_JS_DIR . '/MapuxEvents.js');
                 } catch(\Exception $e) {
                     $errors[] = ' * Impossible to add ' . self::RESOURCES_JS_DIR .'/MapuxEvents.js into ' . self::ASSETS_JS_DIR . 'directory';
                 }
-                //shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
             }
 
         }
