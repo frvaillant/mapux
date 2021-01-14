@@ -13,6 +13,7 @@ class Icon
     private $popupAnchor   = [1, -34];
     private $tooltipAnchor = [16, -28];
     private $shadowSize    = [41, 41];
+    private $className     = '';
 
     public function __construct(string $color = null)
     {
@@ -30,7 +31,8 @@ class Icon
             'iconAnchor'    => $this->getIconAnchor(),
             'popupAnchor'   => $this->getPopupAnchor(),
             'tooltipAnchor' => $this->getTooltipAnchor(),
-            'shadowSize'    => $this->getShadowSize()
+            'shadowSize'    => $this->getShadowSize(),
+            'className'     => $this->getClassName(),
         ]);
     }
 
@@ -145,4 +147,22 @@ class Icon
     {
         $this->shadowSize = $shadowSize;
     }
+
+    /**
+     * @return string
+     */
+    public function getClassName(): string
+    {
+        return $this->className;
+    }
+
+    /**
+     * @param string $className
+     */
+    public function setClassName(string $className): void
+    {
+        $this->className = $className;
+    }
+    
+    
 }

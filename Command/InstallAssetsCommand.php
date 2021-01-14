@@ -15,6 +15,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class InstallAssetsCommand extends Command
 {
     const SUCCESS = 1;
+    const ERROR = 0;
 
     const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
     const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
@@ -32,6 +33,8 @@ class InstallAssetsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $errors = [];
+
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
         $io->title('MAPUX INSTALLATION PROCESS');
@@ -53,55 +56,77 @@ class InstallAssetsCommand extends Command
 require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 ';
                     file_put_contents($appJsFile, $appJsFileContent);
-                    $io->success('app.js updated');
                 }
             } else {
+                $errors[] = 'impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
                 $io->error('impossible to find app.js file');
             }
 
-            mkdir(self::PUBLIC_PICTURES_DIR);
+            try {
+                mkdir(self::PUBLIC_PICTURES_DIR);
+            } catch(Exception $e) {
+                $errors[] = 'Impossible to create ' . self::PUBLIC_PICTURES_DIR .' directory';
+            }
             //shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
 
-            $this->copyFiles(self::LEAFLET_PICTURES_DIR, self::PUBLIC_PICTURES_DIR);
+            try {
+                $this->copyFiles(self::LEAFLET_PICTURES_DIR, self::PUBLIC_PICTURES_DIR);
+            } catch(Exception $e) {
+                $errors[] = 'Impossible to copy pictures from ' . self::LEAFLET_PICTURES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
+            }
             //shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
-            $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
+            try {
+                $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
+            } catch(Exception $e) {
+                $errors[] = 'Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
+            }
             //shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
-            $io->success('leaflet pictures added to your project');
-
-            mkdir(self::ASSETS_JS_DIR);
+            try {
+                mkdir(self::ASSETS_JS_DIR);
+            } catch(Exception $e) {
+                $errors[] = 'Impossible to create directory ' . self::ASSETS_JS_DIR;
+            }
             //shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
 
             if (!is_file(self::ASSETS_JS_DIR . '/MapuxEvents.js')) {
-                copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js ', self::ASSETS_JS_DIR . '/MapuxEvents.js');
+                try {
+                    copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js ', self::ASSETS_JS_DIR . '/MapuxEvents.js');
+                } catch(Exception $e) {
+                    $errors[] = 'Impossible to add ' . self::RESOURCES_JS_DIR .'/MapuxEvents.js into ' . self::ASSETS_JS_DIR . 'directory';
+                }
                 //shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
             }
 
-            $io->success('MapuxEvents file copied in your project');
-
-
         }
 
+        if(0 === count($errors)) {
+            $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encore dev" command for you ?', [
+                'y', 'n'
+            ]);
 
-        $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encode dev" command for you ?', [
-            'y', 'n'
-        ]);
+            $secondResponse = $helper->ask($input, $output, $secondQuestion);
 
-        $secondResponse = $helper->ask($input, $output, $secondQuestion);
-
-        if ('n' === $secondResponse) {
-            $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
-            $io->success('MAPUX INSTALLATION PROCESS ENDED');
-            return self::SUCCESS;;
+            if ('n' === $secondResponse) {
+                $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
+            }
+            if ('y' === $secondResponse) {
+                $io->comment('Yarn encore dev running ...');
+                $result = shell_exec('yarn encore dev');
+                $io->block($result);
+            }
         }
-        if ('y' === $secondResponse) {
-            $io->comment('Yarn encore dev running ...');
-            $result = shell_exec('yarn encore dev');
-            $io->block($result);
+
+        if (count($errors) > 0) {
+            $io->error('Some errors have occured during installation');
+            foreach ($errors as $error) {
+                $io->block($error);
+            }
+            return self::ERROR;
         }
+
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
-
         return self::SUCCESS;
     }
 

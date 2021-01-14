@@ -23,9 +23,11 @@ class Legend
     {
         $legendMarkers = [];
         $markers = $this->map->getAllMarkers();
-        foreach ($markers as $marker) {
-            if (!in_array($marker->getIconObject()->getIconPicture(), $legendMarkers) && $marker->getLegendName()) {
-                $legendMarkers[$marker->getIconObject()->getIconPicture()] = $marker->getLegendName();
+        if($markers) {
+            foreach ($markers as $marker) {
+                if (!in_array($marker->getIconObject()->getIconPicture(), $legendMarkers) && $marker->getLegendName()) {
+                    $legendMarkers[$marker->getIconObject()->getIconPicture()] = $marker->getLegendName();
+                }
             }
         }
         return $legendMarkers;
@@ -131,9 +133,99 @@ class Legend
                     ->close();
             }
         }
+
+        if ($items = $this->map->getLegendItems()) {
+            foreach ($items as $item) {
+                if (!isset($item['type']) || !isset($item['title']) ) {
+                    throw new \Exception('Type and Title must be at least defined for additionnal elements in legend');
+                }
+                if ($item['type'] === 'picture') {
+                    $htmlBuilder
+                        ->div([
+                            'attributes' => [
+                                'class' => 'mapux-legend-element'
+                            ]
+                        ])
+                        ->span([
+                            'attributes' => [
+                                'class' => ' mapux-legend-img'
+                            ]
+                        ])
+                        ->img([
+                            'isSingle' => true,
+                            'attributes' => [
+                                'src' => $item['picture'],
+                                'alt' => htmlspecialchars_decode($item['title'])
+                            ]
+                        ])
+                        ->close()
+                        ->span([
+                            'attributes' => [
+                                'class' => ' mapux-legend-text'
+                            ],
+                            'content' => $item['title']
+                        ])
+                        ->close()
+                        ->close();
+                } else {
+                    $htmlBuilder
+                        ->div([
+                            'attributes' => [
+                                'class' => 'mapux-legend-element'
+                            ]
+                        ])
+                        ->span([
+                            'attributes' => [
+                                'class' => 'mapux-legend-img'
+                            ]
+                        ]);
+                    if ($item['type'] !== 'text') {
+                        $htmlBuilder->div([
+                            'attributes' => [
+                                'class' => 'mapux-legend-' . $item['type'],
+                                'style' => $this->makeAdditionalElementStyle($item)
+                            ]
+                        ])
+                            ->close();
+                    }
+
+                        $htmlBuilder->close()
+                        ->span([
+                            'attributes' => [
+                                'class' => 'mapux-legend-text',
+                                'style' => $item['type'] === 'text' ? 'color:' . $this->getItemColor($item) . ';' : ''
+                            ],
+                            'content' => $item['title']
+                        ])
+                        ->close()
+                        ->close();
+                }
+
+            }
+        }
         $htmlBuilder->close();
     }
 
+    private function getItemColor($item): string
+    {
+        return $item['color'] ?? '#000';
+    }
+
+    private function makeAdditionalElementStyle($item): string
+    {
+        $fillColor = $item['fillColor'] ?? '#000';
+        $fillOpacity = $item['fillOpacity'] ?? 0.5;
+        $color = $item['color'] ?? '#000';
+        $opacity = $item['opacity'] ?? 1;
+        $weight = $item['weight'] ?? 1;
+        $style ='background:' . $this->hex2rgba($fillColor, $fillOpacity) . '; ';
+        $style .= $item['type'] === 'line' ? 'border:none' : 'border:' . $weight . 'px solid ' . $this->hex2rgba($color, $opacity) . '; ';
+        if($item['type'] === 'line') {
+            $style .= 'border-bottom:' . $weight . 'px solid ' . $this->hex2rgba($color, $opacity) . '; ';
+        }
+        return $style;
+
+    }
     private function makeStyle($layer) {
         $style = '';
         foreach ($layer['style'] as $name => $value) {

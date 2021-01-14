@@ -10,6 +10,7 @@ class Map
     const DEFAULT_LAT  = 44.8485138261124;
     const DEFAULT_LON  = -0.563934445381165;
     const DEFAULT_ZOOM = 10;
+    const MAX_MARKERS_ON_MAP = 5000;
     /**
      * @var float
      */
@@ -31,7 +32,7 @@ class Map
     /**
      * @var array
      */
-    private $markers;
+    private $markers = [];
 
     /**
      * @var array
@@ -59,11 +60,25 @@ class Map
     private $legendPosition = 'top-right';
 
     /**
+     * @var array
+     */
+    private $legendItems = null;
+
+    /**
      * @var bool
      */
     private $hasScale = true;
 
+    private $allowLargeSetOfMarkers = false;
 
+
+    /**
+     * Map constructor.
+     * @param float $centerLatitude
+     * @param float $centerLongitude
+     * @param int $zoomLevel
+     * @param string|null $background
+     */
     public function __construct(
         float $centerLatitude  = self::DEFAULT_LAT,
         float $centerLongitude = self::DEFAULT_LON,
@@ -245,13 +260,29 @@ class Map
         $this->zoomLevel = $zoomLevel;
     }
 
+    /**
+     * @param bool $allowLargeSetOfMarkers
+     */
+    public function allowLargeSetOfMarkers(): void
+    {
+        $this->allowLargeSetOfMarkers = true;
+    }
+
+
+
     public function addMarker(Marker $marker)
     {
+        if (count($this->markers) > self::MAX_MARKERS_ON_MAP && !$this->allowLargeSetOfMarkers) {
+            throw new \Exception('Number of markers is biggest than ' . self::MAX_MARKERS_ON_MAP . '. Adding two much markers is not recommanded. Il you want to add more than ' . self::MAX_MARKERS_ON_MAP . ' markers to a map, please set allowLargeSetOfMarkers to true : $map->allowLargeSetOfMarkers()');
+        }
         $this->markers[] = $marker;
     }
 
     public function setMarkers(array $markers)
     {
+        if (count($markers) > self::MAX_MARKERS_ON_MAP && !$this->allowLargeSetOfMarkers) {
+            throw new \Exception('Number of markers is biggest than ' . self::MAX_MARKERS_ON_MAP . '. Adding two much markers is not recommanded. Il you want to add more than ' . self::MAX_MARKERS_ON_MAP . ' markers to a map, please set allowLargeSetOfMarkers to true : $map->allowLargeSetOfMarkers()');
+        }
         $this->markers = $markers;
     }
 
@@ -339,6 +370,34 @@ class Map
     {
         return $this->showLegend;
     }
+
+    public function addLegendItems(array $items)
+    {
+        if (null === $items || empty($items)) {
+            throw new \Exception('Empty or null $items : You must specify legend Items');
+        }
+
+        $this->legendItems = ($this->legendItems) ? array_merge($this->legendItems, $items) : $items;
+    }
+
+    public function addLegendItem(array $item)
+    {
+        if (null === $item || empty($item)) {
+            throw new \Exception('Empty or null $item : You must specify legend Item');
+        }
+
+        $this->legendItems[] = $item;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLegendItems(): ?array
+    {
+        return $this->legendItems;
+    }
+
+
 
     public function getLegend($classes = "", HtmlBuilder $htmlBuilder)
     {

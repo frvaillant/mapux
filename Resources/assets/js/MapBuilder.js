@@ -132,7 +132,8 @@ export class MapBuilder {
             iconAnchor: icon.iconAnchor,
             popupAnchor: icon.popupAnchor,
             tooltipAnchor: icon.tooltipAnchor,
-            shadowSize: icon.shadowSize
+            shadowSize: icon.shadowSize,
+            className: icon.className
         })
         return Icon
     }
@@ -216,7 +217,8 @@ export class MapBuilder {
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             tooltipAnchor: [16, -28],
-            shadowSize: [41, 41]
+            shadowSize: [41, 41],
+            className: 'mapux-' + color + '-icon'
         })
     }
 
