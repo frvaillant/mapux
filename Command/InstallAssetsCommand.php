@@ -2,6 +2,7 @@
 
 namespace MapUx\Command;
 
+use PhpParser\Error;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,7 @@ class InstallAssetsCommand extends Command
     const RESOURCES_JS_DIR     = __DIR__ . '/../Resources/assets/js';
     const RESOURCES_IMAGES_DIR = __DIR__ . '/../Resources/assets/images';
     const APP_JS_FILE          = __DIR__ . '/../../../../assets/app.js';
+    const PUBLIC_DIR           = __DIR__ . '/../../../../public';
 
     protected static $defaultName = 'mapux:install';
 
@@ -57,43 +59,47 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
                     file_put_contents(self::APP_JS_FILE, $appJsFileContent);
                 }
             } else {
-                $errors[] = 'impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
+                $errors[] = '* impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
                 $io->error('impossible to find app.js file');
             }
 
             try {
-                mkdir(self::PUBLIC_PICTURES_DIR);
-            } catch(Exception $e) {
-                $errors[] = 'Impossible to create ' . self::PUBLIC_PICTURES_DIR .' directory';
+                shell_exec('chmod -R 755 ' . self::PUBLIC_DIR);
+                if (!file_exists(self::PUBLIC_PICTURES_DIR)) {
+                    mkdir(self::PUBLIC_PICTURES_DIR, '0777', true);
+                }
+            } catch(\Exception $e) {
+                $errors[] = '* Impossible to create ' . self::PUBLIC_PICTURES_DIR .' directory';
             }
             //shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
 
             try {
                 $this->copyFiles(self::LEAFLET_PICTURES_DIR, self::PUBLIC_PICTURES_DIR);
-            } catch(Exception $e) {
-                $errors[] = 'Impossible to copy pictures from ' . self::LEAFLET_PICTURES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
+            } catch(\Exception $e) {
+                $errors[] = '* Impossible to copy pictures from ' . self::LEAFLET_PICTURES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
             }
             //shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             try {
                 $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
-            } catch(Exception $e) {
-                $errors[] = 'Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
+            } catch(\Exception $e) {
+                $errors[] = '* Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
             }
             //shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             try {
-                mkdir(self::ASSETS_JS_DIR);
-            } catch(Exception $e) {
-                $errors[] = 'Impossible to create directory ' . self::ASSETS_JS_DIR;
+                if (!file_exists(self::ASSETS_JS_DIR)) {
+                    mkdir(self::ASSETS_JS_DIR);
+                }
+            } catch(\Exception $e) {
+                $errors[] = '* Impossible to create directory ' . self::ASSETS_JS_DIR;
             }
             //shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
-
             if (!is_file(self::ASSETS_JS_DIR . '/MapuxEvents.js')) {
                 try {
-                    copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js ', self::ASSETS_JS_DIR . '/MapuxEvents.js');
-                } catch(Exception $e) {
-                    $errors[] = 'Impossible to add ' . self::RESOURCES_JS_DIR .'/MapuxEvents.js into ' . self::ASSETS_JS_DIR . 'directory';
+                    copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js', self::ASSETS_JS_DIR . '/MapuxEvents.js');
+                } catch(\Exception $e) {
+                    $errors[] = ' * Impossible to add ' . self::RESOURCES_JS_DIR .'/MapuxEvents.js into ' . self::ASSETS_JS_DIR . 'directory';
                 }
                 //shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
             }
@@ -147,7 +153,9 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 
     private function copyFiles($source, $destination) {
         $dir = opendir($source);
-        mkdir($destination);
+        if(!file_exists($destination)) {
+            mkdir($destination);
+        }
         while(false !== ( $file = readdir($dir)) ) {
             if (( $file !== '.' ) && ( $file !== '..' )) {
                 if ( !is_dir($source . '/' . $file) ) {
