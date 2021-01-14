@@ -25,7 +25,7 @@ class InstallAssetsCommand extends Command
     const RESOURCES_IMAGES_DIR = __DIR__ . '/../Resources/assets/images';
     const APP_JS_FILE          = __DIR__ . '/../../../../assets/app.js';
     const PUBLIC_DIR           = __DIR__ . '/../../../../public';
-    const BUNDLE_DIR           = __DIR__ . '../../../../public/bundle';
+    const BUNDLE_DIR           = __DIR__ . '/../../../../public/bundle';
 
     protected static $defaultName = 'mapux:install';
 
