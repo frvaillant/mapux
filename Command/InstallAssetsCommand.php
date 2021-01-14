@@ -26,6 +26,8 @@ class InstallAssetsCommand extends Command
     const APP_JS_FILE          = __DIR__ . '/../../../../assets/app.js';
     const PUBLIC_DIR           = __DIR__ . '/../../../../public';
     const BUNDLE_DIR           = __DIR__ . '/../../../../public/bundle';
+    const PUBLIC_IMG_DIR       = __DIR__ . '/../../../../public/bundle/mapux/images';
+
 
     protected static $defaultName = 'mapux:install';
 
@@ -68,17 +70,18 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
                 if (!file_exists(self::PUBLIC_PICTURES_DIR)) {
                     mkdir (self::BUNDLE_DIR, 0777, true);
                     mkdir(self::PUBLIC_PICTURES_DIR, 0777, true);
+                    mkdir(self::PUBLIC_IMG_DIR, 0777, true);
                 }
             } catch(\Exception $e) {
-                $errors[] = '* Impossible to create ' . self::PUBLIC_PICTURES_DIR .' directory' . PHP_EOL .
+                $errors[] = '* Impossible to create ' . self::PUBLIC_IMG_DIR .' directory' . PHP_EOL .
                     'Create the /bundle/mapux directory-ies in your public directory and give it rights to write in it (chmod 755 path-to-folder).' . PHP_EOL .
                     'Then relaunch command';
             }
 
             try {
-                $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
+                $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_IMG_DIR);
             } catch(\Exception $e) {
-                $errors[] = '* Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_PICTURES_DIR;
+                $errors[] = '* Impossible to copy pictures from ' . self::RESOURCES_IMAGES_DIR .' to ' . self::PUBLIC_IMG_DIR;
             }
 
             try {
