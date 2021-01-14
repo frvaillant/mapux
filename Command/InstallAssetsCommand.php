@@ -17,11 +17,12 @@ class InstallAssetsCommand extends Command
     const SUCCESS = 1;
     const ERROR = 0;
 
-    const LEAFLET_PICTURES_DIR = 'node_modules/leaflet/dist/images';
-    const PUBLIC_PICTURES_DIR  = 'public/bundle/mapux';
-    const ASSETS_JS_DIR        = 'assets/js/mapux';
-    const RESOURCES_JS_DIR     = 'vendor/frvaillant/mapux/Resources/assets/js';
-    const RESOURCES_IMAGES_DIR = 'vendor/frvaillant/mapux/Resources/assets/images';
+    const LEAFLET_PICTURES_DIR = __DIR__ . '/../../../../node_modules/leaflet/dist/images';
+    const PUBLIC_PICTURES_DIR  = __DIR__ . '/../../../../public/bundle/mapux';
+    const ASSETS_JS_DIR        = __DIR__ . '/../../../../assets/js/mapux';
+    const RESOURCES_JS_DIR     = __DIR__ . '/../Resources/assets/js';
+    const RESOURCES_IMAGES_DIR = __DIR__ . '/../Resources/assets/images';
+    const APP_JS_FILE          = __DIR__ . '/../../../../assets/app.js';
 
     protected static $defaultName = 'mapux:install';
 
@@ -47,15 +48,13 @@ class InstallAssetsCommand extends Command
             return self::SUCCESS;
         }
         if ('y' === $firstResponse) {
-
-            $appJsFile = __DIR__ . '/../../../../assets/app.js';
-            if (is_file($appJsFile)) {
-                $appJsFileContent = file_get_contents($appJsFile);
+            if (is_file(self::APP_JS_FILE)) {
+                $appJsFileContent = file_get_contents(self::APP_JS_FILE);
                 if (1 === count(explode('frvaillant/mapux', $appJsFileContent))) {
                     $appJsFileContent .= '
 require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
 ';
-                    file_put_contents($appJsFile, $appJsFileContent);
+                    file_put_contents(self::APP_JS_FILE, $appJsFileContent);
                 }
             } else {
                 $errors[] = 'impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
