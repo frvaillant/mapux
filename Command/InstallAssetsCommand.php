@@ -59,18 +59,23 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
                 $io->error('impossible to find app.js file');
             }
 
-            shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
+            mkdir(self::PUBLIC_PICTURES_DIR);
+            //shell_exec('mkdir -p ' . self::PUBLIC_PICTURES_DIR);
 
-            shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
+            $this->copyFiles(self::LEAFLET_PICTURES_DIR, self::PUBLIC_PICTURES_DIR);
+            //shell_exec('cp -a ' . self::LEAFLET_PICTURES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
-            shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
+            $this->copyFiles(self::RESOURCES_IMAGES_DIR, self::PUBLIC_PICTURES_DIR);
+            //shell_exec('cp -a ' . self::RESOURCES_IMAGES_DIR . ' ' . self::PUBLIC_PICTURES_DIR);
 
             $io->success('leaflet pictures added to your project');
 
-            shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
+            mkdir(self::ASSETS_JS_DIR);
+            //shell_exec('mkdir -p ' . self::ASSETS_JS_DIR);
 
             if (!is_file(self::ASSETS_JS_DIR . '/MapuxEvents.js')) {
-                shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
+                copy(self::RESOURCES_JS_DIR . '/MapuxEvents.js ', self::ASSETS_JS_DIR . '/MapuxEvents.js');
+                //shell_exec('cp ' . self::RESOURCES_JS_DIR . '/MapuxEvents.js ' . self::ASSETS_JS_DIR . '/MapuxEvents.js');
             }
 
             $io->success('MapuxEvents file copied in your project');
@@ -98,5 +103,34 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
 
         return self::SUCCESS;
+    }
+
+    private function recursiveCopyFiles($source, $destination) {
+        $dir = opendir($source);
+        mkdir($destination);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file !== '.' ) && ( $file !== '..' )) {
+                if ( is_dir($source . '/' . $file) ) {
+                    recurse_copy($source . '/' . $file, $destination . '/' . $file);
+                }
+                else {
+                    copy($source . '/' . $file,$destination . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
+    }
+
+    private function copyFiles($source, $destination) {
+        $dir = opendir($source);
+        mkdir($destination);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file !== '.' ) && ( $file !== '..' )) {
+                if ( !is_dir($source . '/' . $file) ) {
+                    copy($source . '/' . $file,$destination . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
     }
 }

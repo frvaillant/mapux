@@ -4,6 +4,8 @@
 namespace MapUx\Model;
 
 
+use mysql_xdevapi\RowResult;
+
 class Grid extends Layer
 {
     /**
@@ -45,10 +47,17 @@ class Grid extends Layer
      * @var integer
      */
     protected $unit;
-    
+
     public function __construct($startPoint, $endPoint, $unit)
     {
         parent::__construct();
+
+        if (!is_array($startPoint) || !is_array($endPoint)) {
+            throw new \Exception('startpoint and endpoint of grid have to be defined as array [lat, lng]');
+        }
+        if ($startPoint[0] > $endPoint[0] || $startPoint[1] > $endPoint[1]) {
+            throw new \Exception('StartPoint have to be S-O point and endPoint N-E point of grid');
+        }
         $this->removeBackground();
         $this->setStartPoint($startPoint);
         $this->setEndPoint($endPoint);
@@ -183,8 +192,8 @@ class Grid extends Layer
         $this->fillOpacity = $fillOpacity;
     }
 
-    
-    
+
+
     public function getParameters()
     {
         return [
