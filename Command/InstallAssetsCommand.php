@@ -127,22 +127,10 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
         return self::SUCCESS;
     }
 
-    private function recursiveCopyFiles($source, $destination) {
-        $dir = opendir($source);
-        mkdir($destination);
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file !== '.' ) && ( $file !== '..' )) {
-                if ( is_dir($source . '/' . $file) ) {
-                    recurse_copy($source . '/' . $file, $destination . '/' . $file);
-                }
-                else {
-                    copy($source . '/' . $file,$destination . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
-
+    /**
+     * @param $source
+     * @param $destination
+     */
     private function copyFiles($source, $destination) {
         $dir = opendir($source);
         if(!file_exists($destination)) {
