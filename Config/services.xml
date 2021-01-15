@@ -8,8 +8,10 @@
         <service id="MapUx\Command\InstallAssetsCommand">
             <tag name="console.command" command="mapux:install"/>
         </service>
-        <service id="MapUx\Command\UninstallAssetsCommand">
-            <tag name="console.command" command="mapux:uninstall"/>
+        <service id="mapux_install_assets" class="InstallAssetsCommand">
+            <call method="execute">
+                <argument type="service" id="kernelInterface"/>
+            </call>
         </service>
     </services>
 </container>
