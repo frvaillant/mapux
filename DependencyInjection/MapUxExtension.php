@@ -8,7 +8,6 @@ use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
@@ -19,8 +18,9 @@ use Symfony\Component\Config\FileLocator;
 
 class MapUxExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container, ParameterBagInterface $bag)
+    public function load(array $configs, ContainerBuilder $container)
     {
+
 
         $container
             ->setDefinition('mapux.builder', new Definition(MapBuilder::class))
