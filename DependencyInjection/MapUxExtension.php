@@ -16,7 +16,6 @@ use Twig\Environment;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MapUxExtension extends Extension
 {
