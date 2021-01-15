@@ -9,7 +9,6 @@ use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Twig\Environment;
 use Symfony\Component\Console\Application;
