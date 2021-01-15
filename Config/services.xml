@@ -7,9 +7,6 @@
     <services>
         <service id="MapUx\Command\InstallAssetsCommand">
             <tag name="console.command" command="mapux:install"/>
-            <call method="__construct">
-                <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface" />
-            </call>
         </service>
     </services>
 </container>
