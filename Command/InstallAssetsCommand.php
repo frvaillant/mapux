@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -44,8 +45,9 @@ class InstallAssetsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $container = new ContainerBuilder();
 
-        define('ROOT_DIR',  $this->kernel->getProjectDir());
+        define('ROOT_DIR',  $container->getParameter('project_root_folder'));
 
         $errors = [];
 
