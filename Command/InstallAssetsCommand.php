@@ -32,8 +32,7 @@ class InstallAssetsCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setDescription('map ux assets installer');
+        $this->setDescription('map ux assets installer');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -60,8 +59,8 @@ class InstallAssetsCommand extends Command
                 $appJsFileContent = file_get_contents($ROOT_DIR . self::APP_JS_FILE);
                 if (1 === count(explode('frvaillant/mapux', $appJsFileContent))) {
                     $appJsFileContent .= '
-require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
-';
+require (\'' . $ROOT_DIR . RESOURCES_JS_DIR . '/map.js\')';
+
                     file_put_contents($ROOT_DIR . self::APP_JS_FILE, $appJsFileContent);
                 }
             } else {
@@ -70,10 +69,14 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')
             }
 
             try {
+                if (!file_exists($ROOT_DIR . self::BUNDLE_DIR)) {
+                    mkdir($ROOT_DIR . self::BUNDLE_DIR, 0755, true);
+                }
                 if (!file_exists($ROOT_DIR . self::PUBLIC_MAPUX_DIR)) {
-                    mkdir ($ROOT_DIR . self::BUNDLE_DIR, 0777, true);
-                    mkdir($ROOT_DIR . self::PUBLIC_MAPUX_DIR, 0777, true);
-                    mkdir($ROOT_DIR . self::PUBLIC_IMAGES_DIR, 0777, true);
+                    mkdir($ROOT_DIR . self::PUBLIC_MAPUX_DIR, 0755, true);
+                }
+                if (!file_exists($ROOT_DIR . self::PUBLIC_IMAGES_DIR)) {
+                    mkdir($ROOT_DIR . self::PUBLIC_IMAGES_DIR, 0755, true);
                 }
             } catch(\Exception $e) {
                 $errors[] = '* Impossible to create ' . $ROOT_DIR . self::PUBLIC_IMAGES_DIR .' directory' . PHP_EOL .
