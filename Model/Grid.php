@@ -579,12 +579,6 @@ class Grid extends Layer
                 'title' => $option['text'] ?? $title
             ];
         }
-        $legendOptions[] = [
-            'type' => 'text',
-            'title' => 'Grille de ' . $this->unit / 1000 . 'Km',
-            'color' => '#000'
-        ];
-
         return $legendOptions;
     }
 
