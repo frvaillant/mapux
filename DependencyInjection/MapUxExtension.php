@@ -8,6 +8,7 @@ use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
@@ -15,10 +16,11 @@ use Twig\Environment;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MapUxExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container, ParameterBagInterface $bag)
     {
 
         $container
