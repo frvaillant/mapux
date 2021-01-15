@@ -30,10 +30,10 @@ class InstallAssetsCommand extends Command
 
     protected static $defaultName = 'mapux:install';
 
-    public function __construct($name = null, KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
-        parent::__construct();
+        parent::__construct(static::$defaultName);
     }
 
     protected function configure()
