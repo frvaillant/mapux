@@ -54,15 +54,19 @@ class InstallAssetsCommand extends Command
             $io->error('Installation aborted');
             return self::SUCCESS;
         }
+
         if ('y' === $firstResponse) {
+
             if (is_file($ROOT_DIR . self::APP_JS_FILE)) {
+
                 $appJsFileContent = file_get_contents($ROOT_DIR . self::APP_JS_FILE);
+
                 if (1 === count(explode('frvaillant/mapux', $appJsFileContent))) {
                     $appJsFileContent .= '
-require (\'' . $ROOT_DIR . RESOURCES_JS_DIR . '/map.js\')';
-
+require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')';
                     file_put_contents($ROOT_DIR . self::APP_JS_FILE, $appJsFileContent);
                 }
+
             } else {
                 $errors[] = '* impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
                 $io->error('impossible to find app.js file');
@@ -135,6 +139,8 @@ require (\'' . $ROOT_DIR . RESOURCES_JS_DIR . '/map.js\')';
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
         return self::SUCCESS;
     }
+
+
 
     /**
      * @param $source
