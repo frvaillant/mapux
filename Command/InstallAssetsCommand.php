@@ -20,12 +20,7 @@ class InstallAssetsCommand extends Command
 
     const ASSETS_JS_DIR        = '/assets/js/mapux';
     const RESOURCES_JS_DIR     = '/vendor/frvaillant/mapux/Resources/assets/js';
-    const RESOURCES_IMAGES_DIR = '/vendor/frvaillant/mapux/Resources/assets/images';
     const APP_JS_FILE          = '/assets/app.js';
-    const BUNDLE_DIR           = '/public/bundle';
-    const PUBLIC_MAPUX_DIR     = '/public/bundle/mapux';
-    const PUBLIC_IMAGES_DIR    = '/public/bundle/mapux/images';
-
 
     protected static $defaultName = 'mapux:install';
 
@@ -44,9 +39,16 @@ class InstallAssetsCommand extends Command
         $errors = [];
 
         $io = new SymfonyStyle($input, $output);
+
         $helper = $this->getHelper('question');
         $io->title('MAPUX INSTALLATION PROCESS');
-        $firstQuestion = new ChoiceQuestion('To install MapUx automatically, be sure to have a assets/app.js and having run "yarn install --force" or "npm install --force" before. Continue ? ', [
+        $io->writeln('<fg=green>To install MapUx automatically, please, make sure :</>');
+        $io->listing([
+            'having ran "yarn install --force" or "npm install --force"',
+            'have an assets/app.js file in your project',
+            'have a webpack.config.js file at project root'
+        ]);
+        $firstQuestion = new ChoiceQuestion('<fg=green>Let\'s go ?</> ', [
             'y', 'n'
         ]);
         $firstResponse = $helper->ask($input, $output, $firstQuestion);
@@ -63,35 +65,13 @@ class InstallAssetsCommand extends Command
 
                 if (1 === count(explode('frvaillant/mapux', $appJsFileContent))) {
                     $appJsFileContent .= '
-require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')';
+require (\'@frvaillant/mapux/js/map.js\')';
                     file_put_contents($ROOT_DIR . self::APP_JS_FILE, $appJsFileContent);
                 }
 
             } else {
-                $errors[] = '* impossible to find your app.js file. Please require "[..]/vendor/frvaillant/mapux/Resources/assets/js/map.js" in your app.js file';
+                $errors[] = '* impossible to find your app.js file. Please require "@frvaillant/mapux/js/map.js" in your app.js file';
                 $io->error('impossible to find app.js file');
-            }
-
-            try {
-                if (!file_exists($ROOT_DIR . self::BUNDLE_DIR)) {
-                    mkdir($ROOT_DIR . self::BUNDLE_DIR, 0755, true);
-                }
-                if (!file_exists($ROOT_DIR . self::PUBLIC_MAPUX_DIR)) {
-                    mkdir($ROOT_DIR . self::PUBLIC_MAPUX_DIR, 0755, true);
-                }
-                if (!file_exists($ROOT_DIR . self::PUBLIC_IMAGES_DIR)) {
-                    mkdir($ROOT_DIR . self::PUBLIC_IMAGES_DIR, 0755, true);
-                }
-            } catch(\Exception $e) {
-                $errors[] = '* Impossible to create ' . $ROOT_DIR . self::PUBLIC_IMAGES_DIR .' directory' . PHP_EOL .
-                    'Create the /bundle/mapux directory-ies in your public directory and give it rights to write in it (chmod 755 path-to-folder).' . PHP_EOL .
-                    'Then relaunch command';
-            }
-
-            try {
-                $this->copyFiles($ROOT_DIR . self::RESOURCES_IMAGES_DIR, $ROOT_DIR . self::PUBLIC_IMAGES_DIR);
-            } catch(\Exception $e) {
-                $errors[] = '* Impossible to copy pictures from ' . $ROOT_DIR . self::RESOURCES_IMAGES_DIR .' to ' . $ROOT_DIR . self::PUBLIC_IMAGES_DIR;
             }
 
             try {
@@ -109,34 +89,51 @@ require (\'../vendor/frvaillant/mapux/Resources/assets/js/map.js\')';
                 }
             }
 
+            if (is_file($ROOT_DIR . '/webpack.config.js')) {
+
+                try {
+                    $webpackConfig = file_get_contents($ROOT_DIR . '/webpack.config.js');
+
+                    if (count(explode('mapux', $webpackConfig)) === 1) {
+                        $replace = 'Encore = require(\'@symfony/webpack-encore\');
+
+Encore.addAliases({
+    \'mapuxevents\': __dirname + \'/assets/js/mapux\'
+})
+';
+                        if (count(explode('Encore = require(\'@symfony/webpack-encore\');', $webpackConfig)) === 2) {
+                            $webpackConfig = str_replace("Encore = require('@symfony/webpack-encore');", $replace, $webpackConfig);
+                            file_put_contents($ROOT_DIR . '/webpack.config.js', $webpackConfig);
+                        } else {
+                            $errors[] = 'We were not able to edit your Webpack.config.js file. Please refer to documentation to update your file';
+                        }
+                    }
+                } catch(\Exception $e) {
+                    $errors[] = 'We were not able to edit your Webpack.config.js file. Please refer to documentation to update your file';
+                }
+
+            } else {
+                $errors[] = 'Impossible to find your webpack.congig.js file';
+            }
         }
 
-        if(0 === count($errors)) {
-            $secondQuestion = new ChoiceQuestion('Do you want us to run "Yarn encore dev" command for you ?', [
-                'y', 'n'
-            ]);
-
-            $secondResponse = $helper->ask($input, $output, $secondQuestion);
-
-            if ('n' === $secondResponse) {
-                $io->warning('Do not forget to run "yarn encore dev" command before using MapUx');
-            }
-            if ('y' === $secondResponse) {
-                $io->comment('Yarn encore dev running ...');
-                $result = shell_exec('yarn encore dev');
-                $io->block($result);
-            }
-        }
 
         if (count($errors) > 0) {
             $io->error('Some errors have occured during installation');
             foreach ($errors as $error) {
-                $io->block($error);
+                $io->block('<fg=red>' . $error . '</>');
             }
             return self::ERROR;
         }
 
         $io->success('MAPUX INSTALLATION PROCESS ENDED');
+        $io->newLine();
+        $io->writeln('<info>*************************************</>');
+        $io->writeln('Do not forget to run <info>yarn encore dev</>');
+        $io->writeln('<info>*************************************</>');
+        $io->newLine();
+
+
         return self::SUCCESS;
     }
 

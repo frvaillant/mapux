@@ -19,8 +19,6 @@ class MapUxExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-
-
         $container
             ->setDefinition('mapux.builder', new Definition(MapBuilder::class))
             ->setPublic(false)
@@ -39,13 +37,9 @@ class MapUxExtension extends Extension
             ;
         }
 
-        $container->setParameter('kernel', 'Symfony\Component\HttpKernel\KernelInterface');
-        $container->register(InstallAssetsCommand::class)
-            ->addArgument('%kernel%');
-
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Config')
+            new FileLocator(__DIR__ . '/../Config')
         );
         $loader->load('services.xml');
 

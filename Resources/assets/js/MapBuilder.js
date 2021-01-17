@@ -1,6 +1,21 @@
 require('leaflet/dist/leaflet')
-import { MapuxEvents } from "../../../../../../assets/js/mapux/MapuxEvents"
+
+const reqIcons = {
+    "default": require ('../images/marker-icon.png'),
+    "shadow": require('../images/marker-shadow.png'),
+    "red": require ('../images/red-icon.png'),
+    "green": require ('../images/green-icon.png'),
+    "orange": require ('../images/orange-icon.png'),
+    "yellow": require ('../images/yellow-icon.png'),
+    "pink": require ('../images/pink-icon.png'),
+    "purple": require ('../images/purple-icon.png'),
+    "brown": require ('../images/brown-icon.png'),
+    "black": require ('../images/black-icon.png'),
+}
+
 import { GridGenerator } from "./GridGenerator"
+
+import { MapuxEvents } from "mapuxevents/MapuxEvents";
 
 export class MapBuilder {
 
@@ -17,8 +32,8 @@ export class MapBuilder {
         this.layers  = JSON.parse(container.dataset.layers)
 
         this.defaultIcon = L.icon({
-            iconUrl: '/bundle/mapux/images/marker-icon.png',
-            shadowUrl: '/bundle/mapux/images/marker-shadow.png',
+            iconUrl: reqIcons['default'].default,
+            shadowUrl: reqIcons['shadow'].default,
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -40,7 +55,6 @@ export class MapBuilder {
                 imperial: false
             }).addTo(this.map)
         }
-
 
         // ADDING MAP EVENTS ///////////////////////////////////////
         if (this.mapEvents) {
@@ -118,7 +132,6 @@ export class MapBuilder {
                 if (ver === 0) {
                     obj.addTo(this.map)
                 }
-
             }
         }
     }
@@ -211,8 +224,8 @@ export class MapBuilder {
 
     createIcon(color) {
         return L.icon({
-            iconUrl: '/bundle/mapux/images/' + color + '-icon.png',
-            shadowUrl: '/bundle/mapux/images/marker-shadow.png',
+            iconUrl: reqIcons[color].default,
+            shadowUrl: reqIcons['shadow'].default,
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
