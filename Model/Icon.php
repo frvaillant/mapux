@@ -4,10 +4,10 @@
 namespace MapUx\Model;
 
 
+use MapUx\Builder\IconsPictureBuilder;
 use MapUx\Command\ProjectDirProvider;
-use MapUx\Model\Map;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class Icon
 {
@@ -22,19 +22,26 @@ class Icon
 
     public function __construct(string $color = null)
     {
-        $public = $this->getWebpackPath('setOutputPath');
         $build  = str_replace('/', '', $this->getWebpackPath('setPublicPath'));
-        $rootProvider = new ProjectDirProvider();
-        $package = new Package(new JsonManifestVersionStrategy($rootProvider->getProjectDir() . '/' . $public.'/manifest.json'));
+        $session = new Session();
+        $iconsPictures = $session->get('MAPUX_ICONS');
 
-        $build  = str_replace('/', '', $this->getWebpackPath('setPublicPath'));
-        $this->setIconPicture($package->getUrl($build . '/images/marker-icon.png'));
-        $this->setShadowPicture($package->getUrl($build . '/images/marker-shadow.png'));
+        if (!$iconsPictures || empty($iconsPictures)) {
+            $iconsBuilder = new IconsPictureBuilder();
+            $iconsBuilder->build();
+            $iconsPictures = $session->get('MAPUX_ICONS');
+        }
+
+        $this->setIconPicture($iconsPictures[$build . '/images/marker-icon.png']);
+        $this->setShadowPicture($iconsPictures[$build . '/images/marker-shadow.png']);
         if(null !== $color) {
-            $this->setIconPicture($package->getUrl($build . '/images/' . $color . '-icon.png'));
-            $this->setShadowPicture($package->getUrl($build . '/images/marker-shadow.png'));
+            $this->setIconPicture($iconsPictures[$build . '/images/' . $color . '-icon.png']);
+            $this->setShadowPicture($iconsPictures[$build . '/images/marker-shadow.png']);
         }
     }
+
+
+
 
     private function getWebpackPath($search)
     {

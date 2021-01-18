@@ -1,6 +1,5 @@
 ###< symfony/phpunit-bridge ###
 .DS_Store
 .idea
-
 /vendor/
 vendor

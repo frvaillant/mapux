@@ -40,19 +40,19 @@ class GridTest extends TestCase
 
     public function testPoints()
     {
-        $grid = new Grid([44,1], [42,2], 10000);
+        $grid = new Grid([43,1], [44,2], 10000);
         $this->assertIsArray($grid->getStartPoint());
         $this->assertIsArray($grid->getEndPoint());
     }
 
     public function testGetParameters()
     {
-        $grid = new Grid([44,1], [42,2], 10000);
+        $grid = new Grid([42,1], [44,2], 10000);
 
         $expected = [
-            'startLat'    => 44,
+            'startLat'    => 42,
             'startLon'    => 1,
-            'endLat'      => 42,
+            'endLat'      => 44,
             'endLon'      => 2,
             'unit'        => 10000,
             'weight'      => 1,

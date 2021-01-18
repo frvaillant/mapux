@@ -39,7 +39,4 @@ class IconTest extends TestCase
         ]);
         $this->assertEquals($expected, $icon->render());
     }
-
-
-
 }
