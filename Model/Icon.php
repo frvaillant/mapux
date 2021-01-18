@@ -6,6 +6,8 @@ namespace MapUx\Model;
 
 use MapUx\Command\ProjectDirProvider;
 use MapUx\Model\Map;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
 class Icon
 {
@@ -20,14 +22,31 @@ class Icon
 
     public function __construct(string $color = null)
     {
-        $this->pictures = Map::MAPUX_ICONS;
-        $this->setIconPicture($this->pictures['marker-icon']);
-        $this->setShadowPicture($this->pictures['marker-shadow']);
-        if(null !== $color) {
-            $this->setIconPicture($this->pictures[sprintf('%s-icon', $color)]);
-            $this->setShadowPicture($this->pictures['marker-shadow']);
-        }
+        $public = $this->getWebpackPath('setOutputPath');
+        $build  = str_replace('/', '', $this->getWebpackPath('setPublicPath'));
+        $rootProvider = new ProjectDirProvider();
+        $package = new Package(new JsonManifestVersionStrategy($rootProvider->getProjectDir() . '/' . $public.'/manifest.json'));
 
+        $build  = str_replace('/', '', $this->getWebpackPath('setPublicPath'));
+        $this->setIconPicture($package->getUrl($build . '/images/marker-icon.png'));
+        $this->setShadowPicture($package->getUrl($build . '/images/marker-shadow.png'));
+        if(null !== $color) {
+            $this->setIconPicture($package->getUrl($build . '/images/' . $color . '-icon.png'));
+            $this->setShadowPicture($package->getUrl($build . '/images/marker-shadow.png'));
+        }
+    }
+
+    private function getWebpackPath($search)
+    {
+        $projectRootProvider = new ProjectDirProvider();
+        $root = $projectRootProvider->getProjectDir();
+        $file = $root . '/webpack.config.js';
+        $content = file_get_contents($file);
+        list ($start, $public) = explode($search . '(', $content);
+        list ($path, $rest) = explode(')', $public);
+        $path = str_replace("'", '', $path);
+        $path = str_replace('"', '', $path);
+        return $path;
     }
 
     public function render()
@@ -171,6 +190,4 @@ class Icon
     {
         $this->className = $className;
     }
-
-
 }

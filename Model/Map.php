@@ -12,7 +12,6 @@ class Map
     const DEFAULT_LON  = -0.563934445381165;
     const DEFAULT_ZOOM = 10;
     const MAX_MARKERS_ON_MAP = 5000;
-    const MAPUX_ICONS = [];
 
     /**
      * @var float
