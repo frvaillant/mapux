@@ -43,7 +43,7 @@ class MapBuilder implements MapBuilderInterface
     private function getPictures()
     {
         $projectDirProvider = new ProjectDirProvider();
-        $folder = $projectDirProvider->getProjectDir() . '/public/build/images';
+        $folder = $projectDirProvider->getProjectDir() . '/' . $this->getWebpackPath('setOutputPath') . '/images';
         $pictures = [];
         foreach (scandir($folder) as $picture) {
             if (
@@ -53,7 +53,7 @@ class MapBuilder implements MapBuilderInterface
 
             ) {
                 list ($name, $id, $ext) = explode('.', $picture);
-                $pictures[$name] = '/build/images/' .$picture;
+                $pictures[$name] = $this->getWebpackPath('setPublicPath') . '/images/' .$picture;
             }
         }
         return $pictures;
@@ -71,4 +71,19 @@ class MapBuilder implements MapBuilderInterface
         $str .= '];';
         return $str;
     }
+
+
+    private function getWebpackPath($search)
+    {
+        $projectRootProvider = new ProjectDirProvider();
+        $root = $projectRootProvider->getProjectDir();
+        $file = $root . '/webpack.config.js';
+        $content = file_get_contents($file);
+        list ($start, $public) = explode($search . '(', $content);
+        list ($path, $rest) = explode(')', $public);
+        $path = str_replace("'", '', $path);
+        $path = str_replace('"', '', $path);
+        return $path;
+    }
+
 }
