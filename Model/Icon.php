@@ -28,17 +28,6 @@ class Icon
 
         $iconsPictures = IconsDataProvider::MAPUX_ICONS;
 
-        if ($iconsPictures === []) {
-            $iconsBuilder = new IconsPictureBuilder();
-            $iconsPictures = $iconsBuilder->getIconsPicture();
-
-            $factory = new ClassFactory('MapUx\\Model', 'IconsDataProvider', [
-                'MAPUX_ICONS' => $iconsPictures,
-            ]);
-
-        }
-
-
         $this->setIconPicture($iconsPictures[$build . '/images/marker-icon.png']);
         $this->setShadowPicture($iconsPictures[$build . '/images/marker-shadow.png']);
         if(null !== $color) {
