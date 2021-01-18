@@ -3,6 +3,7 @@
 
 namespace MapUx\Model;
 
+use MapUx\Builder\MapBuilder;
 use MapUx\Services\HtmlBuilder\HtmlBuilder;
 
 class Map
@@ -11,6 +12,8 @@ class Map
     const DEFAULT_LON  = -0.563934445381165;
     const DEFAULT_ZOOM = 10;
     const MAX_MARKERS_ON_MAP = 5000;
+    const MAPUX_ICONS = [];
+
     /**
      * @var float
      */
@@ -442,7 +445,5 @@ class Map
         $this->hasScale = false;
         $this->options['scale'] = $this->hasScale();
     }
-
-
 
 }

@@ -41,5 +41,8 @@ class MapUxExtension extends Extension
             new FileLocator(__DIR__ . '/../Config')
         );
         $loader->load('services.xml');
+
+        $mapBuilder = new MapBuilder();
+        $mapBuilder->buildMap();
     }
 }

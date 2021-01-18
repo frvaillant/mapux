@@ -5,6 +5,7 @@ namespace MapUx\Model;
 
 
 use MapUx\Command\ProjectDirProvider;
+use MapUx\Model\Map;
 
 class Icon
 {
@@ -17,14 +18,9 @@ class Icon
     private $shadowSize    = [41, 41];
     private $className     = '';
 
-    /**
-     * @var array
-     */
-    private $pictures = [];
-
     public function __construct(string $color = null)
     {
-        $this->pictures = $this->getPictures();
+        $this->pictures = Map::MAPUX_ICONS;
         $this->setIconPicture($this->pictures['marker-icon']);
         $this->setShadowPicture($this->pictures['marker-shadow']);
         if(null !== $color) {
@@ -32,25 +28,6 @@ class Icon
             $this->setShadowPicture($this->pictures['marker-shadow']);
         }
 
-    }
-
-    public function getPictures()
-    {
-        $projectDirProvider = new ProjectDirProvider();
-        $folder = $projectDirProvider->getProjectDir() . '/public/build/images';
-        $pictures = [];
-        foreach (scandir($folder) as $picture) {
-            if (
-                $picture !== '.' &&
-                $picture !== '..' &&
-                substr($picture, -3) === 'png'
-
-            ) {
-                list ($name, $id, $ext) = explode('.', $picture);
-                $pictures[$name] = '/build/images/' .$picture;
-            }
-        }
-        return $pictures;
     }
 
     public function render()
@@ -194,4 +171,6 @@ class Icon
     {
         $this->className = $className;
     }
+
+
 }
