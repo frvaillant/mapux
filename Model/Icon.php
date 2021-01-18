@@ -6,7 +6,7 @@ namespace MapUx\Model;
 
 use MapUx\Builder\IconsPictureBuilder;
 use MapUx\Command\ProjectDirProvider;
-use Symfony\Component\HttpFoundation\Session\Session;
+use MapUx\Model\Map;
 
 
 class Icon
@@ -22,15 +22,10 @@ class Icon
 
     public function __construct(string $color = null)
     {
-        $build  = str_replace('/', '', $this->getWebpackPath('setPublicPath'));
-        $session = new Session();
-        $iconsPictures = $session->get('MAPUX_ICONS');
+        $iconPictureBuilder = new IconsPictureBuilder();
+        $build  = $iconPictureBuilder->getBuildUrl();
 
-        if (!$iconsPictures || empty($iconsPictures)) {
-            $iconsBuilder = new IconsPictureBuilder();
-            $iconsBuilder->build();
-            $iconsPictures = $session->get('MAPUX_ICONS');
-        }
+        $iconsPictures = IconsDataProvider::MAPUX_ICONS;
 
         $this->setIconPicture($iconsPictures[$build . '/images/marker-icon.png']);
         $this->setShadowPicture($iconsPictures[$build . '/images/marker-shadow.png']);
