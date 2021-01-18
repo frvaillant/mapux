@@ -4,7 +4,6 @@ namespace MapUx\DependencyInjection;
 
 use MapUx\Builder\MapBuilder;
 use MapUx\Builder\MapBuilderInterface;
-use MapUx\Command\InstallAssetsCommand;
 use MapUx\Twig\MapFunctionExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -42,8 +41,5 @@ class MapUxExtension extends Extension
             new FileLocator(__DIR__ . '/../Config')
         );
         $loader->load('services.xml');
-
     }
-
-
 }

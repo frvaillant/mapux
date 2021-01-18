@@ -4,10 +4,12 @@
 namespace MapUx\Model;
 
 
+use MapUx\Command\ProjectDirProvider;
+
 class Icon
 {
-    private $iconUrl       = '/bundle/mapux/images/marker-icon.png';
-    private $shadowUrl     = '/bundle/mapux/images/marker-shadow.png';
+    private $iconUrl       = '';
+    private $shadowUrl     = '';
     private $iconSize      = [25, 41];
     private $iconAnchor    = [12, 41];
     private $popupAnchor   = [1, -34];
@@ -15,11 +17,40 @@ class Icon
     private $shadowSize    = [41, 41];
     private $className     = '';
 
+    /**
+     * @var array
+     */
+    private $pictures = [];
+
     public function __construct(string $color = null)
     {
+        $this->pictures = $this->getPictures();
+        $this->setIconPicture($this->pictures['marker-icon']);
+        $this->setShadowPicture($this->pictures['marker-shadow']);
         if(null !== $color) {
-            $this->setIconPicture(sprintf('/bundle/mapux/images/%s-icon.png', $color));
+            $this->setIconPicture($this->pictures[sprintf('%s-icon', $color)]);
+            $this->setShadowPicture($this->pictures['marker-shadow']);
         }
+
+    }
+
+    public function getPictures()
+    {
+        $projectDirProvider = new ProjectDirProvider();
+        $folder = $projectDirProvider->getProjectDir() . '/public/build/images';
+        $pictures = [];
+        foreach (scandir($folder) as $picture) {
+            if (
+                $picture !== '.' &&
+                $picture !== '..' &&
+                substr($picture, -3) === 'png'
+
+            ) {
+                list ($name, $id, $ext) = explode('.', $picture);
+                $pictures[$name] = '/build/images/' .$picture;
+            }
+        }
+        return $pictures;
     }
 
     public function render()
@@ -163,6 +194,4 @@ class Icon
     {
         $this->className = $className;
     }
-    
-    
 }

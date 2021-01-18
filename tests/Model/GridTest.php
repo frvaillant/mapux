@@ -10,11 +10,32 @@ use MapUx\Model\Grid;
 
 class GridTest extends TestCase
 {
+    public function testPointsOrder()
+    {
+        try {
+            $grid = new Grid([44, 1], [42, 2], 10000);
+        } catch(\Exception $e) {
+            $this->assertEquals('StartPoint have to be S-O point and endPoint N-E point of grid', $e->getMessage());
+
+        }
+    }
+
+    public function testCornerPoints()
+    {
+        try {
+            $grid = new Grid(44, 42, 2, 10000);
+        } catch(\Exception $e) {
+            $this->assertEquals('startpoint and endpoint of grid have to be defined as array [lat, lng]', $e->getMessage());
+
+        }
+    }
 
     public function testInstancesOf()
     {
-        $grid = new Grid([44,1], [42,2], 10000);
-        $this->assertEquals(true, $grid instanceof Layer);
+         $grid = new Grid([42, 1], [43, 2], 10000);
+
+          $this->assertEquals(true, $grid instanceof Grid);
+
     }
 
     public function testPoints()

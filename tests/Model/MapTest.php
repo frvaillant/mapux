@@ -68,7 +68,7 @@ class MapTest extends TestCase
         $map = new \MapUx\Model\Map(44.00, 2.00, 10);
         $marker = new Marker();
         $map->addMarker($marker);
-        $expected = '[{"lat":44.8485138261124,"lon":-0.563934445381165,"icon":"{"iconUrl":"/bundle/mapux/images/marker-icon.png","shadowUrl":"/bundle/mapux/images/marker-shadow.png","iconSize":[25,41],"iconAnchor":[12,41],"popupAnchor":[1,-34],"tooltipAnchor":[16,-28],"shadowSize":[41,41]}","options":"null","popup":null,"events":null}]';
+        $expected = '[{"lat":44.8485138261124,"lon":-0.563934445381165,"icon":"{"iconUrl":"/bundle/mapux/images/marker-icon.png","shadowUrl":"/bundle/mapux/images/marker-shadow.png","iconSize":[25,41],"iconAnchor":[12,41],"popupAnchor":[1,-34],"tooltipAnchor":[16,-28],"shadowSize":[41,41],"className":""}","options":"null","popup":null,"events":null}]';
         $this->assertEquals(1, count($map->getAllMarkers()));
         $this->assertEquals($expected, stripslashes(stripslashes($map->getMarkers())));
         $this->assertEquals(true, is_array(json_decode($map->getMarkers(), true)));
