@@ -1,17 +1,6 @@
 require('leaflet/dist/leaflet')
 
-const reqIcons = {
-    "default": require ('../images/marker-icon.png'),
-    "shadow": require('../images/marker-shadow.png'),
-    "red": require ('../images/red-icon.png'),
-    "green": require ('../images/green-icon.png'),
-    "orange": require ('../images/orange-icon.png'),
-    "yellow": require ('../images/yellow-icon.png'),
-    "pink": require ('../images/pink-icon.png'),
-    "purple": require ('../images/purple-icon.png'),
-    "brown": require ('../images/brown-icon.png'),
-    "black": require ('../images/black-icon.png'),
-}
+import { reqIcons } from './map'
 
 import { GridGenerator } from "./GridGenerator"
 
