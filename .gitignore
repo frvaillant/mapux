@@ -5,5 +5,7 @@ webpack.config.js
 /vendor/
 vendor
 public
+/public
 tests
+/tests
 

@@ -32,6 +32,7 @@ class CircleTest extends TestCase
         $this->assertEquals(0.5, $circle->getFillOpacity());
     }
 
+
     public function testSurface()
     {
         $circle = new Circle(44, 2, 12000);
