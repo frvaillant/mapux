@@ -1,5 +1,9 @@
 ###< symfony/phpunit-bridge ###
 .DS_Store
 .idea
+webpack.config.js
 /vendor/
 vendor
+public
+tests
+
